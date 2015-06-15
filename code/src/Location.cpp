@@ -6,7 +6,6 @@
 
 #include <iostream>
 
-using namespace std;
 
 void Location::set_id(unsigned int id) {
     this->id = id;
@@ -15,5 +14,5 @@ unsigned int Location::get_id() {
     return id;
 }
 void Location::print() {
-    cout << "Localizacion #" << id << endl;
+    std::cout << "Localizacion #" << id << std::endl;
 }

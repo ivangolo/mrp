@@ -5,8 +5,6 @@
 #include <iostream>
 #include "Balance.h"
 
-using namespace std;
-
 void Balance::set_id(unsigned int id) {
     this->id = id;
 }
@@ -44,5 +42,5 @@ unsigned int Balance::get_target() {
 }
 
 void Balance::print() {
-    cout << "Recurso #" << id << ":<" << resource1_id << ", " << resource2_id << ", " << target << ">" <<endl;
+    std::cout << "Recurso #" << id << ":<" << resource1_id << ", " << resource2_id << ", " << target << ">" << std::endl;
 }

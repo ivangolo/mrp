@@ -5,6 +5,6 @@
 #ifndef MRP_LIBUTIL_H
 #define MRP_LIBUTIL_H
 
-void ShowHelpInfo(char *s);
+void show_help_info(char *s);
 
 #endif //MRP_LIBUTIL_H

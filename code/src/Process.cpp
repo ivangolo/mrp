@@ -5,8 +5,6 @@
 #include "Process.h"
 #include <iostream>
 
-using namespace std;
-
 void Process::set_id(unsigned int id) {
     this->id = id;
 }
@@ -48,5 +46,5 @@ unsigned int Process::get_process_move_cost() {
 }
 
 void Process::print() {
-    cout << "Proceso #" << id << endl;
+    std::cout << "Proceso #" << id << std::endl;
 }

@@ -7,12 +7,10 @@
 
 #include <deque>
 
-using namespace std;
-
-typedef deque<unsigned int> ProcessList;
-typedef deque<unsigned int> ServiceList;
-typedef deque<unsigned int> Capacities;
+typedef std::deque<unsigned int> ProcessList;
+typedef std::deque<unsigned int> ServiceList;
+typedef std::deque<unsigned int> Capacities;
 typedef Capacities Requirements;
-typedef deque<unsigned int> MachineMoveCosts;
+typedef std::deque<unsigned int> MachineMoveCosts;
 
 #endif //MRP_SETS_H

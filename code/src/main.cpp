@@ -1,55 +1,90 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
 #include "utils.h"
-
-#include <vector>
 
 using namespace std;
 int main (int argc,char *argv[]) {
 
-    vector<int> myvector(10);
-    for (unsigned i=0; i<myvector.size(); i++)
-        myvector.at(i)=i;
-    std::cout << "myvector contains:";
-    for (unsigned i=0; i<myvector.size(); i++)
-        std::cout << ' ' << myvector.at(i);
-    std::cout << '\n';
-    /*
+    int time_limit, seed;
+    string instance_filename, original_solution_filename, new_solution_filename;
+
     char tmp;
     if(argc == 1) {
-        ShowHelpInfo(argv[0]);
-        exit(1);
+        show_help_info(argv[0]);
+        exit(EXIT_FAILURE);
     }
 
     while((tmp = getopt(argc,argv,"t:p:i:o:s:")) != -1) {
         switch(tmp) {
-            case 't':
-                cout<<"argument entered: "<<optarg<<endl;
+            case 't': {
+                istringstream iss_tm(optarg);
+                if (!(iss_tm >> time_limit)) {
+                    cerr << "Número inválido " << optarg << endl;
+                    exit(EXIT_FAILURE);
+                }
                 break;
 
+            }
             case 'p':
-                cout<<"argument entered: "<<optarg<<endl;
+                instance_filename = optarg;
                 break;
 
             case 'i':
-                cout<<"argument entered: "<<optarg<<endl;
+                original_solution_filename = optarg;
                 break;
 
             case 'o':
-                cout<<"argument entered: "<<optarg<<endl;
+                new_solution_filename = optarg;
                 break;
 
-            case 's':
-                cout<<"The current version is 0.1"<<endl;
+            case 's': {
+                istringstream iss_seed(optarg);
+                if (!(iss_seed >> seed)) {
+                    cerr << "Número inválido " << optarg << endl;
+                    exit(EXIT_FAILURE);
+                }
                 break;
+            }
 
             default:
-                ShowHelpInfo(argv[0]);
+                show_help_info(argv[0]);
                 break;
         }
     }
-     */
+
+
+    ofstream fout_new_solution(new_solution_filename);
+    fout_new_solution << "Something new" << endl;
+    fout_new_solution.close();
+
+    ifstream fin_instance(instance_filename);
+    ifstream fin_original_solution(original_solution_filename);
+
+    if(!fin_instance.is_open()) {
+        cerr << "Error al intentar abrir el archivo " << instance_filename << endl;
+        exit(EXIT_FAILURE);
+    } else if(!fin_original_solution.is_open()) {
+        cerr << "Error al intentar abrir el archivo " << instance_filename << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    string line;
+    getline(fin_instance, line);
+    cout << line << endl;
+
+    fin_instance.close();
+    fin_original_solution.close();
+
+
+
+    cout << "Time limit: " << time_limit << endl;
+    cout << "Instance Filename: " << instance_filename << endl;
+    cout << "Original Solution filename: " << original_solution_filename << endl;
+    cout << "New Solution filename: " << new_solution_filename << endl;
+    cout << "Seed: " << seed << endl;
+
+
     return 0;
 }

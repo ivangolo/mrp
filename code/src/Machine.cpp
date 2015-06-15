@@ -50,5 +50,5 @@ unsigned int Machine::get_location_id() {
 }
 
 void Machine::print() {
-
+    std::cout << "this is a machine!" << std::endl;
 }

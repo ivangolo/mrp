@@ -7,8 +7,6 @@
 #include <algorithm>
 #include <iterator>
 
-using namespace std;
-
 void Service::set_id(unsigned int id) {
     this->id = id;
 }
@@ -28,11 +26,11 @@ unsigned int Service::get_id() {
 }
 
 void Service::print() {
-    cout << "Servicio #" << endl;
-    cout << "Procesos: [";
-    copy(processes.begin(), processes.end(), ostream_iterator<unsigned int>(cout, ", "));
-    cout << "]" <<endl;
-    cout << "Dependencias (servicios): [";
-    copy(service_dependencies.begin(), service_dependencies.end(), ostream_iterator<unsigned int>(cout, ", "));
-    cout << "]"<< endl;
+    std::cout << "Servicio #" << std::endl;
+    std::cout << "Procesos: [";
+    copy(processes.begin(), processes.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
+    std::cout << "]" << std::endl;
+    std::cout << "Dependencias (servicios): [";
+    copy(service_dependencies.begin(), service_dependencies.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
+    std::cout << "]"<< std::endl;
 }

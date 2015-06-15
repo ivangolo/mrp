@@ -4,7 +4,6 @@
 
 #include "Resource.h"
 #include <iostream>
-using namespace std;
 
 void Resource::set_id(unsigned int id) {
     this->id = id;
@@ -31,5 +30,5 @@ unsigned int Resource::get_weight_load_cost() {
 }
 
 void Resource::print() {
-    cout << "Recurso #" << id << endl;
+    std::cout << "Recurso #" << id << std::endl;
 }
