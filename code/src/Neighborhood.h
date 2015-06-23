@@ -10,6 +10,9 @@ class Neighborhood {
     unsigned int id;
 
 public:
+    Neighborhood();
+    Neighborhood(unsigned int id);
+    ~Neighborhood();
     void set_id(unsigned int id);
     unsigned int get_id();
     void print();

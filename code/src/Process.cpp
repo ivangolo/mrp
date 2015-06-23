@@ -4,14 +4,35 @@
 
 #include "Process.h"
 #include <iostream>
+#include <algorithm>
+#include <iterator>
+
+
+Process::Process() {
+    std::cout << "Process created";
+}
+
+Process::Process(unsigned int id, unsigned int service_id) {
+    this->id = id;
+    this->service_id = service_id;
+}
+
+Process::~Process() {
+    std::cout << "Process " << id << " destroyed" << std::endl;
+}
 
 void Process::set_id(unsigned int id) {
     this->id = id;
 }
 
-void Process::set_machine_id(unsigned int machine_id) {
-    this->machine_id = machine_id;
+void Process::set_current_machine_id(unsigned int current_machine_id) {
+    this->current_machine_id = current_machine_id;
 }
+
+void Process::set_initial_machine_id(unsigned int initial_machine_id) {
+    this->initial_machine_id = initial_machine_id;
+}
+
 
 void Process::set_service_id(unsigned int service_id) {
     this->service_id = service_id;
@@ -33,8 +54,12 @@ unsigned int Process::get_service_id() {
     return service_id;
 }
 
-unsigned int Process::get_machine_id() {
-    return machine_id;
+unsigned int Process::get_initial_machine_id() {
+    return initial_machine_id;
+}
+
+unsigned int Process::get_current_machine_id() {
+    return current_machine_id;
 }
 
 unsigned int Process::get_resource_requirement(unsigned int resource_id) {
@@ -46,5 +71,10 @@ unsigned int Process::get_process_move_cost() {
 }
 
 void Process::print() {
-    std::cout << "Proceso #" << id << std::endl;
+    std::cout << "Proceso # " << id << std::endl;
+    std::cout << "Servicio # " << service_id << std::endl;
+    std::cout << "Process move cost: " << process_move_cost << std::endl;
+    std::cout << "Requerimientos: [";
+    copy(requirements.begin(), requirements.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
+    std::cout << "]"<< std::endl;
 }

@@ -9,22 +9,28 @@
 
 class Process {
     unsigned int id;
-    unsigned int machine_id;
+    unsigned int initial_machine_id;
+    unsigned int current_machine_id;
     unsigned int service_id;
     unsigned int process_move_cost;
     Requirements requirements;
 
 public:
+    Process();
+    Process(unsigned int id, unsigned int service_id);
+    ~Process();
     void set_id(unsigned int id);
     void set_service_id(unsigned int service_id);
-    void set_machine_id(unsigned int machine_id);
+    void set_initial_machine_id(unsigned int initial_machine_id);
+    void set_current_machine_id(unsigned int current_machine_id);
     void set_process_move_cost(unsigned int pmc);
     void add_resource_requirement(unsigned int requirement);
     unsigned int get_resource_requirement(unsigned int resource_id);
 
     unsigned int get_id();
     unsigned int get_service_id();
-    unsigned int get_machine_id();
+    unsigned int get_initial_machine_id();
+    unsigned int get_current_machine_id();
     unsigned int get_process_move_cost();
     void print();
 

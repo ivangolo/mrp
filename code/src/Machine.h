@@ -18,15 +18,15 @@ class Machine {
     MachineMoveCosts mmc;
 
 public:
-    void set_id(unsigned int id);
-    void set_neighborhood_id(unsigned int neighborhood_id);
-    void set_location_id(unsigned int location_id);
-    void add_capacity(unsigned int capacity);
-    void add_safety_capacity(unsigned int capacity);
-    void add_machine_move_cost(unsigned int cost);
+    Machine();
+    Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id);
+    ~Machine();
+
     void push_process(unsigned int process_id);
     unsigned int pop_process(unsigned int process_id);
-
+    void add_capacity(unsigned int capacity);
+    void add_safety_capacity(unsigned int safety_capacity);
+    void add_mmc(unsigned int mmc);
     unsigned int get_id();
     unsigned int get_neighborhood_id();
     unsigned int get_location_id();

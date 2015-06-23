@@ -7,6 +7,18 @@
 #include <iostream>
 
 
+Location::Location() {
+    std::cout << "Location created" << std::endl;
+}
+
+Location::Location(unsigned id) {
+    this->id = id;
+}
+
+Location::~Location() {
+    std::cout << "Location " << id << "destroyed" << std::endl;
+}
+
 void Location::set_id(unsigned int id) {
     this->id = id;
 }

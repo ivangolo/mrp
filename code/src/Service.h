@@ -14,10 +14,14 @@ class Service {
     ServiceList service_dependencies;
 
 public:
+    Service();
+    Service(unsigned int id, unsigned int spread_min);
+    ~Service();
+
     void set_id(unsigned int id);
     void set_spread_min(unsigned int sm);
     void add_process(unsigned int process_id);
-    void add_service(unsigned int service_id);
+    void add_dependency(unsigned int service_id);
     unsigned int get_id();
     void print();
 };

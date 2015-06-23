@@ -5,16 +5,19 @@
 #include "Resource.h"
 #include <iostream>
 
-void Resource::set_id(unsigned int id) {
+
+Resource::Resource() {
+    std::cout << "Resource created" << std::endl;
+}
+
+Resource::Resource(unsigned int id, unsigned int weight_load_cost, bool transient) {
     this->id = id;
-}
-
-void Resource::set_weight_load_cost(unsigned int weight_load_cost) {
     this->weight_load_cost = weight_load_cost;
+    this->transient = transient;
 }
 
-void Resource::set_transient(bool p) {
-    transient = p;
+Resource::~Resource() {
+    std::cout << "Resource " << id << " destroyed" << std::endl;
 }
 
 bool Resource::is_transient() {
@@ -31,4 +34,6 @@ unsigned int Resource::get_weight_load_cost() {
 
 void Resource::print() {
     std::cout << "Recurso #" << id << std::endl;
+    std::cout << "Transitorio: " << std::boolalpha << transient << std::endl;
+    std::cout << "Ponderación: " << weight_load_cost << std::endl;
 }

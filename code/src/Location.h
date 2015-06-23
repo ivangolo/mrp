@@ -10,6 +10,10 @@ class Location {
     unsigned int id;
 
 public:
+    Location();
+    Location(unsigned id);
+    ~Location();
+
     void set_id(unsigned int id);
     unsigned int get_id();
     void print();

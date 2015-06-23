@@ -5,6 +5,20 @@
 #include "Neighborhood.h"
 #include <iostream>
 
+
+Neighborhood::Neighborhood() {
+    std::cout << "Neighborhood created" << std::endl;
+}
+
+Neighborhood::Neighborhood(unsigned int id) {
+    this->id = id;
+
+}
+
+Neighborhood::~Neighborhood() {
+    std::cout << "Neighborhood " << id << "destroyed" << std::endl;
+}
+
 void Neighborhood::set_id(unsigned int id) {
     this->id = id;
 }

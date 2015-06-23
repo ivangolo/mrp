@@ -15,6 +15,10 @@ class Balance {
 
 public:
 
+    Balance();
+    Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id, unsigned weight_balance_cost);
+    ~Balance();
+
     void set_id(unsigned int id);
     void set_target(unsigned int target);
     void set_resource(unsigned int resource_id, unsigned int num);
@@ -23,6 +27,8 @@ public:
     unsigned int get_id();
     unsigned int get_target();
     unsigned int get_resource_id(unsigned int num);
+    unsigned int get_weight_balance_cost();
+
     void print();
 
 };
