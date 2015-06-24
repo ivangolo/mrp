@@ -4,6 +4,8 @@
 
 #include "Machine.h"
 #include <iostream>
+#include <algorithm>
+#include <iterator>
 
 
 Machine::Machine() {
@@ -58,5 +60,11 @@ void Machine::print() {
     std::cout << "Maquina #" << id << std::endl;
     std::cout << "Vecindario #" << neighborhood_id << std::endl;
     std::cout << "Localizacion #" << location_id << std::endl;
+    std::cout << "Procesos: [";
+    std::copy(processes.begin(), processes.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
+    std::cout << "]"<< std::endl;
+    std::cout << "Usos: [";
+    std::copy(usages.begin(), usages.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
+    std::cout << "]"<< std::endl;
 
 }

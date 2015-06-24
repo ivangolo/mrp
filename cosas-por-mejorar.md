@@ -7,7 +7,7 @@
 
 ## Estado del arte
 
-* En lo posible agregar gráficos y tablas para sintetizar información
+* En lo posible agregar gráficos y tablas para sintetizar información -> No lo voy a hacer
 
 ## Modelo matemático
 

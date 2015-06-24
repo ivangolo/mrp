@@ -87,7 +87,7 @@ int main (int argc,char *argv[]) {
 
     //instance model
     Instance *instance = new Instance();
-    instance->read_instance(fin_instance);
+    instance->init(fin_instance, original_solution);
 
     cout << "Number of resources: " << instance->resources.size() << endl;
     cout << "Number of machines: " << instance->machines.size() << endl;
@@ -98,23 +98,24 @@ int main (int argc,char *argv[]) {
     cout << instance->weight_machine_move_cost << endl;
     cout << instance->weight_service_move_cost << endl;
 
+    deque<Machine*>::iterator machine_iterator;
+    for (machine_iterator = instance->machines.begin(); machine_iterator != instance->machines.end(); ++machine_iterator) {
+        (*machine_iterator)->print();
+    }
+
+    /*
+    while(time_limit) {
+        //execute greedy
+        //execute Hill Climbing
+    }
+     */
+
+    cout << "Lower bound: " << instance->get_lower_bound() << endl;
+
     delete instance;
 
     fin_instance.close();
     fin_original_solution.close();
-
-    /*
-    deque<Balance*>::iterator balance_iterator;
-    for (balance_iterator = balances.begin(); balance_iterator != balances.end(); ++balance_iterator) {
-        (*balance_iterator)->print();
-    }
-     */
-
-
-
-    //show solution
-   /* std::copy(original_solution.begin(), original_solution.end(), std::ostream_iterator<unsigned int>(std::cout, " "));
-    cout << endl;*/
 
     cout << "Time limit: " << time_limit << endl;
     cout << "Instance Filename: " << instance_filename << endl;

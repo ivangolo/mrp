@@ -96,7 +96,7 @@ A continuación se presenta un modelo basado en CP (Constraint Programming) o pr
 		\begin{equation}\label{modelo2:r4}
 			nul_s \geq spreadmin_s
 		\end{equation}
-	\item\textit{Restricciones de vecindad:} El número de máquinas usadas por un servicio $s$ en un vecindario $n$ es $zu_{s,n}:=|\{x_p|p\in s \wedge N(x_p)=n\}|$ ($N(x_p)$ es el vecindario de la máquina $x_p$). El número de servicios que desean que $s$ sea (obligatoriamente) el vecindario del servicio $s$ es $zm_{s,n}:=||\{s'|\langle s',s\rangle \in D \wedge zu_{s',n}=0\}$. Cada vecindario obligatorio de un servicio $s$ debería ser utilizado por $s$:
+	\item\textit{Restricciones de vecindad:} El número de máquinas usadas por un servicio $s$ en un vecindario $n$ es $zu_{sn}:=|\{x_p|p\in s \wedge N(x_p)=n\}|$ ($N(x_p)$ es el vecindario de la máquina $x_p$). El número de servicios que desean que $n$ sea (obligatoriamente) el vecindario del servicio $s$ es $zm_{sn}:=||\{s'|\langle s',s\rangle \in D \wedge zu_{s'n}=0\}$. El número de vecindarios obligatorios del servicio $s$ que no son usados por este es $nmn_s:=|\{n \in N \wedge zm_{sn} > 0 \wedge zu_{sn} = 0 \}|$. Cada vecindario obligatorio de un servicio $s$ debería ser utilizado por $s$:
 	\begin{equation}\label{modelo2:r5}
 		nmn_s = 0
 	\end{equation}
@@ -120,6 +120,6 @@ El costo de un servicio se define como la suma ponderada del número de procesos
 \end{equation}
 La función objetivo a minimizar es el costo total:
 \begin{equation}\label{modelo2:overallcost}
-	minimizar \qquad cost = \sum_{m \in \mathcal{M}cost_m}cost_m + (\sum_{p \in \mathcal{P}}cost_p) + \max\limits_{s \in \mathcal{S}}(cost_s)
+	minimizar \qquad cost = \sum_{m \in \mathcal{M}}cost_m + (\sum_{p \in \mathcal{P}}cost_p) + \max\limits_{s \in \mathcal{S}}(cost_s)
 \end{equation}
 

@@ -11,6 +11,7 @@ typedef std::deque<unsigned int> ProcessList;
 typedef std::deque<unsigned int> ServiceList;
 typedef std::deque<unsigned int> Capacities;
 typedef Capacities Requirements;
+typedef Capacities Usages;
 typedef std::deque<unsigned int> MachineMoveCosts;
 
 #endif //MRP_SETS_H

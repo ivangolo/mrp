@@ -24,8 +24,8 @@ public:
     void set_initial_machine_id(unsigned int initial_machine_id);
     void set_current_machine_id(unsigned int current_machine_id);
     void set_process_move_cost(unsigned int pmc);
-    void add_resource_requirement(unsigned int requirement);
-    unsigned int get_resource_requirement(unsigned int resource_id);
+    void add_requirement(unsigned int requirement);
+    unsigned int get_requirement(unsigned int resource_id);
 
     unsigned int get_id();
     unsigned int get_service_id();

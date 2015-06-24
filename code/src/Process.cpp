@@ -42,7 +42,7 @@ void Process::set_process_move_cost(unsigned int pmc) {
     process_move_cost = pmc;
 }
 
-void Process::add_resource_requirement(unsigned int requirement) {
+void Process::add_requirement(unsigned int requirement) {
     requirements.push_back(requirement);
 }
 
@@ -62,7 +62,7 @@ unsigned int Process::get_current_machine_id() {
     return current_machine_id;
 }
 
-unsigned int Process::get_resource_requirement(unsigned int resource_id) {
+unsigned int Process::get_requirement(unsigned int resource_id) {
     return requirements.at(resource_id);
 }
 

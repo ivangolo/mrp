@@ -9,6 +9,8 @@
 
 
 class Machine {
+public:
+
     unsigned int id;
     unsigned int neighborhood_id;
     unsigned int location_id;
@@ -16,8 +18,8 @@ class Machine {
     Capacities safety_capacities;
     ProcessList processes;
     MachineMoveCosts mmc;
+    Usages usages;
 
-public:
     Machine();
     Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id);
     ~Machine();
