@@ -23,12 +23,15 @@ Machine::~Machine() {
     std::cout << "Machine " << id << " destroyed" << std::endl;
 }
 
-void Machine::push_process(unsigned int process_id) {
+void Machine::add_process(unsigned int process_id) {
     processes.push_back(process_id);
 }
 
-unsigned int Machine::pop_process(unsigned int process_id) {
-    return 0;
+void Machine::remove_process(unsigned int process_id) {
+    std::deque<unsigned int>::iterator position = std::find(processes.begin(), processes.end(), location_id);
+    if (position != processes.end()) {
+        processes.erase(position);
+    } // == vector.end() means the element was not found
 }
 
 
@@ -48,12 +51,35 @@ unsigned int Machine::get_id() {
     return id;
 }
 
+
+unsigned int Machine::get_location_id() {
+    return location_id;
+}
+
 unsigned int Machine::get_neighborhood_id() {
     return neighborhood_id;
 }
 
-unsigned int Machine::get_location_id() {
-    return location_id;
+void Machine::set_usage(unsigned int resource_id, unsigned int usage) {
+    usages[resource_id] = usage;
+}
+
+
+unsigned int Machine::get_usage(unsigned int resource_id) {
+    return usages[resource_id];
+}
+
+unsigned int Machine::get_capacity(unsigned int resource_id) {
+    return capacities[resource_id];
+}
+
+
+void Machine::set_transient_usage(unsigned int resource_id, unsigned int usage) {
+    transient_usages[resource_id] = usage;
+}
+
+unsigned int Machine::get_transient_usage(unsigned int resource_id) {
+    return transient_usages[resource_id];
 }
 
 void Machine::print() {

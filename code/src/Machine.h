@@ -7,7 +7,6 @@
 
 #include "sets.h"
 
-
 class Machine {
 public:
 
@@ -19,20 +18,30 @@ public:
     ProcessList processes;
     MachineMoveCosts mmc;
     Usages usages;
+    Usages transient_usages;
 
     Machine();
     Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id);
     ~Machine();
 
-    void push_process(unsigned int process_id);
-    unsigned int pop_process(unsigned int process_id);
+    void add_process(unsigned int process_id);
+    void remove_process(unsigned int process_id);
     void add_capacity(unsigned int capacity);
     void add_safety_capacity(unsigned int safety_capacity);
     void add_mmc(unsigned int mmc);
     unsigned int get_id();
-    unsigned int get_neighborhood_id();
     unsigned int get_location_id();
+    unsigned int get_neighborhood_id();
+    void set_usage(unsigned int resource_id, unsigned int usage);
+    void set_transient_usage(unsigned int resource_id, unsigned int usage);
+    unsigned int get_transient_usage(unsigned int resource_id);
+    unsigned int get_usage(unsigned int resource_id);
+    unsigned int get_capacity(unsigned int resource_id);
     void print();
+
+
+    //calculate costs here
+
 };
 
 

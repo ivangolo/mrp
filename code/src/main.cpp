@@ -3,25 +3,20 @@
 #include <sstream>
 #include <unistd.h>
 #include <deque>
-#include "utils.h"
 #include <algorithm>
 #include <memory>
+#include <time.h>
 #include "Instance.h"
-#include <iterator>
-#include "Resource.h"
-#include "Machine.h"
-#include "Service.h"
-#include "Process.h"
-#include "Balance.h"
-#include "sets.h"
-
+#include "Solution.h"
+#include "utils.h"
 using namespace std;
 int main (int argc,char *argv[]) {
 
-    int time_limit, seed;
+    int seed;
     string instance_filename, original_solution_filename, new_solution_filename;
+    unsigned int time_limit;
 
-    char tmp;
+    int tmp;
     if(argc == 1) {
         show_help_info(argv[0]);
         exit(EXIT_FAILURE);
@@ -67,8 +62,6 @@ int main (int argc,char *argv[]) {
 
 
     ofstream fout_new_solution(new_solution_filename);
-    fout_new_solution << "Something new" << endl;
-    fout_new_solution.close();
 
     ifstream fin_instance(instance_filename);
     ifstream fin_original_solution(original_solution_filename);
@@ -81,39 +74,57 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    //original solution
-    deque<unsigned int> original_solution;
-    get_original_solution(fin_original_solution, original_solution);
-
     //instance model
     Instance *instance = new Instance();
-    instance->init(fin_instance, original_solution);
+    instance->read_instance_from_file(fin_instance);
 
-    cout << "Number of resources: " << instance->resources.size() << endl;
-    cout << "Number of machines: " << instance->machines.size() << endl;
-    cout << "Number of services: " << instance->services.size() << endl;
-    cout << "Number of processes: " << instance->processes.size() << endl;
-    cout << "Instances weights:" << endl;
-    cout << instance->weight_process_move_cost << endl;
-    cout << instance->weight_machine_move_cost << endl;
-    cout << instance->weight_service_move_cost << endl;
+    //original solution
+    Solution *original_solution = new Solution(instance);
+    original_solution->read_solution_from_file(fin_original_solution);
 
-    deque<Machine*>::iterator machine_iterator;
-    for (machine_iterator = instance->machines.begin(); machine_iterator != instance->machines.end(); ++machine_iterator) {
-        (*machine_iterator)->print();
-    }
+    instance->init(original_solution->get_assignments());
+    original_solution->update_solution_costs();
+    original_solution->print();
+    cout << "Costo solución original: " << original_solution->get_solution_cost() << endl;
 
     /*
-    while(time_limit) {
-        //execute greedy
-        //execute Hill Climbing
+    cout << "Spread: " << std::boolalpha << original_solution->check_all_spread_constraints() << endl;
+    cout << "Capacity: " << std::boolalpha << original_solution->check_all_capacity_constraints() << endl;
+    cout << "Conflict: " << std::boolalpha << original_solution->check_all_conflict_constraints() << endl;
+    cout << "Dependency: " << std::boolalpha << original_solution->check_all_dependency_constraints() << endl;
+    */
+    /*
+    clock_t endwait;
+    endwait = clock() + time_limit * CLOCKS_PER_SEC;
+    while(clock() < endwait) {
+
     }
      */
+    bool found = false;
+    for (unsigned int i = 0; !found && i < instance->processes.size(); ++i) {
+        for (unsigned int j = 0; !found && j < instance->machines.size(); ++j) {
 
-    cout << "Lower bound: " << instance->get_lower_bound() << endl;
+            if(original_solution->get_current_assignment(i) != j) {
+                if(original_solution->check_shift(i, j)) {
+                    original_solution->shift_process(i,j);
+                    cout << "Proceso: " << i << endl;
+                    cout << "Máquina: " << j << endl;
+                    found = true;
+                }
+            }
+        }
+    }
+
+    cout << "Factible: " << std::boolalpha << original_solution->check_solution() << endl;
+    original_solution->print();
+    cout << "Costo nueva solución: " << original_solution->get_solution_cost() << endl;
+    original_solution->write_solution_to_file(fout_new_solution);
+
 
     delete instance;
+    delete original_solution;
 
+    fout_new_solution.close();
     fin_instance.close();
     fin_original_solution.close();
 

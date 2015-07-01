@@ -7,9 +7,6 @@
 #include <algorithm>
 #include <memory>
 #include <iterator>
-#include <numeric>
-
-
 
 Instance::Instance() {
     std::cout << "Instance created" << std::endl;
@@ -36,7 +33,7 @@ Instance::~Instance() {
 }
 
 
-void Instance::read_instance(std::ifstream &fin_instance) {
+void Instance::read_instance_from_file(std::ifstream &fin_instance) {
 
     //reading resources
     unsigned int num_resources;
@@ -150,20 +147,46 @@ void Instance::read_instance(std::ifstream &fin_instance) {
 void Instance::add_solution(std::deque<unsigned int> &original_solution) {
     for(std::deque<unsigned int>::size_type i = 0; i < original_solution.size(); i++) {
         //adding processes to machines
-        machines.at(original_solution[i])->push_process(i);
+        machines[original_solution[i]]->add_process(i);
         //adding machine to processes
-        processes.at(i)->set_initial_machine_id(original_solution[i]);
-        processes.at(i)->set_current_machine_id(original_solution[i]);
+        processes[i]->set_initial_machine_id(original_solution[i]);
+        processes[i]->set_current_machine_id(original_solution[i]);
+
+        //adding location to processes
+        processes[i]->set_location_id(machines[original_solution[i]]->location_id);
+        //adding neighborhood to processes
+        processes[i]->set_neighborhood_id(machines[original_solution[i]]->neighborhood_id);
+
+        //adding used machines, locations and neighborhoods to service ownwer
+        LocationList &service_locations = services[processes[i]->get_service_id()]->locations;
+        NeighborhoodList &service_neighborhoods = services[processes[i]->get_service_id()]->neighborhoods;
+        MachineList &service_machines = services[processes[i]->get_service_id()]->machines;
+
+        if(std::find(service_locations.begin(), service_locations.end(), processes[i]->get_location_id()) == service_locations.end()) {
+            //if not found, we add it
+            service_locations.push_back(processes[i]->get_location_id());
+        }
+        if(std::find(service_neighborhoods.begin(), service_neighborhoods.end(), processes[i]->get_neighborhood_id()) == service_neighborhoods.end()) {
+            service_neighborhoods.push_back(processes[i]->get_neighborhood_id());
+        }
+
+        if(std::find(service_machines.begin(), service_machines.end(), processes[i]->get_initial_machine_id()) == service_machines.end()) {
+            service_machines.push_back(processes[i]->get_initial_machine_id());
+        }
+
     }
 
 }
 
 void Instance::compute_usage(unsigned int machine_id, unsigned int resource_id) {
+    //initially, transient usages remains in 0
     unsigned int usage = 0;
-    for(std::deque<unsigned int>::iterator it = machines.at(machine_id)->processes.begin(); it != machines.at(machine_id)->processes.end(); ++it) {
-        usage += processes.at(*it)->get_requirement(resource_id);
+    for(std::deque<unsigned int>::iterator it = machines[machine_id]->processes.begin(); it != machines[machine_id]->processes.end(); ++it) {
+        usage += processes[*it]->get_requirement(resource_id);
     }
-    machines.at(machine_id)->usages.push_back(usage);
+    machines[machine_id]->usages.push_back(usage);
+    //for a transient resource, its usage is initially zero
+    machines[machine_id]->transient_usages.push_back(0);
 }
 
 void Instance::compute_all_usages() {
@@ -228,12 +251,30 @@ unsigned long int Instance::get_lower_bound() {
 }
 
 
-void Instance::init(std::ifstream &fin_instance, std::deque<unsigned int> &original_solution) {
+void Instance::init(Assignments assignments) {
     //do everything
-    Instance::read_instance(fin_instance);
-    Instance::add_solution(original_solution);
+    Instance::add_solution(assignments);
+    Instance::add_dependant_services();
     Instance::compute_all_usages();
     Instance::compute_lower_bound();
+}
+
+void Instance::print_services() {
+    std::deque<Service*>::iterator service_iter;
+    for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
+        (*service_iter)->print();
+    }
+}
+
+
+void Instance::add_dependant_services() {
+    std::deque<Service*>::iterator service_iter;
+    for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
+        ServiceList &dependencies = (*service_iter)->dependencies;
+        for (int i = 0; i < dependencies.size(); ++i) {
+            services[dependencies[i]]->add_dependent((*service_iter)->get_id());
+        }
+    }
 }
 
 void Instance::print() {

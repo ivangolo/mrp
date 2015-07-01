@@ -5,10 +5,10 @@
 * Quitar fórmulas de la descripción de los costos
 * Variantes del MRP (incluir el paper de los italianos con el costo de no me acuerdo qué por ahora)
 
-## Estado del arte
-
-* En lo posible agregar gráficos y tablas para sintetizar información -> No lo voy a hacer
-
 ## Modelo matemático
 
 * Primer modelo, explicar en mayor profundidad la función objetivo y las restricciones
+
+\[
+    x_{n+1} = x_n + 1
+\]

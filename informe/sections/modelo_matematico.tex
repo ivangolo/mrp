@@ -82,7 +82,7 @@ A continuación se presenta un modelo basado en CP (Constraint Programming) o pr
 			u_{m,r} = \sum_{p \in \mathcal{P} \wedge x_p = m}r_{p,r}\;; \qquad \forall m \in \mathcal{M}, r \in \mathcal{R}
 		\end{equation} 
 	
-	\item \textit{Restricciones de uso transitorio:}La utilización de un recurso transitorio $r \in T$ ($T$ conjunto de recursos de uso transitorio, $T \in \mathcal{R}$) en una máquina $m$ es la suma de $u_{m,r}$ y los recursos requeridos por aquellos procesos $p$ cuya máquina original $o_p$ es $m$ pero la actual es distinta.
+	\item \textit{Restricciones de uso transitorio:} La utilización de un recurso transitorio $r \in T$ ($T$ conjunto de recursos de uso transitorio, $T \in \mathcal{R}$) en una máquina $m$ es la suma de $u_{m,r}$ y los recursos requeridos por aquellos procesos $p$ cuya máquina original $o_p$ es $m$ pero la actual es distinta.
 		\begin{equation}\label{modelo2:r2}
 			t_{m,r} = u_{m,r} + \sum_{o_p=m \wedge x_p \neq o_p}r_{p,r}\;; \qquad \forall m \in \mathcal{M}, r \in T
 		\end{equation}

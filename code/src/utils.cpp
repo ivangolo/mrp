@@ -23,7 +23,3 @@ void get_original_solution(std::ifstream &in, std::deque<unsigned int> &v) {
     }
 
 }
-
-unsigned int calculate_lower_bound() {
-    return 0;
-}

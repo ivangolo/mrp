@@ -19,6 +19,7 @@ public:
     unsigned int weight_machine_move_cost;
     unsigned long int load_cost_lower_bound;
     unsigned long int balance_cost_lower_bound;
+    char type;
     std::deque<Machine*> machines;
     std::deque<Process*> processes;
     std::deque<Service*> services;
@@ -26,15 +27,17 @@ public:
     std::deque<Balance*> balances;
     Instance();
     ~Instance();
-    void init(std::ifstream &fin_instance, std::deque<unsigned int> &original_solution);
+    void init(Assignments assignments);
     void compute_usage(unsigned int machine_id, unsigned int resource_id);
     void compute_all_usages();
-    void read_instance(std::ifstream &fin_instance);
+    void read_instance_from_file(std::ifstream &fin_instance);
     void add_solution(std::deque<unsigned int> &original_solution);
     unsigned long int get_lower_bound();
     void compute_load_cost_lower_bound();
     void compute_balance_cost_lower_bound();
     void compute_lower_bound();
+    void print_services();
+    void add_dependant_services();
     void print();
 
 };

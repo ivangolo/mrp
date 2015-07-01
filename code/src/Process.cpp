@@ -63,11 +63,32 @@ unsigned int Process::get_current_machine_id() {
 }
 
 unsigned int Process::get_requirement(unsigned int resource_id) {
-    return requirements.at(resource_id);
+    return requirements[resource_id];
 }
 
 unsigned int Process::get_process_move_cost() {
     return process_move_cost;
+}
+
+
+void Process::set_location_id(unsigned int location_id) {
+    this->location_id = location_id;
+}
+
+void Process::set_neighborhood_id(unsigned int neighborhood_id) {
+    this->neighborhood_id = neighborhood_id;
+}
+
+unsigned int Process::get_location_id() {
+    return location_id;
+}
+
+unsigned int Process::get_neighborhood_id() {
+    return neighborhood_id;
+}
+
+Requirements Process::get_all_requirements() {
+    return requirements;
 }
 
 void Process::print() {

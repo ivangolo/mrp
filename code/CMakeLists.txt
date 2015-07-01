@@ -4,4 +4,4 @@ project(mrp)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES src/main.cpp)
-add_executable(mrp ${SOURCE_FILES} src/utils.h src/utils.cpp src/Machine.cpp src/Machine.h src/Process.cpp src/Process.h src/Resource.cpp src/Resource.h src/Service.cpp src/Service.h src/Balance.cpp src/Balance.h src/sets.h src/sets.cpp src/Neighborhood.cpp src/Neighborhood.h src/Location.cpp src/Location.h src/Instance.cpp src/Instance.h src/Constraints.cpp src/Constraints.h src/Costs.cpp src/Costs.h)
+add_executable(mrp ${SOURCE_FILES} src/utils.h src/utils.cpp src/Machine.cpp src/Machine.h src/Process.cpp src/Process.h src/Resource.cpp src/Resource.h src/Service.cpp src/Service.h src/Balance.cpp src/Balance.h src/sets.h src/sets.cpp src/Neighborhood.cpp src/Neighborhood.h src/Location.cpp src/Location.h src/Instance.cpp src/Instance.h src/Constraints.cpp src/Constraints.h src/Solution.cpp src/Solution.h src/HillClimbing.cpp src/HillClimbing.h)
