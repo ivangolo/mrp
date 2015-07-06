@@ -82,6 +82,13 @@ int main (int argc,char *argv[]) {
     Solution *original_solution = new Solution(instance);
     original_solution->read_solution_from_file(fin_original_solution);
 
+    if(instance->processes.size() != original_solution->get_assignments().size()) {
+        delete instance;
+        delete original_solution;
+        cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << endl;
+        exit(EXIT_FAILURE);
+    }
+
     instance->init(original_solution->get_assignments());
     original_solution->update_solution_costs();
     original_solution->print();

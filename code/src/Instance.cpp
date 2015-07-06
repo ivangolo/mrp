@@ -44,7 +44,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         fin_instance >> transient;
         fin_instance >> weight;
 
-        resources.push_back(new Resource(i, weight, (bool)transient));
+        add_resource(new Resource(i, weight, (bool)transient));
     }
 
     // reading machines
@@ -73,13 +73,13 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
             maquina->add_mmc(move_cost);
         }
 
-        machines.push_back(maquina);
+        add_machine(maquina);
     }
 
     //reading services
     unsigned int num_services;
     fin_instance >> num_services;
-    for(int m = 0; m < num_services; ++m) {
+    for(unsigned int m = 0; m < num_services; ++m) {
         unsigned int spread_min, num_dependencies, service_id;
         fin_instance >> spread_min;
         fin_instance >> num_dependencies;
@@ -91,10 +91,10 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
                 fin_instance >> service_id;
                 servicio->add_dependency(service_id);
             }
-            services.push_back(servicio);
+            add_service(servicio);
 
         } else {//if the service hasn't dependencies
-            services.push_back(servicio);
+            add_service(servicio);
             continue;
         }
     }
@@ -102,7 +102,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
     //reading processes
     unsigned int num_processes;
     fin_instance >> num_processes;
-    for (int n = 0; n < num_processes; ++n) {
+    for (unsigned int n = 0; n < num_processes; ++n) {
         unsigned int service_id, requirement, process_move_cost;
         fin_instance >> service_id;
         Process *proceso = new Process(n, service_id);
@@ -117,22 +117,22 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         proceso->set_process_move_cost(process_move_cost);
 
         //adding the process to the service owner
-        services.at(service_id)->add_process(n);
+        this->get_service(service_id)->add_process(n);
 
-        processes.push_back(proceso);
+        add_process(proceso);
     }
 
     //reading balances
     unsigned int num_balances;
     fin_instance >> num_balances;
-    for (int i = 0; i < num_balances; ++i) {
+    for (unsigned int i = 0; i < num_balances; ++i) {
         unsigned int resource1, resource2, target, weight;
         fin_instance >> resource1;
         fin_instance >> resource2;
         fin_instance >> target;
         fin_instance >> weight;
 
-        balances.push_back(new Balance(i, target, resource1, resource2, weight));
+        add_balance(new Balance(i, target, resource1, resource2, weight));
 
     }
 
@@ -145,7 +145,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
 
 
 void Instance::add_solution(std::deque<unsigned int> &original_solution) {
-    for(std::deque<unsigned int>::size_type i = 0; i < original_solution.size(); i++) {
+    for(unsigned int i = 0; i < original_solution.size(); i++) {
         //adding processes to machines
         machines[original_solution[i]]->add_process(i);
         //adding machine to processes
@@ -277,30 +277,60 @@ void Instance::add_dependant_services() {
     }
 }
 
+
+Machine *Instance::get_machine(unsigned int machine_id) {
+    return machines[machine_id];
+}
+
+Process *Instance::get_process(unsigned int process_id) {
+    return processes[process_id];
+}
+
+Service *Instance::get_service(unsigned int service_id) {
+    return services[service_id];
+}
+
+Resource *Instance::get_resource(unsigned int resource_id) {
+    return resources[resource_id];
+}
+
+Balance *Instance::get_balance(unsigned int balance_id) {
+    return balances[balance_id];
+}
+
 void Instance::print() {
 
 }
 
 
+unsigned int Instance::get_weight_process_move_cost() {
+    return weight_process_move_cost;
+}
 
+unsigned int Instance::get_weight_service_move_cost() {
+    return weight_service_move_cost;
+}
 
+unsigned int Instance::get_weight_machine_move_cost() {
+    return weight_machine_move_cost;
+}
 
+void Instance::add_resource(Resource *resource) {
+    resources.push_back(resource);
+}
 
+void Instance::add_machine(Machine *machine) {
+    machines.push_back(machine);
+}
 
+void Instance::add_service(Service *service) {
+    services.push_back(service);
+}
 
+void Instance::add_process(Process *process) {
+    processes.push_back(process);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Instance::add_balance(Balance *balance) {
+    balances.push_back(balance);
+}

@@ -28,7 +28,7 @@ void Machine::add_process(unsigned int process_id) {
 }
 
 void Machine::remove_process(unsigned int process_id) {
-    std::deque<unsigned int>::iterator position = std::find(processes.begin(), processes.end(), location_id);
+    std::deque<unsigned int>::iterator position = std::find(processes.begin(), processes.end(), process_id);
     if (position != processes.end()) {
         processes.erase(position);
     } // == vector.end() means the element was not found
@@ -60,25 +60,29 @@ unsigned int Machine::get_neighborhood_id() {
     return neighborhood_id;
 }
 
-void Machine::set_usage(unsigned int resource_id, unsigned int usage) {
+void Machine::set_usage(unsigned int resource_id, unsigned long int usage) {
     usages[resource_id] = usage;
 }
 
 
-unsigned int Machine::get_usage(unsigned int resource_id) {
+unsigned long int Machine::get_usage(unsigned int resource_id) {
     return usages[resource_id];
 }
 
-unsigned int Machine::get_capacity(unsigned int resource_id) {
+unsigned long int Machine::get_capacity(unsigned int resource_id) {
     return capacities[resource_id];
 }
 
+
+unsigned long  int Machine::get_scapacity(unsigned int resource_id) {
+    return safety_capacities[resource_id];
+}
 
 void Machine::set_transient_usage(unsigned int resource_id, unsigned int usage) {
     transient_usages[resource_id] = usage;
 }
 
-unsigned int Machine::get_transient_usage(unsigned int resource_id) {
+unsigned long int Machine::get_transient_usage(unsigned int resource_id) {
     return transient_usages[resource_id];
 }
 
@@ -93,4 +97,13 @@ void Machine::print() {
     std::copy(usages.begin(), usages.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
     std::cout << "]"<< std::endl;
 
+}
+
+bool Machine::has_process(unsigned int process_id) {
+    ProcessList::iterator position = std::find(processes.begin(), processes.end(), process_id);
+    return (position != processes.end()); //true if process is found, false in the other case
+}
+
+unsigned int Machine::get_machine_move_cost(unsigned int machine_id) {
+    return mmc[machine_id];
 }

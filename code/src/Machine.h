@@ -32,12 +32,15 @@ public:
     unsigned int get_id();
     unsigned int get_location_id();
     unsigned int get_neighborhood_id();
-    void set_usage(unsigned int resource_id, unsigned int usage);
+    void set_usage(unsigned int resource_id, unsigned long int usage);
     void set_transient_usage(unsigned int resource_id, unsigned int usage);
-    unsigned int get_transient_usage(unsigned int resource_id);
-    unsigned int get_usage(unsigned int resource_id);
-    unsigned int get_capacity(unsigned int resource_id);
+    unsigned long int get_transient_usage(unsigned int resource_id);
+    unsigned long int get_usage(unsigned int resource_id);
+    unsigned long int get_capacity(unsigned int resource_id);
+    unsigned long int get_scapacity(unsigned int resource_id);
+    unsigned int get_machine_move_cost(unsigned int machine_id);
     void print();
+    bool has_process(unsigned int process_id);
 
 
     //calculate costs here

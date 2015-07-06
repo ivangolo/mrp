@@ -25,6 +25,7 @@ public:
     std::deque<Service*> services;
     std::deque<Resource*> resources;
     std::deque<Balance*> balances;
+    ProcessList processes_sorted_by_req;
     Instance();
     ~Instance();
     void init(Assignments assignments);
@@ -39,6 +40,19 @@ public:
     void print_services();
     void add_dependant_services();
     void print();
+    Machine* get_machine(unsigned int machine_id);
+    Process* get_process(unsigned int process_id);
+    Service* get_service(unsigned int service_id);
+    Resource* get_resource(unsigned int resource_id);
+    Balance* get_balance(unsigned int balance_id);
+    unsigned int get_weight_process_move_cost();
+    unsigned int get_weight_service_move_cost();
+    unsigned int get_weight_machine_move_cost();
+    void add_resource(Resource *resource);
+    void add_machine(Machine *machine);
+    void add_service(Service *service);
+    void add_process(Process *process);
+    void add_balance(Balance *balance);
 
 };
 

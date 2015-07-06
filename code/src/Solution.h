@@ -16,6 +16,7 @@ class Solution {
     unsigned long int process_move_cost;
     unsigned long int service_move_cost;
     unsigned long int machine_move_cost;
+    unsigned long int max_num_of_moved_processes;
 
 public:
     Solution();
@@ -52,6 +53,18 @@ public:
     unsigned long int calc_total_process_move_cost();  //calc_process_move_cost for all process
     unsigned long int calc_total_machine_move_cost();  //calc_machine_move_cost for all process
 
+    Usages get_usage_with_process(unsigned int process_id, unsigned int machine_id);
+    Usages get_usage_without_process(unsigned int process_id, unsigned int machine_id);
+
+    unsigned long int get_load_cost_with_process(unsigned int process_id, unsigned int machine_id);
+    unsigned long int get_load_cost_without_process(unsigned int process_id, unsigned int machine_id);
+
+    unsigned long int get_balance_cost_with_process(unsigned int process_id, unsigned int machine_id);
+    unsigned long int get_balance_cost_without_process(unsigned int process_id, unsigned int machine_id);
+
+    unsigned long int get_process_move_cost_with_this_process(unsigned int process_id);
+    unsigned long int get_service_move_cost_with_this_process(unsigned int process_id);
+    unsigned long int get_machine_move_cost_with_this_process(unsigned int process_id);
 
     void update_solution_load_cost();
     void update_solution_balance_cost();
@@ -61,13 +74,12 @@ public:
     void update_solution_costs();
 
 
-    unsigned long int calc_load_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    unsigned long int calc_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    unsigned long int calc_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    unsigned long int calc_service_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    unsigned long int calc_machine_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-
-    unsigned long int calc_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_load_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_service_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_machine_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    long int calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id);
 
 
     //Constraints
@@ -89,6 +101,8 @@ public:
     bool check_dependency_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_transient_usage_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_shift(unsigned int process_id, unsigned int machine_id);
+
+    void assign_process(unsigned int process_id, unsigned int machine_id);
 
     //Reasignments
     void shift_process(unsigned int process_id, unsigned int machine_id);

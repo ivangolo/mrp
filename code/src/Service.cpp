@@ -15,6 +15,7 @@ Service::Service() {
 Service::Service(unsigned int id, unsigned int spread_min) {
     this->id = id;
     this->spread_min = spread_min;
+    this->num_moved_processes = 0;
 }
 
 Service::~Service() {
@@ -92,4 +93,33 @@ void Service::print() {
     std::cout << "Vecindarios: [";
     copy(neighborhoods.begin(), neighborhoods.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
     std::cout << "]"<< std::endl;
+}
+
+bool Service::has_machine(unsigned int machine_id) {
+    MachineList::iterator position = std::find(machines.begin(), machines.end(), machine_id);
+    return (position != machines.end()); //true if process is found, false in the other case
+}
+
+bool Service::has_neighborhood(unsigned int neighborhood_id) {
+    NeighborhoodList::iterator position = std::find(neighborhoods.begin(), neighborhoods.end(), neighborhood_id);
+    return (position != neighborhoods.end()); //true if process is found, false in the other case
+}
+
+bool Service::has_location(unsigned int location_id) {
+    LocationList::iterator position = std::find(locations.begin(), locations.end(), location_id);
+    return (position != locations.end()); //true if process is found, false in the other case
+}
+
+unsigned int Service::get_num_moved_processes() {
+    return num_moved_processes;
+}
+
+void Service::add_moved_process() {
+    num_moved_processes++;
+}
+
+void Service::subtract_moved_process() {
+    if(num_moved_processes) {
+        num_moved_processes--;
+    }
 }

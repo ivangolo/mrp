@@ -62,7 +62,7 @@ unsigned int Process::get_current_machine_id() {
     return current_machine_id;
 }
 
-unsigned int Process::get_requirement(unsigned int resource_id) {
+unsigned long int Process::get_requirement(unsigned int resource_id) {
     return requirements[resource_id];
 }
 

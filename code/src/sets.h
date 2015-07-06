@@ -14,9 +14,9 @@ typedef List ProcessList;
 typedef List ServiceList;
 typedef List LocationList;
 typedef List NeighborhoodList;
-typedef List Capacities;
-typedef List Requirements;
-typedef List Usages;
+typedef std::deque<unsigned long int> Capacities;
+typedef Capacities Requirements;
+typedef Capacities Usages;
 typedef List MachineMoveCosts;
 
 #endif //MRP_SETS_H

@@ -28,10 +28,20 @@ El siguiente modelo está basado en  MIP (Mixed Integer Programming) o Programac
 \subsubsection{Función objetivo}
 La función objetivo es la correspondiente a la expresada en la sección \ref{sec:definicion}, pero formalizada según el presente modelo MIP:\\
 \begin{align}
-	minimizar \qquad& \sum_{r \in R}\Phi_{r}\sum_{m \in M}max \{ 0,(\sum_{p \in P}x_{p,m}R_{p,r}) - SC_{m,r} \} \nonumber \\
-					&+ \sum_{b \in B}\Phi_{b}\sum_{m \in M}max\{0, T^b(C_{m,r_{1}^b} - \sum_{p \in P}x_{p,m}R_{p,r_{1}^b}) - (C_{m,r_{2}^b} - \sum_{p \in P}x_{p,m}R_{p,r_{2}^b})\} \nonumber \\
-					&+ \sum_{p \in P}\sum_{m \in M \backslash M_0(p)}(\Phi_{p} + \Phi_{M_0(p),m})x_{m,p} + \Phi_{s}max(\sum_{p \in s}\sum_{m \in M \backslash M_0(p)}x_{m,p})
+	\label{modelo1:loadcost}& \sum_{r \in R}\Phi_{r}\sum_{m \in M}max \{ 0,(\sum_{p \in P}x_{p,m}R_{p,r}) - SC_{m,r} \} \\
+	\label{modelo1:balancecost}&+ \sum_{b \in B}\Phi_{b}\sum_{m \in M}max\{0, T^b(C_{m,r_{1}^b} - \sum_{p \in P}x_{p,m}R_{p,r_{1}^b}) - (C_{m,r_{2}^b} - \sum_{p \in P}x_{p,m}R_{p,r_{2}^b})\} \\
+	\label{modelo1:processandmachinemovecost}&+ \sum_{p \in P}\sum_{m \in M \backslash M_0(p)}(\Phi_{p} + \Phi_{M_0(p),m})x_{m,p} \\
+	\label{modelo1:servicemovecost}&+ \Phi_{s}max(\sum_{p \in s}\sum_{m \in M \backslash M_0(p)}x_{m,p})
 \end{align}
+\\
+\begin{itemize}
+	\item \eqref{modelo1:loadcost} es el costo de carga total.
+	\item \eqref{modelo1:balancecost} es el costo de balance total.
+	\item \eqref{modelo1:processandmachinemovecost} es la suma de los costos de movimiento de proceso y de máquina.
+	\item \eqref{modelo1:servicemovecost} es el costo de movimiento de servicio.
+\end{itemize}
+
+
 \subsubsection{Restricciones}
 \begin{align}
 	\label{modelo1:r1} &\sum_{m \in M}x_{m,p} = 1\;; \quad \forall p \in \mathcal{P} \\ 
@@ -47,15 +57,15 @@ La función objetivo es la correspondiente a la expresada en la sección \ref{se
 	\label{modelo1:r11} & z_{n,p} \in \{0,1\}\;; \qquad \forall n \in \mathcal{N}, p \in \mathcal{P}
 \end{align}
 \\
-Explicación de las restricciones:
+Donde cada restricción corresponde a:
 \begin{itemize}
 	\item \eqref{modelo1:r1} garantiza que cada proceso sea asignado a una sola máquina.
-	\item \eqref{modelo1:r2} establece que el consumo total de cada recurso en cada máquina no debe superar la capacidad de ésta.
+	\item \eqref{modelo1:r2} restricción de capacidad, establece que el consumo total de cada recurso en cada máquina no debe superar la capacidad de ésta.
 	\item \eqref{modelo1:r3} para cada recurso de uso transitorio, su utilización no debe exceder la capacidad dispuesta por las máquinas.
-	\item \eqref{modelo1:r4} previene que dos procesos pertenecientes al mismo servicio, sean asignados a la misma máquina.
-	\item \eqref{modelo1:r5} y \eqref{modelo1:r6}, relativas al cumplimiento de las restricciones de dispersión.
-	\item \eqref{modelo1:r7} y \eqref{modelo1:r8}, relativas al cumplimiento de las restricciones de dependencia.
-	\item \eqref{modelo1:r9}, \eqref{modelo1:r10} y \eqref{modelo1:r11}, relativas al dominio de las variables.
+	\item \eqref{modelo1:r4} restricción de conflicto, previene que dos procesos pertenecientes al mismo servicio, sean asignados a la misma máquina.
+	\item \eqref{modelo1:r5} y \eqref{modelo1:r6}, relativas al cumplimiento de las restricciones de dispersión. La primera establece que la variable $y_{l,s}$ debe ser cero cuando ningún proceso del servicio $s$ se ejecuta en alguna máquina perteneciente a la localización $l$. La segunda establece que el número de localizaciones utilizadas por un servicio $s$, debe ser mayor o igual al mínimo de dispersión $SM_s$.
+	\item \eqref{modelo1:r7} y \eqref{modelo1:r8}, relativas al cumplimiento de las restricciones de dependencia. La primera establece si un proceso $p$, perteneciente a un servicio $s$, se ejecuta en algún vecindario determinado. La segunda establece que, si en la anterior restricción $z_{p,n}$ es uno y siendo el servicio $s_b$ dependencia de $s$, al menos un proceso perteneciente a $s_b$ debe ejecutarse en el vecindario $n$.  
+	\item \eqref{modelo1:r9}, \eqref{modelo1:r10} y \eqref{modelo1:r11}, establece el dominio o valores posibles que pueden tomar esas variables, que en este caso son binarias.
 \end{itemize}
 
 \subsection{Segundo Modelo}

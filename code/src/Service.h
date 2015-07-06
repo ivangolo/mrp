@@ -10,6 +10,7 @@
 class Service {
     unsigned int id;
     unsigned int spread_min;
+    unsigned int num_moved_processes;
 
 public:
     ProcessList processes;
@@ -34,6 +35,12 @@ public:
     unsigned int get_id();
     unsigned int get_spread_min();
     void print();
+    bool has_machine(unsigned int machine_id);
+    bool has_neighborhood(unsigned int neighborhood_id);
+    bool has_location(unsigned int location_id);
+    unsigned int get_num_moved_processes();
+    void add_moved_process();
+    void subtract_moved_process();
 };
 
 
