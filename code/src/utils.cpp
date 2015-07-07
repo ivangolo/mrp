@@ -16,10 +16,4 @@ void show_help_info(char *s) {
     std::cout << "example: " << s << " -t 300 -p model_a1_1.txt -i assignment_a1_1.txt -o salida.txt -s 100" << std::endl;
 }
 
-void get_original_solution(std::ifstream &in, std::deque<unsigned int> &v) {
-    unsigned int assignment;
-    while(in >> assignment) {
-        v.push_back(assignment);
-    }
 
-}

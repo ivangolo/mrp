@@ -10,7 +10,7 @@ Balance::Balance() {
 }
 
 Balance::Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id,
-                 unsigned weight_balance_cost) {
+                 unsigned int weight_balance_cost) {
     this->id = id;
     this->target = target;
     this->resource1_id = resource1_id;
@@ -47,11 +47,7 @@ unsigned int Balance::get_id() {
 }
 
 unsigned int Balance::get_resource_id(unsigned int num) {
-    if(num == 1) {
-        return resource1_id;
-    } else {
-        return resource2_id;
-    }
+    return (num == 1) ? resource1_id : resource2_id;
 }
 
 unsigned int Balance::get_target() {

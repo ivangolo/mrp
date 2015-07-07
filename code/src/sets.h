@@ -6,6 +6,7 @@
 #define MRP_SETS_H
 
 #include <deque>
+#include <cstdint>
 
 typedef std::deque<unsigned int> List;
 typedef List Assignments;
@@ -14,9 +15,9 @@ typedef List ProcessList;
 typedef List ServiceList;
 typedef List LocationList;
 typedef List NeighborhoodList;
-typedef std::deque<unsigned long int> Capacities;
+typedef List MachineMoveCosts;
+typedef std::deque<uint32_t> Capacities;
 typedef Capacities Requirements;
 typedef Capacities Usages;
-typedef List MachineMoveCosts;
 
 #endif //MRP_SETS_H

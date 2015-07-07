@@ -16,7 +16,7 @@ class Balance {
 public:
 
     Balance();
-    Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id, unsigned weight_balance_cost);
+    Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id, unsigned int weight_balance_cost);
     ~Balance();
 
     void set_id(unsigned int id);

@@ -60,29 +60,29 @@ unsigned int Machine::get_neighborhood_id() {
     return neighborhood_id;
 }
 
-void Machine::set_usage(unsigned int resource_id, unsigned long int usage) {
+void Machine::set_usage(unsigned int resource_id, uint32_t usage) {
     usages[resource_id] = usage;
 }
 
 
-unsigned long int Machine::get_usage(unsigned int resource_id) {
+unsigned int Machine::get_usage(unsigned int resource_id) {
     return usages[resource_id];
 }
 
-unsigned long int Machine::get_capacity(unsigned int resource_id) {
+unsigned int Machine::get_capacity(unsigned int resource_id) {
     return capacities[resource_id];
 }
 
 
-unsigned long  int Machine::get_scapacity(unsigned int resource_id) {
+unsigned int Machine::get_scapacity(unsigned int resource_id) {
     return safety_capacities[resource_id];
 }
 
-void Machine::set_transient_usage(unsigned int resource_id, unsigned int usage) {
+void Machine::set_transient_usage(unsigned int resource_id, uint32_t usage) {
     transient_usages[resource_id] = usage;
 }
 
-unsigned long int Machine::get_transient_usage(unsigned int resource_id) {
+unsigned int Machine::get_transient_usage(unsigned int resource_id) {
     return transient_usages[resource_id];
 }
 

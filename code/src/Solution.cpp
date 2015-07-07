@@ -8,9 +8,7 @@
 #include <memory>
 #include <iterator>
 
-Solution::Solution() {
-
-}
+Solution::Solution() {}
 
 Solution::Solution(Instance *instance) {
     this->instance = instance;
@@ -20,27 +18,27 @@ Solution::~Solution() {
     std::cout << "Deleting solution..." << std::endl;
 }
 
-unsigned long int Solution::get_load_cost() {
+int64_t Solution::get_load_cost() {
     return load_cost;
 }
 
-unsigned long int Solution::get_balance_cost() {
+int64_t Solution::get_balance_cost() {
     return balance_cost;
 }
 
-unsigned long int Solution::get_process_move_cost() {
+int64_t Solution::get_process_move_cost() {
     return process_move_cost;
 }
 
-unsigned long int Solution::get_service_move_cost() {
+int64_t Solution::get_service_move_cost() {
     return service_move_cost;
 }
 
-unsigned long int Solution::get_machine_move_cost() {
+int64_t Solution::get_machine_move_cost() {
     return machine_move_cost;
 }
 
-unsigned long int Solution::get_solution_cost() {
+int64_t Solution::get_solution_cost() {
     return load_cost + balance_cost + process_move_cost + service_move_cost + machine_move_cost;
 }
 
@@ -73,40 +71,40 @@ Assignments Solution::get_assignments() {
 
 //COSTS CALCULATION
 
-unsigned long int Solution::calc_load_cost(unsigned int machine_id, unsigned int resource_id) {
+uint32_t Solution::calc_load_cost(unsigned int machine_id, unsigned int resource_id) {
     Machine *machine = instance->get_machine(machine_id);
     return (machine->get_usage(resource_id) > machine->get_scapacity(resource_id)) ?
            (machine->get_usage(resource_id) - machine->get_scapacity(resource_id))
            : 0;
 }
 
-unsigned long int Solution::calc_balance_cost(unsigned int machine_id, unsigned int balance_id) {
+uint32_t Solution::calc_balance_cost(unsigned int machine_id, unsigned int balance_id) {
     Machine *machine = instance->get_machine(machine_id);
     Balance *balance = instance->get_balance(balance_id);
 
-    unsigned long int capacity_r1 = machine->get_capacity(balance->get_resource_id(1));
-    unsigned long int usage_r1 = machine->get_usage(balance->get_resource_id(1));
-    unsigned long int available_r1 = capacity_r1 - usage_r1;
+    uint32_t capacity_r1 = machine->get_capacity(balance->get_resource_id(1));
+    uint32_t usage_r1 = machine->get_usage(balance->get_resource_id(1));
+    uint32_t available_r1 = capacity_r1 - usage_r1;
 
-    unsigned long int capacity_r2 = machine->get_capacity(balance->get_resource_id(2));
-    unsigned long int usage_r2 = machine->get_usage(balance->get_resource_id(2));
-    unsigned long int available_r2 = capacity_r2 - usage_r2;
+    uint32_t capacity_r2 = machine->get_capacity(balance->get_resource_id(2));
+    uint32_t usage_r2 = machine->get_usage(balance->get_resource_id(2));
+    uint32_t available_r2 = capacity_r2 - usage_r2;
 
     unsigned int target = balance->get_target();
 
     return ((target * available_r1 - available_r2) > 0) ? (target * available_r1 - available_r2) : 0;
 }
 
-unsigned long int Solution::calc_process_move_cost(unsigned int process_id) {
+uint32_t Solution::calc_process_move_cost(unsigned int process_id) {
     Process *process = instance->get_process(process_id);
     return (process->get_initial_machine_id() != process->get_current_machine_id()) ? process->get_process_move_cost() : 0;
 }
 
-unsigned long int Solution::calc_service_move_cost(unsigned int service_id) {
+uint32_t Solution::calc_service_move_cost(unsigned int service_id) {
     return instance->get_service(service_id)->get_num_moved_processes();
 }
 
-unsigned long int Solution::calc_machine_move_cost(unsigned int process_id) {
+uint32_t Solution::calc_machine_move_cost(unsigned int process_id) {
     Process *process = instance->get_process(process_id);
     unsigned int initial_machine_id = process->get_initial_machine_id();
     unsigned int current_machine_id = process->get_current_machine_id();
@@ -114,8 +112,8 @@ unsigned long int Solution::calc_machine_move_cost(unsigned int process_id) {
     return (initial_machine_id == current_machine_id) ? 0 : instance->get_machine(initial_machine_id)->get_machine_move_cost(current_machine_id);
 }
 
-unsigned long int Solution::calc_machine_load_cost(unsigned int machine_id) {
-    unsigned long int cost = 0;
+uint32_t Solution::calc_machine_load_cost(unsigned int machine_id) {
+    uint32_t cost = 0;
     std::deque<Resource*>::iterator resource_iter;  //on every resource
     for (resource_iter = instance->resources.begin(); resource_iter != instance->resources.end(); ++resource_iter) {
         cost += calc_load_cost(machine_id, (*resource_iter)->get_id()) * (*resource_iter)->get_weight_load_cost();
@@ -123,8 +121,8 @@ unsigned long int Solution::calc_machine_load_cost(unsigned int machine_id) {
     return cost;
 }
 
-unsigned long int Solution::calc_machine_balance_cost(unsigned machine_id) {
-    unsigned long int cost = 0;
+uint32_t Solution::calc_machine_balance_cost(unsigned machine_id) {
+    uint32_t cost = 0;
     std::deque<Balance*>::iterator balance_iter;  //on every balance
     for (balance_iter = instance->balances.begin(); balance_iter != instance->balances.end(); ++balance_iter) {
         cost += Solution::calc_balance_cost(machine_id, (*balance_iter)->get_id()) * (*balance_iter)->get_weight_balance_cost();
@@ -132,8 +130,8 @@ unsigned long int Solution::calc_machine_balance_cost(unsigned machine_id) {
     return cost;
 }
 
-unsigned long int Solution::calc_total_load_cost() {
-    unsigned long int cost = 0;
+int64_t Solution::calc_total_load_cost() {
+    int64_t cost = 0;
     std::deque<Machine*>::iterator machine_iter;
     for (machine_iter = instance->machines.begin(); machine_iter != instance->machines.end(); ++machine_iter) {
         cost += calc_machine_load_cost((*machine_iter)->get_id());
@@ -141,8 +139,8 @@ unsigned long int Solution::calc_total_load_cost() {
     return cost;
 }
 
-unsigned long int Solution::calc_total_balance_cost() {
-    unsigned long int cost = 0;
+int64_t Solution::calc_total_balance_cost() {
+    int64_t cost = 0;
     std::deque<Machine*>::iterator machine_iter;
     for (machine_iter = instance->machines.begin(); machine_iter != instance->machines.end(); ++machine_iter) {
         cost += Solution::calc_machine_balance_cost((*machine_iter)->get_id());
@@ -150,8 +148,8 @@ unsigned long int Solution::calc_total_balance_cost() {
     return cost;
 }
 
-unsigned long int Solution::calc_total_process_move_cost() {
-    unsigned long int cost = 0;
+int64_t Solution::calc_total_process_move_cost() {
+    int64_t cost = 0;
     std::deque<Process*>::iterator process_iter;
     for (process_iter = instance->processes.begin(); process_iter != instance->processes.end(); ++process_iter) {
         cost += Solution::calc_process_move_cost((*process_iter)->get_id());
@@ -159,20 +157,22 @@ unsigned long int Solution::calc_total_process_move_cost() {
     return cost * instance->get_weight_process_move_cost();
 }
 
-unsigned long int Solution::calc_total_service_move_cost() {
-    unsigned long int max = 0;
+int64_t Solution::calc_total_service_move_cost() {
+    unsigned int max = 0;
     std::deque<Service*>::iterator service_iter;
     for (service_iter = instance->services.begin(); service_iter != instance->services.end(); ++service_iter) {
-        unsigned long int cost = Solution::calc_service_move_cost((*service_iter)->get_id());
+        unsigned int cost = Solution::calc_service_move_cost((*service_iter)->get_id());
         if(cost > max) {
             max = cost;
         }
     }
-    return max;
+    max_num_of_moved_processes = max;
+
+    return max_num_of_moved_processes * instance->get_weight_service_move_cost();
 }
 
-unsigned long int Solution::calc_total_machine_move_cost() {
-    unsigned long int cost = 0;
+int64_t Solution::calc_total_machine_move_cost() {
+    int64_t cost = 0;
     std::deque<Process*>::iterator process_iter;
     for (process_iter = instance->processes.begin(); process_iter != instance->processes.end(); ++process_iter) {
         cost += Solution::calc_machine_move_cost((*process_iter)->get_id());
@@ -193,8 +193,7 @@ void Solution::update_solution_process_move_cost() {
 }
 
 void Solution::update_solution_service_move_cost() {
-    max_num_of_moved_processes = calc_total_service_move_cost();
-    service_move_cost = max_num_of_moved_processes * instance->get_weight_service_move_cost();
+    service_move_cost = calc_total_service_move_cost();
 }
 
 void Solution::update_solution_machine_move_cost() {
@@ -211,96 +210,12 @@ void Solution::update_solution_costs() {
 
 // Constraints
 
-//capacity constraint
-bool Solution::check_capacity_constraint(unsigned int machine_id, unsigned int resource_id) {
-    Machine *machine = instance->get_machine(machine_id);
-    return (machine->get_capacity(resource_id) >= machine->get_usage(resource_id));
-}
-
-//conflict constraint
-bool Solution::check_conflict_constraint(unsigned int service_id) {
-    Service *service = instance->get_service(service_id);
-    return (service->machines.size() == service->processes.size());
-}
-
-//spread constraint
-bool Solution::check_spread_constraint(unsigned int service_id) {
-    Service *service = instance->get_service(service_id);
-    return (service->locations.size() >= service->get_spread_min());
-}
-
-//dependency constraint
-bool Solution::check_dependency_constraint(unsigned int service_id) {
-    Service *service = instance->get_service(service_id);
-    for (int i = 0; i < service->neighborhoods.size(); ++i) {
-        for (int j = 0; j < service->dependencies.size(); ++j) {
-            Service *dependency = instance->get_service(service->dependencies[j]);
-            if(!dependency->has_neighborhood(service->neighborhoods[i])) {
-                //if not found
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-bool Solution::check_all_capacity_constraints() {
-    std::deque<Machine*>::iterator machine_iter;
-    std::deque<Resource*>::iterator resource_iter;
-
-    for (machine_iter = instance->machines.begin(); machine_iter != instance->machines.end(); ++machine_iter) {
-        for (resource_iter = instance->resources.begin(); resource_iter != instance->resources.end(); ++resource_iter) {
-            if(!check_capacity_constraint((*machine_iter)->get_id(), (*resource_iter)->get_id())) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-bool Solution::check_all_conflict_constraints() {
-    std::deque<Service*>::iterator service_iter;
-    for (service_iter = instance->services.begin(); service_iter != instance->services.end() ; ++service_iter) {
-        if(!check_conflict_constraint((*service_iter)->get_id())) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Solution::check_all_spread_constraints() {
-    std::deque<Service*>::iterator service_iter;
-    for (service_iter = instance->services.begin(); service_iter != instance->services.end() ; ++service_iter) {
-        if(!check_spread_constraint((*service_iter)->get_id())) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Solution::check_all_dependency_constraints() {
-    std::deque<Service*>::iterator service_iter;
-    for (service_iter = instance->services.begin(); service_iter != instance->services.end() ; ++service_iter) {
-        if(!check_dependency_constraint((*service_iter)->get_id())) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Solution::check_solution() {
-    return (check_all_capacity_constraints()
-            && check_all_conflict_constraints()
-            && check_all_spread_constraints()
-            && check_all_dependency_constraints());
-}
-
 bool Solution::check_capacity_with_shift(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *new_machine = instance->get_machine(machine_id);
 
-    for (unsigned int i = 0; i < instance->resources.size(); ++i) {
-        unsigned long int new_usage = new_machine->get_usage(i) + process->get_requirement(i);
+    for (unsigned int i = 0; i < instance->resources.size(); i++) {
+        uint32_t new_usage = new_machine->get_usage(i) + process->get_requirement(i);
         if(new_usage > new_machine->get_capacity(i)) {
             return false;
         }
@@ -412,11 +327,11 @@ bool Solution::check_transient_usage_with_shift(unsigned int process_id, unsigne
 
         if(instance->get_resource(i)->is_transient()) {
 
-            unsigned long int transient_usage = (is_the_new_machine_the_initial_one) ?
+            uint32_t transient_usage = (is_the_new_machine_the_initial_one) ?
                                                 new_machine->get_transient_usage(i) - process->get_requirement(i)
                                                 : new_machine->get_transient_usage(i);
 
-            unsigned long int new_usage = new_machine->get_usage(i) + process->get_requirement(i) + transient_usage;
+            uint32_t new_usage = new_machine->get_usage(i) + process->get_requirement(i) + transient_usage;
 
             if(new_usage > new_machine->get_capacity(i)) {
                 return false;
@@ -435,73 +350,55 @@ bool Solution::check_shift(unsigned int process_id, unsigned int machine_id) {
             && check_transient_usage_with_shift(process_id, machine_id));
 }
 
-Usages Solution::get_usage_with_process(unsigned int process_id, unsigned int machine_id) {
-    Machine *machine = instance->get_machine(machine_id);
-    if(machine->has_process(process_id)) {
-        return machine->usages;
-    }
-    Process *process = instance->get_process(process_id);
-    Usages usages = machine->usages;
-    for (unsigned int i = 0; i < usages.size(); ++i) {
-        usages[i] += process->get_requirement(i);
-    }
-    return usages;
-}
-
-Usages Solution::get_usage_without_process(unsigned int process_id, unsigned int machine_id) {
-    Machine *machine = instance->get_machine(machine_id);
-    if(!machine->has_process(process_id)) {
-        return machine->usages;
-    }
-    Process *process = instance->get_process(process_id);
-    Usages usages = machine->usages;
-    for (unsigned int i = 0; i < usages.size(); ++i) {
-        usages[i] -= process->get_requirement(i);
-    }
-    return usages;
-}
-
-unsigned long int Solution::get_load_cost_with_process(unsigned int process_id, unsigned int machine_id) {
+uint32_t Solution::get_load_cost_with_process(unsigned int process_id, unsigned int machine_id) {
     Machine* machine = instance->get_machine(machine_id);
 
     if (machine->has_process(process_id)) {
         return calc_machine_load_cost(machine_id);
     }
 
-    Usages usages = get_usage_with_process(process_id, machine_id);
-
-    unsigned long int cost = 0;
+    Process *process = instance->get_process(process_id);
+    uint32_t cost = 0;
     std::deque<Resource*>::iterator resource_iter;  //on every resource
     for (resource_iter = instance->resources.begin(); resource_iter != instance->resources.end(); ++resource_iter) {
-        unsigned long int resource_cost = (usages[(*resource_iter)->get_id()] > machine->get_scapacity((*resource_iter)->get_id())
-                                           ? usages[(*resource_iter)->get_id()] - machine->get_scapacity((*resource_iter)->get_id())
-                                           : 0);
-        cost += resource_cost * (*resource_iter)->get_weight_load_cost();
+
+        uint32_t usage_with_process = machine->get_usage((*resource_iter)->get_id()) + process->get_requirement((*resource_iter)->get_id());
+        uint32_t resource_cost = 0;
+
+        if(usage_with_process > machine->get_scapacity((*resource_iter)->get_id())) {
+            resource_cost = usage_with_process - machine->get_scapacity((*resource_iter)->get_id());
+        }
+
+        cost += (resource_cost * (*resource_iter)->get_weight_load_cost());
     }
     return cost;
 }
 
-unsigned long int Solution::get_load_cost_without_process(unsigned int process_id, unsigned int machine_id) {
+uint32_t Solution::get_load_cost_without_process(unsigned int process_id, unsigned int machine_id) {
     Machine* machine = instance->get_machine(machine_id);
 
     if(!machine->has_process(process_id)) {
         return calc_machine_load_cost(machine_id);
     }
 
-    Usages usages = get_usage_without_process(process_id, machine_id);
-
-    unsigned long int cost = 0;
+    Process *process = instance->get_process(process_id);
+    uint32_t cost = 0;
     std::deque<Resource*>::iterator resource_iter;  //on every resource
     for (resource_iter = instance->resources.begin(); resource_iter != instance->resources.end(); ++resource_iter) {
-        unsigned long int resource_cost = (usages[(*resource_iter)->get_id()] > machine->get_scapacity((*resource_iter)->get_id())
-                                           ? usages[(*resource_iter)->get_id()] - machine->get_scapacity((*resource_iter)->get_id())
-                                           : 0);
-        cost += resource_cost * (*resource_iter)->get_weight_load_cost();
+
+        uint32_t usage_without_process = machine->get_usage((*resource_iter)->get_id()) - process->get_requirement((*resource_iter)->get_id());
+        uint32_t resource_cost = 0;
+
+        if(usage_without_process > machine->get_scapacity((*resource_iter)->get_id())) {
+            resource_cost = usage_without_process - machine->get_scapacity((*resource_iter)->get_id());
+        }
+
+        cost += (resource_cost * (*resource_iter)->get_weight_load_cost());
     }
     return cost;
 }
 
-unsigned long int Solution::get_balance_cost_with_process(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::get_balance_cost_with_process(unsigned int process_id, unsigned int machine_id) {
     Machine *machine = instance->get_machine(machine_id);
 
     if(machine->has_process(process_id)) {
@@ -509,20 +406,20 @@ unsigned long int Solution::get_balance_cost_with_process(unsigned int process_i
     }
 
     Process *process = instance->get_process(process_id);
-    unsigned long int cost = 0;
+    int32_t cost = 0;
     std::deque<Balance*>::iterator balance_iter;  //on every balance
     for (balance_iter = instance->balances.begin(); balance_iter != instance->balances.end(); ++balance_iter) {
 
-        unsigned long int capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
-        unsigned long int usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
+        int32_t capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
+        int32_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
                                 + process->get_requirement((*balance_iter)->get_resource_id(1));
-        unsigned long int available_r1 = capacity_r1 - usage_r1;
+        int32_t available_r1 = capacity_r1 - usage_r1;
 
-        unsigned long int capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
-        unsigned long int usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
+        int32_t capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
+        int32_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
                                 + process->get_requirement((*balance_iter)->get_resource_id(2));;
 
-        unsigned long int available_r2 = capacity_r2 - usage_r2;
+        int32_t available_r2 = capacity_r2 - usage_r2;
 
         unsigned int target = (*balance_iter)->get_target();
 
@@ -532,7 +429,7 @@ unsigned long int Solution::get_balance_cost_with_process(unsigned int process_i
 
 }
 
-unsigned long int Solution::get_balance_cost_without_process(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::get_balance_cost_without_process(unsigned int process_id, unsigned int machine_id) {
     Machine *machine = instance->get_machine(machine_id);
 
     if(!machine->has_process(process_id)) {
@@ -540,21 +437,21 @@ unsigned long int Solution::get_balance_cost_without_process(unsigned int proces
     }
 
     Process *process = instance->get_process(process_id);
-    unsigned long int cost = 0;
+    int32_t cost = 0;
     std::deque<Balance*>::iterator balance_iter;  //on every balance
     for (balance_iter = instance->balances.begin(); balance_iter != instance->balances.end(); ++balance_iter) {
 
-        unsigned long int capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
-        unsigned long int usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
+        int32_t capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
+        int32_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
                                 - process->get_requirement((*balance_iter)->get_resource_id(1));
 
-        unsigned long int available_r1 = capacity_r1 - usage_r1;
+        int32_t available_r1 = capacity_r1 - usage_r1;
 
-        unsigned long int capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
-        unsigned long int usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
+        int32_t capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
+        int32_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
                                 - process->get_requirement((*balance_iter)->get_resource_id(2));;
 
-        unsigned long int available_r2 = capacity_r2 - usage_r2;
+        int32_t available_r2 = capacity_r2 - usage_r2;
 
         unsigned int target = (*balance_iter)->get_target();
 
@@ -565,7 +462,7 @@ unsigned long int Solution::get_balance_cost_without_process(unsigned int proces
 
 }
 
-long int Solution::calc_delta_load_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_load_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
     //se necesita calcular la variación en el costo de carga al realizar el shift del proceso
     //primero, calcular el estado actual, es decir, el costo de carga en la máquina antigua (old machine) con el proceso
     //en ella
@@ -573,36 +470,40 @@ long int Solution::calc_delta_load_cost_with_shift(unsigned int process_id, unsi
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
 
-    long int delta_load_cost_old_machine = get_load_cost_without_process(process->get_id(), old_machine->get_id()) //final state, lower cost
-                                           - get_load_cost_with_process(process->get_id(), old_machine->get_id()); //initial state, bigger cost
+    int32_t om_lc_without = get_load_cost_without_process(process->get_id(), old_machine->get_id());
+    int32_t om_lc_with = get_load_cost_with_process(process->get_id(), old_machine->get_id());
 
-    long int delta_load_cost_new_machine = get_load_cost_without_process(process->get_id(), new_machine->get_id()) //final state, bigger cost
-                                           - get_load_cost_with_process(process->get_id(), new_machine->get_id()); //initial state, lower cost
+    int32_t delta_load_cost_old_machine = om_lc_with - om_lc_without;
 
+    int32_t nm_lc_without = get_load_cost_without_process(process->get_id(), new_machine->get_id());
+    int32_t nm_lc_with = get_load_cost_with_process(process->get_id(), new_machine->get_id());
 
-    long int delta = delta_load_cost_new_machine - delta_load_cost_old_machine;
+    int32_t delta_load_cost_new_machine = nm_lc_with - nm_lc_without;
+
+    int32_t delta = delta_load_cost_new_machine - delta_load_cost_old_machine;
+
     return delta;
     //si el delta es negativo, el descenso en el costo de la máquina antigua es mayor que el aumento que se da máquina nueva
 }
 
-long int Solution::calc_delta_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
 
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
 
-    long int delta_balance_cost_old_machine = get_balance_cost_without_process(process->get_id(), old_machine->get_id())
+    int32_t delta_balance_cost_old_machine = get_balance_cost_without_process(process->get_id(), old_machine->get_id())
                                               - get_balance_cost_with_process(process->get_id(), old_machine->get_id());
 
-    long int delta_balance_cost_new_machine = get_balance_cost_with_process(process->get_id(), new_machine->get_id())
+    int32_t delta_balance_cost_new_machine = get_balance_cost_with_process(process->get_id(), new_machine->get_id())
                                               - get_balance_cost_without_process(process->get_id(), new_machine->get_id());
 
-    long int delta = delta_balance_cost_new_machine - delta_balance_cost_old_machine;
+    int32_t delta = delta_balance_cost_new_machine - delta_balance_cost_old_machine;
     return delta;
     //si el delta es negativo, el descenso en el costo de la máquina antigua es mayor que el aumento que se da máquina nueva
 }
 
-long int Solution::calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
@@ -624,7 +525,7 @@ long int Solution::calc_delta_process_move_cost_with_shift(unsigned int process_
     }
 }
 
-long int Solution::calc_delta_service_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_service_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
@@ -657,14 +558,14 @@ long int Solution::calc_delta_service_move_cost_with_shift(unsigned int process_
 
         //  se reasigna el proceso desde una máquina distinta a la inicial a otra cualquiera, es decir el proceso ya se movió
         //  desde su máquina inicial, por lo que el costo ya se ve reflejado en el service_move_cost
-    } else {
-        //la cantidad de procesos movidos del servicio dueño del proceso, se mantiene
-        return 0;
     }
+    //la cantidad de procesos movidos del servicio dueño del proceso, se mantiene
+    return 0;
+
 
 }
 
-long int Solution::calc_delta_machine_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_machine_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
@@ -683,14 +584,14 @@ long int Solution::calc_delta_machine_move_cost_with_shift(unsigned int process_
         //  desde su máquina inicial, por lo que el costo ya se ve reflejado en el process_move_cost
     } else {// old machine and new machine son distintas de la original
         Machine *original_machine = instance->get_machine(process->get_initial_machine_id());
-        long int delta = -(original_machine->get_machine_move_cost(old_machine->get_id()))//removimos el antiguo costo
+        int32_t delta = -(original_machine->get_machine_move_cost(old_machine->get_id()))//removimos el antiguo costo
                          + (original_machine->get_machine_move_cost(new_machine->get_id())); //y agregamos el nuevo
 
         return delta;
     }
 }
 
-long int Solution::calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
+int32_t Solution::calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
     return (calc_delta_load_cost_with_shift(process_id, machine_id)
             + calc_delta_balance_cost_with_shift(process_id, machine_id)
             + calc_delta_process_move_cost_with_shift(process_id, machine_id)
@@ -711,7 +612,7 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
 
     //for the old machine, update the usages
    for (unsigned int i = 0; i < instance->resources.size(); ++i) {
-        unsigned long int new_usage = old_machine->get_usage(i) - process->get_requirement(i);
+        uint32_t new_usage = old_machine->get_usage(i) - process->get_requirement(i);
         old_machine->set_usage(i, new_usage);
         if(is_the_old_machine_the_initial_one && instance->get_resource(i)->is_transient()) {
            old_machine->transient_usages[i] += process->get_requirement(i);
@@ -719,14 +620,13 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     }
     old_machine->remove_process(process_id);
 
-
     bool is_the_new_machine_the_initial_one = (new_machine->get_id() == process->get_initial_machine_id());
 
     new_machine->add_process(process_id);
 
     //for the new machine, update usages
     for (unsigned int j = 0; j < instance->resources.size(); ++j) {
-        unsigned long int new_usage = new_machine->get_usage(j) + process->get_requirement(j);
+        uint32_t new_usage = new_machine->get_usage(j) + process->get_requirement(j);
         new_machine->set_usage(j, new_usage);
         if(is_the_new_machine_the_initial_one && instance->get_resource(j)->is_transient()) {
             new_machine->transient_usages[j] -= process->get_requirement(j);
@@ -740,6 +640,11 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     Service *service = instance->get_service(process->get_service_id());
     service->remove_machine(old_machine->get_id());
     service->add_machine(new_machine->get_id());
+    if(is_the_old_machine_the_initial_one) {
+        service->add_moved_process();
+    } else if(is_the_new_machine_the_initial_one){
+        service->subtract_moved_process();
+    }
 
 
     if(process->get_neighborhood_id() != new_machine->get_neighborhood_id()) {
@@ -791,5 +696,5 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
 }
 
 unsigned int Solution::get_current_assignment(unsigned int process_id) {
-    return assignments[process_id];
+    return instance->get_process(process_id)->get_current_machine_id();
 }

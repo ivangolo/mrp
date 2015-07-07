@@ -5,7 +5,6 @@
 #include <deque>
 #include <algorithm>
 #include <memory>
-#include <time.h>
 #include "Instance.h"
 #include "Solution.h"
 #include "utils.h"
@@ -107,22 +106,19 @@ int main (int argc,char *argv[]) {
 
     }
      */
-    bool found = false;
-    for (unsigned int i = 0; !found && i < instance->processes.size(); ++i) {
-        for (unsigned int j = 0; !found && j < instance->machines.size(); ++j) {
+    for (unsigned int i = 0; i < instance->processes.size(); ++i) {
+        for (unsigned int j = 0; j < instance->machines.size(); ++j) {
 
             if(original_solution->get_current_assignment(i) != j) {
                 if(original_solution->check_shift(i, j)) {
-                    original_solution->shift_process(i,j);
-                    cout << "Proceso: " << i << endl;
-                    cout << "Máquina: " << j << endl;
-                    found = true;
+                    if(original_solution->calc_delta_cost_with_shift(i, j) < 0) {
+                        original_solution->shift_process(i,j);
+                    }
                 }
             }
         }
     }
 
-    cout << "Factible: " << std::boolalpha << original_solution->check_solution() << endl;
     original_solution->print();
     cout << "Costo nueva solución: " << original_solution->get_solution_cost() << endl;
     original_solution->write_solution_to_file(fout_new_solution);

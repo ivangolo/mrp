@@ -13,19 +13,19 @@
 #include "Resource.h"
 
 class Instance {
-public:
     unsigned int weight_process_move_cost;
     unsigned int weight_service_move_cost;
     unsigned int weight_machine_move_cost;
-    unsigned long int load_cost_lower_bound;
-    unsigned long int balance_cost_lower_bound;
-    char type;
+    int64_t load_cost_lower_bound;
+    int64_t balance_cost_lower_bound;
+public:
+    //char type;
     std::deque<Machine*> machines;
     std::deque<Process*> processes;
     std::deque<Service*> services;
     std::deque<Resource*> resources;
     std::deque<Balance*> balances;
-    ProcessList processes_sorted_by_req;
+    //ProcessList processes_sorted_by_req;
     Instance();
     ~Instance();
     void init(Assignments assignments);
@@ -33,7 +33,7 @@ public:
     void compute_all_usages();
     void read_instance_from_file(std::ifstream &fin_instance);
     void add_solution(std::deque<unsigned int> &original_solution);
-    unsigned long int get_lower_bound();
+    int64_t get_lower_bound();
     void compute_load_cost_lower_bound();
     void compute_balance_cost_lower_bound();
     void compute_lower_bound();
