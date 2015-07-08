@@ -39,8 +39,8 @@ public:
     bool has_neighborhood(unsigned int neighborhood_id);
     bool has_location(unsigned int location_id);
     unsigned int get_num_moved_processes();
-    void add_moved_process();
-    void subtract_moved_process();
+    void increment_moved_processes();
+    void decrement_moved_processes();
 };
 
 

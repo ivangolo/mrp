@@ -17,7 +17,7 @@ Resource::Resource(unsigned int id, unsigned int weight_load_cost, bool transien
 }
 
 Resource::~Resource() {
-    std::cout << "Resource " << id << " destroyed" << std::endl;
+    //std::cout << "Resource " << id << " destroyed" << std::endl;
 }
 
 bool Resource::is_transient() {

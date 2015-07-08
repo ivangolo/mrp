@@ -16,7 +16,7 @@ typedef List ServiceList;
 typedef List LocationList;
 typedef List NeighborhoodList;
 typedef List MachineMoveCosts;
-typedef std::deque<uint32_t> Capacities;
+typedef std::deque<int32_t> Capacities;
 typedef Capacities Requirements;
 typedef Capacities Usages;
 

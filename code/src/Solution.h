@@ -35,15 +35,15 @@ public:
     unsigned int get_current_assignment(unsigned int process_id);
     void print();
 
-    uint32_t calc_load_cost(unsigned int machine_id, unsigned int resource_id);  //for one machine and over one resource
-    uint32_t calc_balance_cost(unsigned int machine_id, unsigned int balance_id);  //for one machine and over one balance
-    uint32_t calc_process_move_cost(unsigned int process_id);  //for one process
-    uint32_t calc_service_move_cost(unsigned int service_id);  //for one service
-    uint32_t calc_machine_move_cost(unsigned int process_id);  //for one process
+    int64_t calc_load_cost(unsigned int machine_id, unsigned int resource_id);  //for one machine and over one resource
+    int64_t calc_balance_cost(unsigned int machine_id, unsigned int balance_id);  //for one machine and over one balance
+    int64_t calc_process_move_cost(unsigned int process_id);  //for one process
+    unsigned int calc_service_move_cost(unsigned int service_id);  //for one service
+    int64_t calc_machine_move_cost(unsigned int process_id);  //for one process
 
 
-    uint32_t calc_machine_load_cost(unsigned int machine_id);  //for one machine over all resources
-    uint32_t calc_machine_balance_cost(unsigned machine_id);  //for one machine over all balances
+    int64_t calc_machine_load_cost(unsigned int machine_id);  //for one machine over all resources
+    int64_t calc_machine_balance_cost(unsigned machine_id);  //for one machine over all balances
 
 
     int64_t calc_total_load_cost();  //calc_machine_load_cost for all machines
@@ -52,11 +52,11 @@ public:
     int64_t calc_total_process_move_cost();  //calc_process_move_cost for all process
     int64_t calc_total_machine_move_cost();  //calc_machine_move_cost for all process
 
-    uint32_t get_load_cost_with_process(unsigned int process_id, unsigned int machine_id);
-    uint32_t get_load_cost_without_process(unsigned int process_id, unsigned int machine_id);
+    int64_t get_load_cost_with_process(unsigned int process_id, unsigned int machine_id);
+    int64_t get_load_cost_without_process(unsigned int process_id, unsigned int machine_id);
 
-    int32_t get_balance_cost_with_process(unsigned int process_id, unsigned int machine_id);
-    int32_t get_balance_cost_without_process(unsigned int process_id, unsigned int machine_id);
+    int64_t get_balance_cost_with_process(unsigned int process_id, unsigned int machine_id);
+    int64_t get_balance_cost_without_process(unsigned int process_id, unsigned int machine_id);
 
     void update_solution_load_cost();
     void update_solution_balance_cost();
@@ -66,12 +66,12 @@ public:
     void update_solution_costs();
 
 
-    int32_t calc_delta_load_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    int32_t calc_delta_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    int32_t calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    int32_t calc_delta_service_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    int32_t calc_delta_machine_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
-    int32_t calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_load_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_balance_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_service_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_machine_move_cost_with_shift(unsigned int process_id, unsigned int machine_id);
+    int64_t calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id);
 
 
     bool check_capacity_with_shift(unsigned int process_id, unsigned int machine_id);
@@ -81,7 +81,7 @@ public:
     bool check_transient_usage_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_shift(unsigned int process_id, unsigned int machine_id);
 
-    void assign_process(unsigned int process_id, unsigned int machine_id);
+    //void assign_process(unsigned int process_id, unsigned int machine_id);
 
     //Reasignments
     void shift_process(unsigned int process_id, unsigned int machine_id);

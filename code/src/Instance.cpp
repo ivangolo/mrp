@@ -70,7 +70,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         //reading machine move costs
         for (int l = 0; l < num_machines; ++l) {
             fin_instance >> move_cost;
-            maquina->add_mmc(move_cost);
+            maquina->add_machine_move_cost(move_cost);
         }
 
         add_machine(maquina);

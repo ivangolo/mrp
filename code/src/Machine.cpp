@@ -20,7 +20,7 @@ Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int loc
 }
 
 Machine::~Machine() {
-    std::cout << "Machine " << id << " destroyed" << std::endl;
+    //std::cout << "Machine " << id << " destroyed" << std::endl;
 }
 
 void Machine::add_process(unsigned int process_id) {
@@ -35,15 +35,15 @@ void Machine::remove_process(unsigned int process_id) {
 }
 
 
-void Machine::add_capacity(unsigned int capacity) {
+void Machine::add_capacity(int32_t capacity) {
     capacities.push_back(capacity);
 }
 
-void Machine::add_safety_capacity(unsigned int safety_capacity) {
+void Machine::add_safety_capacity(int32_t safety_capacity) {
     safety_capacities.push_back(safety_capacity);
 }
 
-void Machine::add_mmc(unsigned int mmc) {
+void Machine::add_machine_move_cost(unsigned int mmc) {
     this->mmc.push_back(mmc);
 }
 
@@ -60,29 +60,28 @@ unsigned int Machine::get_neighborhood_id() {
     return neighborhood_id;
 }
 
-void Machine::set_usage(unsigned int resource_id, uint32_t usage) {
+void Machine::set_usage(unsigned int resource_id, int32_t usage) {
     usages[resource_id] = usage;
 }
 
 
-unsigned int Machine::get_usage(unsigned int resource_id) {
+int32_t Machine::get_usage(unsigned int resource_id) {
     return usages[resource_id];
 }
 
-unsigned int Machine::get_capacity(unsigned int resource_id) {
+int32_t Machine::get_capacity(unsigned int resource_id) {
     return capacities[resource_id];
 }
 
-
-unsigned int Machine::get_scapacity(unsigned int resource_id) {
+int32_t Machine::get_scapacity(unsigned int resource_id) {
     return safety_capacities[resource_id];
 }
 
-void Machine::set_transient_usage(unsigned int resource_id, uint32_t usage) {
+void Machine::set_transient_usage(unsigned int resource_id, int32_t usage) {
     transient_usages[resource_id] = usage;
 }
 
-unsigned int Machine::get_transient_usage(unsigned int resource_id) {
+int32_t Machine::get_transient_usage(unsigned int resource_id) {
     return transient_usages[resource_id];
 }
 

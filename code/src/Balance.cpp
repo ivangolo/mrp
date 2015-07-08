@@ -19,7 +19,7 @@ Balance::Balance(unsigned int id, unsigned int target, unsigned int resource1_id
 }
 
 Balance::~Balance() {
-    std::cout << "Balance " << id << " destroyed" << std::endl;
+    //std::cout << "Balance " << id << " destroyed" << std::endl;
 }
 
 void Balance::set_id(unsigned int id) {

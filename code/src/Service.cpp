@@ -19,7 +19,7 @@ Service::Service(unsigned int id, unsigned int spread_min) {
 }
 
 Service::~Service() {
-    std::cout << "Service " << id << " destroyed" << std::endl;
+    //std::cout << "Service " << id << " destroyed" << std::endl;
 }
 
 void Service::add_process(unsigned int process_id) {
@@ -114,11 +114,11 @@ unsigned int Service::get_num_moved_processes() {
     return num_moved_processes;
 }
 
-void Service::add_moved_process() {
+void Service::increment_moved_processes() {
     num_moved_processes++;
 }
 
-void Service::subtract_moved_process() {
+void Service::decrement_moved_processes() {
     if(num_moved_processes) {
         num_moved_processes--;
     }

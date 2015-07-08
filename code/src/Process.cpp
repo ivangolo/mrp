@@ -18,11 +18,7 @@ Process::Process(unsigned int id, unsigned int service_id) {
 }
 
 Process::~Process() {
-    std::cout << "Process " << id << " destroyed" << std::endl;
-}
-
-void Process::set_id(unsigned int id) {
-    this->id = id;
+   // std::cout << "Process " << id << " destroyed" << std::endl;
 }
 
 void Process::set_current_machine_id(unsigned int current_machine_id) {
@@ -33,16 +29,11 @@ void Process::set_initial_machine_id(unsigned int initial_machine_id) {
     this->initial_machine_id = initial_machine_id;
 }
 
-
-void Process::set_service_id(unsigned int service_id) {
-    this->service_id = service_id;
-}
-
 void Process::set_process_move_cost(unsigned int pmc) {
     process_move_cost = pmc;
 }
 
-void Process::add_requirement(uint32_t requirement) {
+void Process::add_requirement(int32_t requirement) {
     requirements.push_back(requirement);
 }
 
@@ -62,7 +53,7 @@ unsigned int Process::get_current_machine_id() {
     return current_machine_id;
 }
 
-uint32_t Process::get_requirement(unsigned int resource_id) {
+int32_t Process::get_requirement(unsigned int resource_id) {
     return requirements[resource_id];
 }
 
@@ -85,10 +76,6 @@ unsigned int Process::get_location_id() {
 
 unsigned int Process::get_neighborhood_id() {
     return neighborhood_id;
-}
-
-Requirements Process::get_all_requirements() {
-    return requirements;
 }
 
 void Process::print() {

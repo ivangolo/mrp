@@ -27,18 +27,18 @@ public:
 
     void add_process(unsigned int process_id);
     void remove_process(unsigned int process_id);
-    void add_capacity(uint32_t capacity);
-    void add_safety_capacity(uint32_t safety_capacity);
-    void add_mmc(unsigned int mmc);
+    void add_capacity(int32_t capacity);
+    void add_safety_capacity(int32_t safety_capacity);
+    void add_machine_move_cost(unsigned int mmc);
     unsigned int get_id();
     unsigned int get_location_id();
     unsigned int get_neighborhood_id();
-    void set_usage(unsigned int resource_id, uint32_t usage);
-    void set_transient_usage(unsigned int resource_id, uint32_t usage);
-    uint32_t get_transient_usage(unsigned int resource_id);
-    uint32_t get_usage(unsigned int resource_id);
-    uint32_t get_capacity(unsigned int resource_id);
-    uint32_t get_scapacity(unsigned int resource_id);
+    void set_usage(unsigned int resource_id, int32_t usage);
+    void set_transient_usage(unsigned int resource_id, int32_t usage);
+    int32_t get_transient_usage(unsigned int resource_id);
+    int32_t get_usage(unsigned int resource_id);
+    int32_t get_capacity(unsigned int resource_id);
+    int32_t get_scapacity(unsigned int resource_id);
     unsigned int get_machine_move_cost(unsigned int machine_id);
     void print();
     bool has_process(unsigned int process_id);
