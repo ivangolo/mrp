@@ -7,6 +7,7 @@
 
 #include <deque>
 #include <cstdint>
+#include <map>
 
 typedef std::deque<unsigned int> List;
 typedef List Assignments;
@@ -19,5 +20,6 @@ typedef List MachineMoveCosts;
 typedef std::deque<int32_t> Capacities;
 typedef Capacities Requirements;
 typedef Capacities Usages;
+
 
 #endif //MRP_SETS_H

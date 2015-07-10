@@ -9,11 +9,11 @@
 #include "sets.h"
 
 class Machine {
-public:
-
     unsigned int id;
     unsigned int neighborhood_id;
     unsigned int location_id;
+
+public:
     Capacities capacities;
     Capacities safety_capacities;
     ProcessList processes;
@@ -42,6 +42,8 @@ public:
     unsigned int get_machine_move_cost(unsigned int machine_id);
     void print();
     bool has_process(unsigned int process_id);
+    void increment_transient_usage(unsigned int resource_id, int32_t usage);
+    void decrement_transient_usage(unsigned int resource_id, int32_t usage);
 
 
     //calculate costs here

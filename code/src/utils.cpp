@@ -5,6 +5,7 @@
 #include <iostream>
 #include "utils.h"
 #include <fstream>
+#include <algorithm>
 
 void show_help_info(char *s) {
     std::cout << "Usage:   " << s << " [-option] [argument]" << std::endl;
@@ -17,3 +18,6 @@ void show_help_info(char *s) {
 }
 
 
+std::pair<unsigned int, int64_t> get_min(SolutionNeighborhood neighborhood) {
+    return *min_element(neighborhood.begin(), neighborhood.end(), CompareSecond());
+}

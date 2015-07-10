@@ -8,6 +8,7 @@
 #include "Instance.h"
 #include "Solution.h"
 #include "utils.h"
+
 using namespace std;
 int main (int argc,char *argv[]) {
 
@@ -93,34 +94,45 @@ int main (int argc,char *argv[]) {
     original_solution->print();
     cout << "Costo solución original: " << original_solution->get_solution_cost() << endl;
 
-    /*
-    cout << "Spread: " << std::boolalpha << original_solution->check_all_spread_constraints() << endl;
-    cout << "Capacity: " << std::boolalpha << original_solution->check_all_capacity_constraints() << endl;
-    cout << "Conflict: " << std::boolalpha << original_solution->check_all_conflict_constraints() << endl;
-    cout << "Dependency: " << std::boolalpha << original_solution->check_all_dependency_constraints() << endl;
-    */
-    /*
-    clock_t endwait;
-    endwait = clock() + time_limit * CLOCKS_PER_SEC;
-    while(clock() < endwait) {
+    unsigned int times = 0;
+    bool changes;
 
-    }
-     */
-    for (unsigned int i = 0; i < instance->processes.size(); ++i) {
-        for (unsigned int j = 0; j < instance->machines.size(); ++j) {
+    do {
+        changes = false;
+        times++;
+        for (unsigned int process_id = 0; process_id < instance->processes.size(); ++process_id) {
 
-            if(original_solution->get_current_assignment(i) != j) {
-                if(original_solution->check_shift(i, j)) {
-                    if(original_solution->calc_delta_cost_with_shift(i, j) < 0) {
-                        original_solution->shift_process(i,j);
+            SolutionNeighborhood neighborhood; //<machine_id, delta_cost>
+            unsigned int current_process_assignment = original_solution->get_current_assignment(process_id);
+
+            //generate the neighborhood
+            for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
+
+                if (machine_id != current_process_assignment) {
+
+                    if (original_solution->check_shift(process_id, machine_id)) { //only feasible solutions
+                        int64_t delta_cost = original_solution->calc_delta_cost_with_shift(process_id, machine_id);
+
+                        if (delta_cost < 0) {  //only solutions that improves the current solution
+                            neighborhood[machine_id] = delta_cost;
+                        }
                     }
                 }
             }
+
+            //check the best shift
+            if (!neighborhood.empty()) {
+                std::pair<unsigned int, int64_t> best_machine = get_min(neighborhood);
+                original_solution->shift_process(process_id, best_machine.first);
+                changes = true;
+            }
         }
-    }
+
+    } while(changes);
 
     original_solution->print();
     cout << "Costo nueva solución: " << original_solution->get_solution_cost() << endl;
+    cout << "Iteraciones do-while: " << times << endl;
     original_solution->write_solution_to_file(fout_new_solution);
 
 

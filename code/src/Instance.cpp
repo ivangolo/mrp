@@ -36,7 +36,7 @@ Instance::~Instance() {
 void Instance::read_instance_from_file(std::ifstream &fin_instance) {
 
     //reading resources
-    int num_resources;
+    unsigned int num_resources;
     fin_instance >> num_resources;
     for(unsigned int i = 0; i < num_resources; ++i) {
         unsigned int transient;
@@ -58,17 +58,17 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         Machine *maquina = new Machine(i, neighborhood, location);
 
         //reading resource capacities
-        for (int j = 0; j < num_resources; ++j) {
+        for (unsigned int j = 0; j < num_resources; ++j) {
             fin_instance >> capacity;
             maquina->add_capacity(capacity);
         }
         //reading resource safety_capacities
-        for (int k = 0; k < num_resources; ++k) {
+        for (unsigned int k = 0; k < num_resources; ++k) {
             fin_instance >> safety_capacity;
             maquina->add_safety_capacity(safety_capacity);
         }
         //reading machine move costs
-        for (int l = 0; l < num_machines; ++l) {
+        for (unsigned int l = 0; l < num_machines; ++l) {
             fin_instance >> move_cost;
             maquina->add_machine_move_cost(move_cost);
         }
@@ -87,7 +87,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         Service *servicio = new Service(m, spread_min);
 
         if(num_dependencies > 0) {
-            for(int i = 0; i < num_dependencies; ++i) {
+            for(unsigned int i = 0; i < num_dependencies; ++i) {
                 fin_instance >> service_id;
                 servicio->add_dependency(service_id);
             }
@@ -108,7 +108,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         Process *proceso = new Process(n, service_id);
 
         //reading resource requirements
-        for (int i = 0; i < num_resources; ++i) {
+        for (unsigned int i = 0; i < num_resources; ++i) {
             fin_instance >> requirement;
             proceso->add_requirement(requirement);
         }
@@ -154,9 +154,9 @@ void Instance::add_solution(std::deque<unsigned int> &original_solution) {
         process->set_current_machine_id(original_solution[i]);
 
         //adding location to processes
-        process->set_location_id(machines[original_solution[i]]->location_id);
+        process->set_location_id(machines[original_solution[i]]->get_location_id());
         //adding neighborhood to processes
-        process->set_neighborhood_id(machines[original_solution[i]]->neighborhood_id);
+        process->set_neighborhood_id(machines[original_solution[i]]->get_neighborhood_id());
 
         //adding used machines, locations and neighborhoods to service ownwer
         Service *service = get_service(process->get_service_id());
@@ -266,7 +266,7 @@ void Instance::add_dependant_services() {
     std::deque<Service*>::iterator service_iter;
     for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
         ServiceList &dependencies = (*service_iter)->dependencies;
-        for (int i = 0; i < dependencies.size(); ++i) {
+        for (unsigned int i = 0; i < dependencies.size(); ++i) {
             services[dependencies[i]]->add_dependent((*service_iter)->get_id());
         }
     }

@@ -6,7 +6,18 @@
 #define MRP_LIBUTIL_H
 
 #include <deque>
+#include <map>
+
+typedef std::map<unsigned int, int64_t> SolutionNeighborhood;
+struct CompareSecond {
+    template <typename T>
+    bool operator()(const T& pLhs, const T& pRhs) {
+        return pLhs.second < pRhs.second;
+    }
+};
 
 void show_help_info(char *s);
+std::pair<unsigned int, int64_t> get_min(SolutionNeighborhood neighborhood);
+
 
 #endif //MRP_LIBUTIL_H

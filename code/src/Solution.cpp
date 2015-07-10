@@ -280,7 +280,7 @@ bool Solution::check_dependency_with_shift(unsigned int process_id, unsigned int
     //Si el vecindario nuevo, ya se encontraba usado por el servicio, la solución se mantiene factible,
     //en caso contrario, debemos chequear de que las dependencias utilicen ese vecindario nuevo
     if(!service->dependencies.empty() && !service->has_neighborhood(new_machine_neighborhood)) {
-        for (int i = 0; i < service->dependencies.size(); ++i) {
+        for (unsigned int i = 0; i < service->dependencies.size(); ++i) {
             Service *dependency = instance->get_service(service->dependencies[i]);
             if(!dependency->has_neighborhood(new_machine_neighborhood)){
                 return false;
@@ -291,35 +291,16 @@ bool Solution::check_dependency_with_shift(unsigned int process_id, unsigned int
     //S_c depende de S_a
     if(!service->dependents.empty()) {
 
-        if(!service->has_neighborhood(new_machine_neighborhood)) {
-            //Chequear que en el current_process_neighborhood quede al menos un proceso de S_a, distinto
-            //del cual se está reasignando.
-            unsigned int num_of_processes_in_current_neighborhood = 0;
-            for (int i = 0; i < service->processes.size(); ++i) {
-                unsigned int process_neighborhood = instance->processes[service->processes[i]]->get_neighborhood_id();
-                if(process_neighborhood == current_process_neighborhood) {
-                    num_of_processes_in_current_neighborhood++;
-                }
+        unsigned int num_of_processes_in_current_neighborhood = 0;
+        for (unsigned int i = 0; i < service->processes.size(); ++i) {
+            unsigned int process_neighborhood = instance->get_process(service->processes[i])->get_neighborhood_id();
+            if(process_neighborhood == current_process_neighborhood) {
+                num_of_processes_in_current_neighborhood++;
             }
+        }
 
-            if(num_of_processes_in_current_neighborhood < 2) {
-                return false;
-            }
-
-        } else {//ESTO ES RIDICULO REPETIR EL CODIGO, PERO QUEDAN MAS CLAROS LOS CASOS PARA MI
-
-            unsigned int num_of_processes_in_current_neighborhood = 0;
-            for (int i = 0; i < service->processes.size(); ++i) {
-                unsigned int process_neighborhood = instance->processes[service->processes[i]]->get_neighborhood_id();
-                if(process_neighborhood == current_process_neighborhood) {
-                    num_of_processes_in_current_neighborhood++;
-                }
-            }
-
-            if(num_of_processes_in_current_neighborhood < 2) {
-                return false;
-            }
-
+        if(num_of_processes_in_current_neighborhood < 2) {
+            return false;
         }
     }
 
@@ -360,6 +341,8 @@ bool Solution::check_shift(unsigned int process_id, unsigned int machine_id) {
             && check_dependency_with_shift(process_id, machine_id)
             && check_transient_usage_with_shift(process_id, machine_id));
 }
+
+// Delta costs calculation
 
 int64_t Solution::get_load_cost_with_process(unsigned int process_id, unsigned int machine_id) {
     Machine* machine = instance->get_machine(machine_id);
@@ -422,13 +405,11 @@ int64_t Solution::get_balance_cost_with_process(unsigned int process_id, unsigne
     for (balance_iter = instance->balances.begin(); balance_iter != instance->balances.end(); ++balance_iter) {
 
         int64_t capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
-        int64_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
-                                + process->get_requirement((*balance_iter)->get_resource_id(1));
+        int64_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1)) + process->get_requirement((*balance_iter)->get_resource_id(1));
         int64_t available_r1 = capacity_r1 - usage_r1;
 
         int64_t capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
-        int64_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
-                                + process->get_requirement((*balance_iter)->get_resource_id(2));;
+        int64_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2)) + process->get_requirement((*balance_iter)->get_resource_id(2));
 
         int64_t available_r2 = capacity_r2 - usage_r2;
 
@@ -453,14 +434,12 @@ int64_t Solution::get_balance_cost_without_process(unsigned int process_id, unsi
     for (balance_iter = instance->balances.begin(); balance_iter != instance->balances.end(); ++balance_iter) {
 
         int64_t capacity_r1 = machine->get_capacity((*balance_iter)->get_resource_id(1));
-        int64_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1))
-                                - process->get_requirement((*balance_iter)->get_resource_id(1));
+        int64_t usage_r1 = machine->get_usage((*balance_iter)->get_resource_id(1)) - process->get_requirement((*balance_iter)->get_resource_id(1));
 
         int64_t available_r1 = capacity_r1 - usage_r1;
 
         int64_t capacity_r2 = machine->get_capacity((*balance_iter)->get_resource_id(2));
-        int64_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2))
-                                - process->get_requirement((*balance_iter)->get_resource_id(2));;
+        int64_t usage_r2 = machine->get_usage((*balance_iter)->get_resource_id(2)) - process->get_requirement((*balance_iter)->get_resource_id(2));
 
         int64_t available_r2 = capacity_r2 - usage_r2;
 
@@ -497,15 +476,11 @@ int64_t Solution::calc_delta_balance_cost_with_shift(unsigned int process_id, un
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
 
-    int64_t delta_balance_cost_old_machine = abs(get_balance_cost_with_process(process->get_id(), old_machine->get_id()) - get_balance_cost_without_process(process->get_id(), old_machine->get_id()));
+    int64_t delta_bcost_old_machine = get_balance_cost_without_process(process->get_id(), old_machine->get_id()) - get_balance_cost_with_process(process->get_id(), old_machine->get_id());
 
-    int64_t delta_balance_cost_new_machine = abs(get_balance_cost_with_process(process->get_id(), new_machine->get_id()) - get_balance_cost_without_process(process->get_id(), new_machine->get_id()));
+    int64_t delta_bcost_new_machine = get_balance_cost_with_process(process->get_id(), new_machine->get_id()) - get_balance_cost_without_process(process->get_id(), new_machine->get_id());
 
-
-    int64_t delta = delta_balance_cost_new_machine - delta_balance_cost_old_machine;
-
-    return delta;
-    //si el delta es negativo, el descenso en el costo de la máquina antigua es mayor que el aumento que se da máquina nueva
+    return delta_bcost_new_machine + delta_bcost_old_machine;
 }
 
 int64_t Solution::calc_delta_process_move_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
@@ -604,8 +579,9 @@ int64_t Solution::calc_delta_cost_with_shift(unsigned int process_id, unsigned i
             + calc_delta_machine_move_cost_with_shift(process_id, machine_id));
 }
 
-//AL REALIZAR UNA ASIGNACIÓN COMPROBAR LOS RECURSOS
-//este método se ejecutará con previo chequeo del movimiento, es decir, se realizará si solo produce una solución factible.
+
+// shift movement
+
 void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
@@ -664,7 +640,7 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
         }
 
         unsigned int num_of_processes_in_old_neighborhood = 0;
-        for (int i = 0; i < service->processes.size(); ++i) {
+        for (unsigned int i = 0; i < service->processes.size(); ++i) {
             if(instance->get_process(service->processes[i])->get_neighborhood_id() == old_process_neighborhood) {
                 num_of_processes_in_old_neighborhood++;
             }
@@ -686,7 +662,7 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
         }
 
         unsigned int num_of_processes_in_old_location = 0;
-        for (int i = 0; i < service->processes.size(); ++i) {
+        for (unsigned int i = 0; i < service->processes.size(); ++i) {
             if(instance->get_process(service->processes[i])->get_location_id() == old_process_location) {
                 num_of_processes_in_old_location++;
             }
