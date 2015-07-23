@@ -3,18 +3,21 @@
 #include <sstream>
 #include <unistd.h>
 #include <deque>
+#include <queue>
 #include <algorithm>
+#include <ctime>
 #include <memory>
+#include <cstring>
 #include "Instance.h"
 #include "Solution.h"
+#include "HillClimbing.h"
 #include "utils.h"
 
-using namespace std;
 int main (int argc,char *argv[]) {
 
-    int seed;
-    string instance_filename, original_solution_filename, new_solution_filename;
-    unsigned int time_limit;
+    int seed = 0;
+    std::string instance_filename, original_solution_filename, new_solution_filename;
+    unsigned int time_limit = 300;
 
     int tmp;
     if(argc == 1) {
@@ -25,9 +28,9 @@ int main (int argc,char *argv[]) {
     while((tmp = getopt(argc,argv,"t:p:i:o:s:")) != -1) {
         switch(tmp) {
             case 't': {
-                istringstream iss_tm(optarg);
+                std::istringstream iss_tm(optarg);
                 if (!(iss_tm >> time_limit)) {
-                    cerr << "Número inválido " << optarg << endl;
+                    std::cerr << "Número inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
                 }
                 break;
@@ -46,9 +49,9 @@ int main (int argc,char *argv[]) {
                 break;
 
             case 's': {
-                istringstream iss_seed(optarg);
+                std::istringstream iss_seed(optarg);
                 if (!(iss_seed >> seed)) {
-                    cerr << "Número inválido " << optarg << endl;
+                    std::cerr << "Número inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
                 }
                 break;
@@ -61,93 +64,105 @@ int main (int argc,char *argv[]) {
     }
 
 
-    ofstream fout_new_solution(new_solution_filename);
+    std::ofstream fout_new_solution(new_solution_filename);
+    std::ifstream fin_instance(instance_filename);
+    std::ifstream fin_original_solution(original_solution_filename);
 
-    ifstream fin_instance(instance_filename);
-    ifstream fin_original_solution(original_solution_filename);
 
     if(!fin_instance.is_open()) {
-        cerr << "Error al intentar abrir el archivo " << instance_filename << endl;
+        std::cerr << "Error al intentar abrir el archivo " << instance_filename << ". " << strerror(errno) << std::endl;
         exit(EXIT_FAILURE);
     } else if(!fin_original_solution.is_open()) {
-        cerr << "Error al intentar abrir el archivo " << instance_filename << endl;
+        std::cerr << "Error al intentar abrir el archivo " << original_solution_filename << ". " << strerror(errno) << std::endl;
         exit(EXIT_FAILURE);
     }
 
     //instance model
-    Instance *instance = new Instance();
-    instance->read_instance_from_file(fin_instance);
+    Instance *instance = new Instance(fin_instance);
 
     //original solution
-    Solution *original_solution = new Solution(instance);
-    original_solution->read_solution_from_file(fin_original_solution);
+    Solution *original_solution = new Solution(instance, fin_original_solution);
 
     if(instance->processes.size() != original_solution->get_assignments().size()) {
+        std::cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << std::endl;
         delete instance;
         delete original_solution;
-        cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << endl;
         exit(EXIT_FAILURE);
     }
 
-    instance->init(original_solution->get_assignments());
-    original_solution->update_solution_costs();
-    original_solution->print();
-    cout << "Costo solución original: " << original_solution->get_solution_cost() << endl;
 
-    unsigned int times = 0;
-    bool changes;
+    /*
+    Solution *greedy_solution = new Solution(instance);
 
+
+
+    unsigned int num_of_assigned_processes = 0;
     do {
-        changes = false;
-        times++;
-        for (unsigned int process_id = 0; process_id < instance->processes.size(); ++process_id) {
+        //std::cout << "Proceso: " << processes.front().first << ", costo: " << processes.front().second << std::endl;
+        for (unsigned int i = 0; i < processes.size(); ++i) {
+            unsigned int process_id = processes[i].first;
+            if(greedy_solution->get_current_assignment(process_id) == 60000) {
+                for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
 
-            SolutionNeighborhood neighborhood; //<machine_id, delta_cost>
-            unsigned int current_process_assignment = original_solution->get_current_assignment(process_id);
-
-            //generate the neighborhood
-            for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
-
-                if (machine_id != current_process_assignment) {
-
-                    if (original_solution->check_shift(process_id, machine_id)) { //only feasible solutions
-                        int64_t delta_cost = original_solution->calc_delta_cost_with_shift(process_id, machine_id);
-
-                        if (delta_cost < 0) {  //only solutions that improves the current solution
-                            neighborhood[machine_id] = delta_cost;
-                        }
+                    if (greedy_solution->check_assignment(process_id, machine_id)) { //only feasible solutions
+                        greedy_solution->assign_process(process_id, machine_id);
+                        std::cout << "Proceso " << process_id << " asignado" << std::endl;
+                        num_of_assigned_processes++;
+                        break;
+                    } else {
+                        std::cout << "Proceso " << process_id << " no asignado" << std::endl;
                     }
                 }
             }
-
-            //check the best shift
-            if (!neighborhood.empty()) {
-                std::pair<unsigned int, int64_t> best_machine = get_min(neighborhood);
-                original_solution->shift_process(process_id, best_machine.first);
-                changes = true;
-            }
         }
 
-    } while(changes);
+    } while(num_of_assigned_processes <= instance->get_num_of_processes());
 
+
+
+    //greedy_solution->print_assignments();
+    //std::cout << "numero procesos con greedy: " << greedy_solution->get_assignments().size() << std::endl;
+   // std::cout << "numero procesos con original: " << original_solution->get_assignments().size() << std::endl;
+
+    //greedy_solution->write_solution_to_file(fout_new_solution);
+
+     */
+
+    instance->init(original_solution->get_assignments());
+    original_solution->update_solution_costs();
+
+    std::cout << "-.initial_assignment_costs::" << std::endl;
     original_solution->print();
-    cout << "Costo nueva solución: " << original_solution->get_solution_cost() << endl;
-    cout << "Iteraciones do-while: " << times << endl;
+
+    HillClimbing *hc = new HillClimbing(instance, original_solution);
+    hc->set_time_limit(time_limit);
+    hc->run(true);
+
+    std::cout << "-.new_assignment_costs::" << std::endl;
+    original_solution->print();
+
+    std::cout << "-.algorithm_stats::" << std::endl;
+    std::cout << "iterations: " << hc->get_num_iterations() <<  ", ";
+    std::cout << "running_time: " << hc->get_execution_time() << std::endl;
     original_solution->write_solution_to_file(fout_new_solution);
 
 
     delete instance;
     delete original_solution;
+    delete hc;
 
     fout_new_solution.close();
     fin_instance.close();
     fin_original_solution.close();
 
-    cout << "Time limit: " << time_limit << endl;
-    cout << "Instance Filename: " << instance_filename << endl;
-    cout << "Original Solution filename: " << original_solution_filename << endl;
-    cout << "New Solution filename: " << new_solution_filename << endl;
-    cout << "Seed: " << seed << endl;
+    /*
+    std::cout << std::endl << "arguments:" << std::endl;
+    std::cout << "time_limit: " << time_limit << std::endl;
+    std::cout << "model_filename: " << instance_filename << std::endl;
+    std::cout << "initial_assignment_filename: " << original_solution_filename << std::endl;
+    std::cout << "new_assignment_filename: " << new_solution_filename << std::endl;
+    std::cout << "seed: " << seed << std::endl;
+    */
 
 
     return 0;

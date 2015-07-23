@@ -9,10 +9,10 @@
 #include <cstdint>
 #include <map>
 
-typedef std::deque<unsigned int> List;
+typedef std::deque<unsigned int> ProcessList;
+typedef std::deque<int> List;
 typedef List Assignments;
 typedef List MachineList;
-typedef List ProcessList;
 typedef List ServiceList;
 typedef List LocationList;
 typedef List NeighborhoodList;
@@ -20,6 +20,7 @@ typedef List MachineMoveCosts;
 typedef std::deque<int32_t> Capacities;
 typedef Capacities Requirements;
 typedef Capacities Usages;
+typedef std::map<unsigned int, int64_t> SolutionNeighborhood;
 
 
 #endif //MRP_SETS_H

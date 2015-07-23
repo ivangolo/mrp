@@ -1,10 +1,8 @@
-A1
-A2
-B
-salida*
+a1
+a2
+b
 bin
 build
 checker
 solutions
-output*
-GenericMakeFile
+*.csv

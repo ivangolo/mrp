@@ -8,28 +8,28 @@
 #include <memory>
 #include <iterator>
 
-Instance::Instance() {
-    std::cout << "Instance created" << std::endl;
+Instance::Instance(std::ifstream &fin_instance) {
+    read_instance_from_file(fin_instance);
+    //std::cout << "Instance created" << std::endl;
 }
 
 Instance::~Instance() {
-
-    std::cout << "Eliminando recursos" << std::endl;
+    //std::cout << "Eliminando recursos" << std::endl;
     std::for_each(resources.begin(), resources.end(), std::default_delete<Resource>());
 
-    std::cout << "Eliminando maquinas" << std::endl;
+    //std::cout << "Eliminando maquinas" << std::endl;
     std::for_each(machines.begin(), machines.end(), std::default_delete<Machine>());
 
-    std::cout << "Eliminando servicios" << std::endl;
+    //std::cout << "Eliminando servicios" << std::endl;
     std::for_each(services.begin(), services.end(), std::default_delete<Service>());
 
-    std::cout << "Eliminando procesos" << std::endl;
+    //std::cout << "Eliminando procesos" << std::endl;
     std::for_each(processes.begin(), processes.end(), std::default_delete<Process>());
 
-    std::cout << "Eliminando balances" << std::endl;
+    //std::cout << "Eliminando balances" << std::endl;
     std::for_each(balances.begin(), balances.end(), std::default_delete<Balance>());
 
-    std::cout << "Instance destroyed" << std::endl;
+    //std::cout << "Instance destroyed" << std::endl;
 }
 
 
@@ -55,25 +55,29 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         fin_instance >> neighborhood;
         fin_instance >> location;
 
-        Machine *maquina = new Machine(i, neighborhood, location);
+        Machine *machine = new Machine(i, neighborhood, location);
 
         //reading resource capacities
         for (unsigned int j = 0; j < num_resources; ++j) {
             fin_instance >> capacity;
-            maquina->add_capacity(capacity);
+            machine->add_capacity(capacity);
         }
         //reading resource safety_capacities
         for (unsigned int k = 0; k < num_resources; ++k) {
             fin_instance >> safety_capacity;
-            maquina->add_safety_capacity(safety_capacity);
+            machine->add_safety_capacity(safety_capacity);
         }
         //reading machine move costs
         for (unsigned int l = 0; l < num_machines; ++l) {
             fin_instance >> move_cost;
-            maquina->add_machine_move_cost(move_cost);
+            machine->add_machine_move_cost(move_cost);
+        }
+        //initialize usages
+        for (unsigned int m = 0; m < num_resources; ++m) {
+            machine->add_usage(0);
         }
 
-        add_machine(maquina);
+        add_machine(machine);
     }
 
     //reading services
@@ -84,17 +88,17 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         fin_instance >> spread_min;
         fin_instance >> num_dependencies;
 
-        Service *servicio = new Service(m, spread_min);
+        Service *service = new Service(m, spread_min);
 
         if(num_dependencies > 0) {
             for(unsigned int i = 0; i < num_dependencies; ++i) {
                 fin_instance >> service_id;
-                servicio->add_dependency(service_id);
+                service->add_dependency(service_id);
             }
-            add_service(servicio);
+            add_service(service);
 
         } else {//if the service hasn't dependencies
-            add_service(servicio);
+            add_service(service);
             continue;
         }
     }
@@ -105,21 +109,27 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
     for (unsigned int n = 0; n < num_processes; ++n) {
         unsigned int service_id, requirement, process_move_cost;
         fin_instance >> service_id;
-        Process *proceso = new Process(n, service_id);
+        Process *process = new Process(n, service_id);
 
         //reading resource requirements
         for (unsigned int i = 0; i < num_resources; ++i) {
             fin_instance >> requirement;
-            proceso->add_requirement(requirement);
+            process->add_requirement(requirement);
+            process->increment_process_size(requirement);
         }
         // process move cost
         fin_instance >> process_move_cost;
-        proceso->set_process_move_cost(process_move_cost);
+        process->set_process_move_cost(process_move_cost);
 
         //adding the process to the service owner
         this->get_service(service_id)->add_process(n);
 
-        add_process(proceso);
+        //setting initial and current assignment
+        process->set_initial_machine_id(-1);
+        process->set_current_machine_id(-1);
+
+        sorted_processes.push_back(std::make_pair(n, process->get_size()));
+        add_process(process);
     }
 
     //reading balances
@@ -141,11 +151,14 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
     fin_instance >> weight_service_move_cost;
     fin_instance >> weight_machine_move_cost;
 
+    //model type: a or b
+    type = (num_processes > 1000) ? 'b' : 'a';
+
 }
 
 
-void Instance::add_solution(std::deque<unsigned int> &original_solution) {
-    for(unsigned int i = 0; i < original_solution.size(); i++) {
+void Instance::add_solution(Assignments &original_solution) {
+    for(unsigned int i = 0; i < original_solution.size(); ++i) {
         //adding processes to machines
         get_machine(original_solution[i])->add_process(i);
         //adding machine to processes
@@ -154,9 +167,9 @@ void Instance::add_solution(std::deque<unsigned int> &original_solution) {
         process->set_current_machine_id(original_solution[i]);
 
         //adding location to processes
-        process->set_location_id(machines[original_solution[i]]->get_location_id());
+        process->set_location_id(get_machine(original_solution[i])->get_location_id());
         //adding neighborhood to processes
-        process->set_neighborhood_id(machines[original_solution[i]]->get_neighborhood_id());
+        process->set_neighborhood_id(get_machine(original_solution[i])->get_neighborhood_id());
 
         //adding used machines, locations and neighborhoods to service ownwer
         Service *service = get_service(process->get_service_id());
@@ -177,11 +190,11 @@ void Instance::add_solution(std::deque<unsigned int> &original_solution) {
 
 }
 
-void Instance::compute_usage(unsigned int machine_id, unsigned int resource_id) {
+void Instance::compute_usage(int machine_id, int resource_id) {
     //initially, transient usages remains in 0
     Machine *machine = get_machine(machine_id);
     uint32_t usage = 0;
-    for(std::deque<unsigned int>::iterator it = machine->processes.begin(); it != machine->processes.end(); ++it) {
+    for(ProcessList::iterator it = machine->processes.begin(); it != machine->processes.end(); ++it) {
         usage += get_process(*it)->get_requirement(resource_id);
     }
     machine->set_usage(resource_id, usage);
@@ -198,6 +211,7 @@ void Instance::compute_all_usages() {
 
 }
 
+/*
 void Instance::compute_load_cost_lower_bound() {
     load_cost_lower_bound = 0;
     std::deque<Resource*>::iterator resource_iter;
@@ -213,7 +227,9 @@ void Instance::compute_load_cost_lower_bound() {
         load_cost_lower_bound += (resource_usage - resource_scapacity) * (*resource_iter)->get_weight_load_cost();
     }
 }
+*/
 
+/*
 void Instance::compute_balance_cost_lower_bound() {
     balance_cost_lower_bound = 0;
     std::deque<Balance*>::iterator balance_iter;
@@ -222,8 +238,8 @@ void Instance::compute_balance_cost_lower_bound() {
     for (balance_iter = balances.begin(); balance_iter != balances.end(); ++balance_iter) {
         unsigned long int a_r1 = 0;
         unsigned long int a_r2 = 0;
-        unsigned int r1_id = (*balance_iter)->get_resource_id(1);
-        unsigned int r2_id = (*balance_iter)->get_resource_id(2);
+        int r1_id = (*balance_iter)->get_resource_id(1);
+        int r2_id = (*balance_iter)->get_resource_id(2);
 
         for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
             //compute available capacity for resource 1 A(r1)
@@ -237,6 +253,9 @@ void Instance::compute_balance_cost_lower_bound() {
     }
 
 }
+*/
+
+/*
 
 void Instance::compute_lower_bound() {
     Instance::compute_load_cost_lower_bound();
@@ -247,12 +266,14 @@ int64_t Instance::get_lower_bound() {
     return load_cost_lower_bound + balance_cost_lower_bound;
 }
 
+*/
+
 void Instance::init(Assignments assignments) {
     //do everything
     Instance::add_solution(assignments);
     Instance::add_dependant_services();
     Instance::compute_all_usages();
-    Instance::compute_lower_bound();
+    Instance::sort_process_by_size();
 }
 
 void Instance::print_services() {
@@ -262,33 +283,40 @@ void Instance::print_services() {
     }
 }
 
+void Instance::print_processes() {
+    std::deque<Process*>::iterator process_iter;
+    for (process_iter = processes.begin(); process_iter != processes.end(); ++process_iter) {
+        (*process_iter)->print();
+    }
+}
+
 void Instance::add_dependant_services() {
     std::deque<Service*>::iterator service_iter;
     for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
         ServiceList &dependencies = (*service_iter)->dependencies;
         for (unsigned int i = 0; i < dependencies.size(); ++i) {
-            services[dependencies[i]]->add_dependent((*service_iter)->get_id());
+            get_service(dependencies[i])->add_dependent((*service_iter)->get_id());
         }
     }
-}
-
-Machine *Instance::get_machine(unsigned int machine_id) {
-    return machines[machine_id];
 }
 
 Process *Instance::get_process(unsigned int process_id) {
     return processes[process_id];
 }
 
-Service *Instance::get_service(unsigned int service_id) {
+Machine *Instance::get_machine(int machine_id) {
+    return machines[machine_id];
+}
+
+Service *Instance::get_service(int service_id) {
     return services[service_id];
 }
 
-Resource *Instance::get_resource(unsigned int resource_id) {
+Resource *Instance::get_resource(int resource_id) {
     return resources[resource_id];
 }
 
-Balance *Instance::get_balance(unsigned int balance_id) {
+Balance *Instance::get_balance(int balance_id) {
     return balances[balance_id];
 }
 
@@ -326,4 +354,52 @@ void Instance::add_process(Process *process) {
 
 void Instance::add_balance(Balance *balance) {
     balances.push_back(balance);
+}
+
+void Instance::sort_process_by_size() {
+    std::sort(sorted_processes.begin(), sorted_processes.end(), BiggerProcess());
+}
+
+void Instance::print_sorted_processes() {
+    std::cout << "Procesos ordenados:" << std::endl;
+    for (const auto& p : sorted_processes) {
+        std::cout << p.first << ", " << p.second << std::endl;
+    }
+}
+
+
+unsigned long int Instance::get_num_of_processes() {
+    return processes.empty() ? 0 : processes.size();
+}
+
+unsigned long int Instance::get_num_of_machines() {
+    return machines.empty() ? 0 : machines.size();
+}
+
+unsigned long int Instance::get_num_of_resources() {
+    return resources.empty() ? 0 : resources.size();
+}
+
+unsigned long int Instance::get_num_of_balances() {
+    return balances.empty() ? 0 : balances.size();
+}
+
+unsigned long int Instance::get_num_of_services() {
+    return services.empty() ? 0 : services.size();
+}
+
+void Instance::print_machines() {
+    std::deque<Machine*>::iterator machine_iter;
+    for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
+        (*machine_iter)->print();
+    }
+}
+
+
+char Instance::get_type() {
+    return type;
+}
+
+void Instance::set_type(char type) {
+    this->type = type;
 }

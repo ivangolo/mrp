@@ -14,15 +14,31 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7f8dea5-ba30-4cff-8880-bbf4fe3456a0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.gitignore" afterPath="$PROJECT_DIR$/../.gitignore" />
+    <list default="true" id="f7f8dea5-ba30-4cff-8880-bbf4fe3456a0" name="Default" comment="command line options and basic input output files">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HillClimbing.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/HillClimbing.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../informe/informe2.pdf" afterPath="$PROJECT_DIR$/../informe/informe2.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../test-mrp.ods" afterPath="$PROJECT_DIR$/../test-mrp.ods" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Balance.cpp" afterPath="$PROJECT_DIR$/src/Balance.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Balance.h" afterPath="$PROJECT_DIR$/src/Balance.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Instance.cpp" afterPath="$PROJECT_DIR$/src/Instance.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Instance.h" afterPath="$PROJECT_DIR$/src/Instance.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Machine.cpp" afterPath="$PROJECT_DIR$/src/Machine.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Machine.h" afterPath="$PROJECT_DIR$/src/Machine.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Process.cpp" afterPath="$PROJECT_DIR$/src/Process.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Process.h" afterPath="$PROJECT_DIR$/src/Process.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Resource.cpp" afterPath="$PROJECT_DIR$/src/Resource.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Resource.h" afterPath="$PROJECT_DIR$/src/Resource.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service.cpp" afterPath="$PROJECT_DIR$/src/Service.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service.h" afterPath="$PROJECT_DIR$/src/Service.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.cpp" afterPath="$PROJECT_DIR$/src/Solution.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.h" afterPath="$PROJECT_DIR$/src/Solution.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../informe/sections/introduccion.tex" afterPath="$PROJECT_DIR$/../informe/sections/introduccion.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sets.cpp" afterPath="$PROJECT_DIR$/src/sets.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sets.h" afterPath="$PROJECT_DIR$/src/sets.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils.cpp" afterPath="$PROJECT_DIR$/src/utils.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils.h" afterPath="$PROJECT_DIR$/src/utils.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -45,89 +61,75 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6182708">
+              <caret line="155" column="34" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#2662#4181#0" expanded="false" />
+                <element signature="e#5033#5455#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Instance.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Instance.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+              <folding>
+                <element signature="e#7095#7883#0" expanded="false" />
+                <element signature="e#7885#8915#0" expanded="false" />
+                <element signature="e#8917#9164#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Solution.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Solution.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="482" column="61" selection-start-line="482" selection-start-column="61" selection-end-line="482" selection-end-column="61" />
+              <caret line="98" column="38" selection-start-line="98" selection-start-column="38" selection-end-line="98" selection-end-column="38" />
               <folding>
-                <element signature="e#169#242#0" expanded="false" />
-                <element signature="e#244#323#0" expanded="false" />
-                <element signature="e#325#384#0" expanded="false" />
-                <element signature="e#386#451#0" expanded="false" />
-                <element signature="e#453#528#0" expanded="false" />
-                <element signature="e#530#605#0" expanded="false" />
-                <element signature="e#607#682#0" expanded="false" />
-                <element signature="e#684#822#0" expanded="false" />
-                <element signature="e#824#993#0" expanded="false" />
-                <element signature="e#995#1180#0" expanded="false" />
-                <element signature="e#1182#1776#0" expanded="false" />
-                <element signature="e#1778#1845#0" expanded="false" />
-                <element signature="e#1868#2197#0" expanded="false" />
-                <element signature="e#2199#2954#0" expanded="false" />
-                <element signature="e#2956#3207#0" expanded="false" />
-                <element signature="e#3209#3356#0" expanded="false" />
-                <element signature="e#3358#3778#0" expanded="false" />
-                <element signature="e#3780#4198#0" expanded="false" />
-                <element signature="e#4200#4615#0" expanded="false" />
-                <element signature="e#4617#4934#0" expanded="false" />
-                <element signature="e#4936#5259#0" expanded="false" />
-                <element signature="e#5261#5641#0" expanded="false" />
-                <element signature="e#5643#6147#0" expanded="false" />
-                <element signature="e#6149#6519#0" expanded="false" />
-                <element signature="e#6521#6607#0" expanded="false" />
-                <element signature="e#6609#6704#0" expanded="false" />
-                <element signature="e#6706#6816#0" expanded="false" />
-                <element signature="e#6818#6928#0" expanded="false" />
-                <element signature="e#6930#7040#0" expanded="false" />
-                <element signature="e#7042#7276#0" expanded="false" />
-                <element signature="e#7294#7777#0" expanded="false" />
-                <element signature="e#7779#8279#0" expanded="false" />
-                <element signature="e#8281#9646#0" expanded="false" />
-                <element signature="e#9648#11570#0" expanded="false" />
-                <element signature="e#11572#12605#0" expanded="false" />
-                <element signature="e#12607#13018#0" expanded="false" />
-                <element signature="e#13048#14050#0" expanded="false" />
-                <element signature="e#14052#15066#0" expanded="false" />
-                <element signature="e#15068#16381#0" expanded="false" />
-                <element signature="e#16383#17702#0" expanded="false" />
-                <element signature="e#17704#18839#0" expanded="false" />
-                <element signature="e#19596#20648#0" expanded="false" />
-                <element signature="e#20650#22902#0" expanded="false" />
-                <element signature="e#22904#24466#0" expanded="false" />
-                <element signature="e#24965#28898#0" expanded="false" />
+                <element signature="e#169#370#0" expanded="false" />
+                <element signature="e#372#497#0" expanded="false" />
+                <element signature="e#499#580#0" expanded="false" />
+                <element signature="e#582#641#0" expanded="false" />
+                <element signature="e#643#708#0" expanded="false" />
+                <element signature="e#710#785#0" expanded="false" />
+                <element signature="e#787#862#0" expanded="false" />
+                <element signature="e#864#939#0" expanded="false" />
+                <element signature="e#941#1079#0" expanded="false" />
+                <element signature="e#1081#1328#0" expanded="false" />
+                <element signature="e#1330#1515#0" expanded="false" />
+                <element signature="e#1967#2178#0" expanded="false" />
+                <element signature="e#2180#2247#0" expanded="false" />
+                <element signature="e#10199#12085#0" expanded="false" />
+                <element signature="e#12087#13111#0" expanded="false" />
+                <element signature="e#13113#13515#0" expanded="false" />
+                <element signature="e#13545#14538#0" expanded="false" />
+                <element signature="e#14540#15545#0" expanded="false" />
+                <element signature="e#15547#16851#0" expanded="false" />
+                <element signature="e#16853#18163#0" expanded="false" />
+                <element signature="e#18165#19291#0" expanded="false" />
+                <element signature="e#19293#20037#0" expanded="false" />
+                <element signature="e#20039#21082#0" expanded="false" />
+                <element signature="e#21084#23327#0" expanded="false" />
+                <element signature="e#23329#24882#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Machine.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Machine.cpp">
+      <file leaf-file-name="Instance.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Instance.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.2642486">
-              <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Machine.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Machine.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -156,40 +158,51 @@
         <option value="$PROJECT_DIR$/src/Location.cpp" />
         <option value="$PROJECT_DIR$/src/Neighborhood.h" />
         <option value="$PROJECT_DIR$/src/Neighborhood.cpp" />
-        <option value="$PROJECT_DIR$/src/Resource.h" />
         <option value="$PROJECT_DIR$/src/Restrictions.h" />
         <option value="$PROJECT_DIR$/src/Costs.h" />
         <option value="$PROJECT_DIR$/src/Constraints.h" />
         <option value="$PROJECT_DIR$/src/Constraints.cpp" />
         <option value="$PROJECT_DIR$/src/Costs.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/utils.cpp" />
+        <option value="$PROJECT_DIR$/notes.md" />
+        <option value="$PROJECT_DIR$/src/BiggerProcessHelper.h" />
+        <option value="$PROJECT_DIR$/src/RemoveProcess.h" />
         <option value="$PROJECT_DIR$/src/Balance.h" />
-        <option value="$PROJECT_DIR$/src/Instance.h" />
-        <option value="$PROJECT_DIR$/src/Process.h" />
-        <option value="$PROJECT_DIR$/src/Service.h" />
-        <option value="$PROJECT_DIR$/src/Process.cpp" />
-        <option value="$PROJECT_DIR$/src/Machine.cpp" />
-        <option value="$PROJECT_DIR$/src/Service.cpp" />
+        <option value="$PROJECT_DIR$/src/Resource.h" />
         <option value="$PROJECT_DIR$/src/Resource.cpp" />
+        <option value="$PROJECT_DIR$/src/Service.cpp" />
+        <option value="$PROJECT_DIR$/src/Machine.cpp" />
+        <option value="$PROJECT_DIR$/src/Machine.h" />
+        <option value="$PROJECT_DIR$/src/Process.h" />
+        <option value="$PROJECT_DIR$/src/Process.cpp" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Balance.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/Solution.h" />
         <option value="$PROJECT_DIR$/src/sets.h" />
         <option value="$PROJECT_DIR$/src/utils.h" />
-        <option value="$PROJECT_DIR$/src/utils.cpp" />
-        <option value="$PROJECT_DIR$/notes.md" />
-        <option value="$PROJECT_DIR$/src/Machine.h" />
+        <option value="$PROJECT_DIR$/src/HillClimbing.h" />
+        <option value="$PROJECT_DIR$/src/Service.h" />
+        <option value="$PROJECT_DIR$/src/HillClimbing.cpp" />
+        <option value="$PROJECT_DIR$/src/Instance.h" />
         <option value="$PROJECT_DIR$/src/Instance.cpp" />
         <option value="$PROJECT_DIR$/src/Solution.cpp" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
       </list>
     </option>
   </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
   <component name="NamedScopeManager">
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1366" />
-    <option name="height" value="733" />
+    <option name="x" value="-4" />
+    <option name="y" value="-1" />
+    <option name="width" value="1374" />
+    <option name="height" value="745" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -254,7 +267,7 @@
     <property name="FullScreen" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/headers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/checker" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="127" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
@@ -300,7 +313,16 @@
       <JdkChoice value="FROM_MODULE" />
       <method />
     </configuration>
-    <configuration default="false" name="mrp" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="mrp -t 300 -p A2/models/model_a2_1.txt -i A2/assignments/assingment_a2_1.txt  -o solutions/a2/salida2-1.txt -s 100 " WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="mrp" TARGET_NAME="mrp" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="mrp" RUN_TARGET_NAME="mrp">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="mrp" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-t 300 -p a1/models/model_a1_1.txt -i a1/assignments/assignment_a1_1.txt  -o solutions/a1/out-1-sorted.txt -s 100 " WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="mrp" TARGET_NAME="mrp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mrp" RUN_TARGET_NAME="mrp">
       <envs />
       <method />
     </configuration>
@@ -343,49 +365,49 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="733" extended-state="0" />
-    <editor active="false" />
+    <frame x="-4" y="-1" width="1374" height="745" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16753536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21888727" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3215434" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.50558454" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3004695" sideWeight="0.511713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40325204" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.48845866" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4695122" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32520324" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03089431" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25528455" sideWeight="0.4944155" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4813008" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4657321" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="100" width="1164" height="533" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39871383" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39813375" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4127726" sideWeight="0.48828697" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.4944155" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32503888" sideWeight="0.4944155" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0124223605" sideWeight="0.4944155" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31511253" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4701258" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3215434" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47749197" sideWeight="0.50558454" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.50558454" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="100" width="1164" height="533" />
-      <window_info id="Inspection" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39871383" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.78778136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.001607717" sideWeight="0.48845866" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17125838" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.398374" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40325204" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3883648" sideWeight="0.48845866" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03089431" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33431518" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22513089" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32520324" sideWeight="0.4944155" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4695122" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47749197" sideWeight="0.4944155" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="1.0" sideWeight="0.4944155" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -405,16 +427,57 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <breakpoints-dialog>
+        <breakpoints-dialog>
+          <selected-grouping-rules>
+            <grouping-rule id="by-file" />
+          </selected-grouping-rules>
+        </breakpoints-dialog>
+      </breakpoints-dialog>
+      <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Instance.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="165" column="64" selection-start-line="165" selection-start-column="64" selection-end-line="165" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="37" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="37" selection-start-line="46" selection-start-column="37" selection-end-line="46" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="364" column="50" selection-start-line="364" selection-start-column="50" selection-end-line="364" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="18" selection-start-line="63" selection-start-column="18" selection-end-line="63" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Machine.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="74" selection-start-line="45" selection-start-column="74" selection-end-line="45" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -436,9 +499,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="130" column="30" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -488,9 +548,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="130" column="30" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -505,20 +562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/models/model_a1_2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/models/model_a1_2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -578,97 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/5.1.0/fstream">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="539" column="0" selection-start-line="539" selection-start-column="0" selection-end-line="539" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/ide/ide-scripting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/models/model_a1_1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2238806">
-          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/assignments/assignment_a1_1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/assignments/assignment_a1_2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/A1/models/model_a1_2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="80.0">
-          <caret line="1088" column="22" selection-start-line="1088" selection-start-column="18" selection-end-line="1088" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sets.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="300" selection-start-line="6" selection-start-column="300" selection-end-line="6" selection-end-column="300" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Balance.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79763913">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0876898">
-          <caret line="43" column="2" selection-start-line="43" selection-start-column="2" selection-end-line="43" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Balance.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5059022">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Service.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45531198">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sets.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5631399">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17918089">
@@ -676,138 +628,208 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.h">
+    <entry file="file://$PROJECT_DIR$/src/sets.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58928573">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.17582418">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Process.h">
+    <entry file="file://$PROJECT_DIR$/src/Balance.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.5912409">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Instance.h">
+    <entry file="file://$PROJECT_DIR$/src/Resource.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Instance.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="158" column="90" selection-start-line="158" selection-start-column="90" selection-end-line="158" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Process.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.075885326">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.42174628">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Resource.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Resource.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34232715">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Solution.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92411464">
-          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Machine.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.7891269">
+          <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Machine.cpp">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.741351">
+          <caret line="107" column="1" selection-start-line="107" selection-start-column="1" selection-end-line="107" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Process.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07742998">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Process.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.029654">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service.cpp">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Balance.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23703703">
+          <caret line="6" column="238" selection-start-line="6" selection-start-column="238" selection-end-line="6" selection-end-column="238" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/utfsm/201501/ia/Proyecto/Entregables/2/code/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5054348">
+          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sets.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HillClimbing.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Service.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HillClimbing.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53932583">
+          <caret line="59" column="12" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5.1.0/fstream">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="15.83368">
+          <caret line="480" column="6" selection-start-line="480" selection-start-column="6" selection-end-line="480" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Instance.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+          <folding>
+            <element signature="e#7095#7883#0" expanded="false" />
+            <element signature="e#7885#8915#0" expanded="false" />
+            <element signature="e#8917#9164#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Solution.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="482" column="61" selection-start-line="482" selection-start-column="61" selection-end-line="482" selection-end-column="61" />
+          <caret line="98" column="38" selection-start-line="98" selection-start-column="38" selection-end-line="98" selection-end-column="38" />
           <folding>
-            <element signature="e#169#242#0" expanded="false" />
-            <element signature="e#244#323#0" expanded="false" />
-            <element signature="e#325#384#0" expanded="false" />
-            <element signature="e#386#451#0" expanded="false" />
-            <element signature="e#453#528#0" expanded="false" />
-            <element signature="e#530#605#0" expanded="false" />
-            <element signature="e#607#682#0" expanded="false" />
-            <element signature="e#684#822#0" expanded="false" />
-            <element signature="e#824#993#0" expanded="false" />
-            <element signature="e#995#1180#0" expanded="false" />
-            <element signature="e#1182#1776#0" expanded="false" />
-            <element signature="e#1778#1845#0" expanded="false" />
-            <element signature="e#1868#2197#0" expanded="false" />
-            <element signature="e#2199#2954#0" expanded="false" />
-            <element signature="e#2956#3207#0" expanded="false" />
-            <element signature="e#3209#3356#0" expanded="false" />
-            <element signature="e#3358#3778#0" expanded="false" />
-            <element signature="e#3780#4198#0" expanded="false" />
-            <element signature="e#4200#4615#0" expanded="false" />
-            <element signature="e#4617#4934#0" expanded="false" />
-            <element signature="e#4936#5259#0" expanded="false" />
-            <element signature="e#5261#5641#0" expanded="false" />
-            <element signature="e#5643#6147#0" expanded="false" />
-            <element signature="e#6149#6519#0" expanded="false" />
-            <element signature="e#6521#6607#0" expanded="false" />
-            <element signature="e#6609#6704#0" expanded="false" />
-            <element signature="e#6706#6816#0" expanded="false" />
-            <element signature="e#6818#6928#0" expanded="false" />
-            <element signature="e#6930#7040#0" expanded="false" />
-            <element signature="e#7042#7276#0" expanded="false" />
-            <element signature="e#7294#7777#0" expanded="false" />
-            <element signature="e#7779#8279#0" expanded="false" />
-            <element signature="e#8281#9646#0" expanded="false" />
-            <element signature="e#9648#11570#0" expanded="false" />
-            <element signature="e#11572#12605#0" expanded="false" />
-            <element signature="e#12607#13018#0" expanded="false" />
-            <element signature="e#13048#14050#0" expanded="false" />
-            <element signature="e#14052#15066#0" expanded="false" />
-            <element signature="e#15068#16381#0" expanded="false" />
-            <element signature="e#16383#17702#0" expanded="false" />
-            <element signature="e#17704#18839#0" expanded="false" />
-            <element signature="e#19596#20648#0" expanded="false" />
-            <element signature="e#20650#22902#0" expanded="false" />
-            <element signature="e#22904#24466#0" expanded="false" />
-            <element signature="e#24965#28898#0" expanded="false" />
+            <element signature="e#169#370#0" expanded="false" />
+            <element signature="e#372#497#0" expanded="false" />
+            <element signature="e#499#580#0" expanded="false" />
+            <element signature="e#582#641#0" expanded="false" />
+            <element signature="e#643#708#0" expanded="false" />
+            <element signature="e#710#785#0" expanded="false" />
+            <element signature="e#787#862#0" expanded="false" />
+            <element signature="e#864#939#0" expanded="false" />
+            <element signature="e#941#1079#0" expanded="false" />
+            <element signature="e#1081#1328#0" expanded="false" />
+            <element signature="e#1330#1515#0" expanded="false" />
+            <element signature="e#1967#2178#0" expanded="false" />
+            <element signature="e#2180#2247#0" expanded="false" />
+            <element signature="e#10199#12085#0" expanded="false" />
+            <element signature="e#12087#13111#0" expanded="false" />
+            <element signature="e#13113#13515#0" expanded="false" />
+            <element signature="e#13545#14538#0" expanded="false" />
+            <element signature="e#14540#15545#0" expanded="false" />
+            <element signature="e#15547#16851#0" expanded="false" />
+            <element signature="e#16853#18163#0" expanded="false" />
+            <element signature="e#18165#19291#0" expanded="false" />
+            <element signature="e#19293#20037#0" expanded="false" />
+            <element signature="e#20039#21082#0" expanded="false" />
+            <element signature="e#21084#23327#0" expanded="false" />
+            <element signature="e#23329#24882#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.2642486">
-          <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6182708">
+          <caret line="155" column="34" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#2662#4181#0" expanded="false" />
+            <element signature="e#5033#5455#0" expanded="false" />
           </folding>
         </state>
       </provider>

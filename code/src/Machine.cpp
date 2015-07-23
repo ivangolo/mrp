@@ -13,7 +13,7 @@ Machine::Machine() {
 }
 
 
-Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id) {
+Machine::Machine(int id, int neighborhood_id, int location_id) {
     this->id = id;
     this->neighborhood_id = neighborhood_id;
     this->location_id = location_id;
@@ -28,7 +28,7 @@ void Machine::add_process(unsigned int process_id) {
 }
 
 void Machine::remove_process(unsigned int process_id) {
-    std::deque<unsigned int>::iterator position = std::find(processes.begin(), processes.end(), process_id);
+    ProcessList::iterator position = std::find(processes.begin(), processes.end(), process_id);
     if (position != processes.end()) {
         processes.erase(position);
     } // == vector.end() means the element was not found
@@ -47,41 +47,41 @@ void Machine::add_machine_move_cost(unsigned int mmc) {
     this->mmc.push_back(mmc);
 }
 
-unsigned int Machine::get_id() {
+int Machine::get_id() {
     return id;
 }
 
 
-unsigned int Machine::get_location_id() {
+int Machine::get_location_id() {
     return location_id;
 }
 
-unsigned int Machine::get_neighborhood_id() {
+int Machine::get_neighborhood_id() {
     return neighborhood_id;
 }
 
-void Machine::set_usage(unsigned int resource_id, int32_t usage) {
+void Machine::set_usage(int resource_id, int32_t usage) {
     usages[resource_id] = usage;
 }
 
 
-int32_t Machine::get_usage(unsigned int resource_id) {
+int32_t Machine::get_usage(int resource_id) {
     return usages[resource_id];
 }
 
-int32_t Machine::get_capacity(unsigned int resource_id) {
+int32_t Machine::get_capacity(int resource_id) {
     return capacities[resource_id];
 }
 
-int32_t Machine::get_scapacity(unsigned int resource_id) {
+int32_t Machine::get_scapacity(int resource_id) {
     return safety_capacities[resource_id];
 }
 
-void Machine::set_transient_usage(unsigned int resource_id, int32_t usage) {
+void Machine::set_transient_usage(int resource_id, int32_t usage) {
     transient_usages[resource_id] = usage;
 }
 
-int32_t Machine::get_transient_usage(unsigned int resource_id) {
+int32_t Machine::get_transient_usage(int resource_id) {
     return transient_usages[resource_id];
 }
 
@@ -103,6 +103,10 @@ bool Machine::has_process(unsigned int process_id) {
     return (position != processes.end()); //true if process is found, false in the other case
 }
 
-unsigned int Machine::get_machine_move_cost(unsigned int machine_id) {
+int Machine::get_machine_move_cost(int machine_id) {
     return mmc[machine_id];
+}
+
+void Machine::add_usage(int32_t usage) {
+    usages.push_back(usage);
 }
