@@ -20,7 +20,7 @@ public:
     LocationList locations;
     NeighborhoodList neighborhoods;
     Service();
-    Service(int id, int spread_min);
+    Service(int id, unsigned int spread_min);
     ~Service();
 
     void add_process(unsigned int process_id);

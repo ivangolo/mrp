@@ -33,9 +33,9 @@ public:
     void read_solution_from_file(std::ifstream &in);
     void write_solution_to_file(std::ofstream &out);
     Assignments get_assignments();
-    int get_current_assignment(unsigned int process_id);
+    unsigned int get_current_assignment(unsigned int process_id);
     void print();
-    void print_assignments();
+//    void print_assignments();
     void set_assignments(Assignments assignments);
 
     int64_t calc_load_cost(int machine_id, int resource_id);  //for one machine and over one resource
@@ -85,13 +85,13 @@ public:
     bool check_shift(unsigned int process_id, int machine_id);
 
     //Reasignments
-    void shift_process(unsigned int process_id, int machine_id);
+    void shift_process(unsigned int process_id, unsigned int machine_id);
 
     //Assignments
-    void assign_process(unsigned int process_id, int machine_id);
+    void assign_process(unsigned int process_id, unsigned int machine_id);
 
     //checkers
-    bool check_assignment(unsigned int process_id, int machine_id);
+    bool check_assignment(unsigned int process_id, unsigned int machine_id);
     bool check_capacity_with_assignment(unsigned int process_id, int machine_id);
     bool check_conflict_with_assignment(unsigned int process_id, int machine_id);
     bool check_spread_with_assignment(unsigned int process_id, int machine_id);

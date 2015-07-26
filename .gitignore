@@ -3,3 +3,4 @@ code/.idea
 GenericMakeFile/
 code/mrp
 test*
+*.py

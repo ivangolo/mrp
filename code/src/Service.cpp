@@ -12,7 +12,7 @@ Service::Service() {
     std::cout << "Service created" << std::endl;
 }
 
-Service::Service(int id, int spread_min) {
+Service::Service(int id, unsigned int spread_min) {
     this->id = id;
     this->spread_min = spread_min;
     this->num_moved_processes = 0;

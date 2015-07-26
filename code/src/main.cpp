@@ -90,44 +90,6 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-
-    /*
-    Solution *greedy_solution = new Solution(instance);
-
-
-
-    unsigned int num_of_assigned_processes = 0;
-    do {
-        //std::cout << "Proceso: " << processes.front().first << ", costo: " << processes.front().second << std::endl;
-        for (unsigned int i = 0; i < processes.size(); ++i) {
-            unsigned int process_id = processes[i].first;
-            if(greedy_solution->get_current_assignment(process_id) == 60000) {
-                for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
-
-                    if (greedy_solution->check_assignment(process_id, machine_id)) { //only feasible solutions
-                        greedy_solution->assign_process(process_id, machine_id);
-                        std::cout << "Proceso " << process_id << " asignado" << std::endl;
-                        num_of_assigned_processes++;
-                        break;
-                    } else {
-                        std::cout << "Proceso " << process_id << " no asignado" << std::endl;
-                    }
-                }
-            }
-        }
-
-    } while(num_of_assigned_processes <= instance->get_num_of_processes());
-
-
-
-    //greedy_solution->print_assignments();
-    //std::cout << "numero procesos con greedy: " << greedy_solution->get_assignments().size() << std::endl;
-   // std::cout << "numero procesos con original: " << original_solution->get_assignments().size() << std::endl;
-
-    //greedy_solution->write_solution_to_file(fout_new_solution);
-
-     */
-
     instance->init(original_solution->get_assignments());
     original_solution->update_solution_costs();
 
@@ -141,11 +103,8 @@ int main (int argc,char *argv[]) {
     std::cout << "-.new_assignment_costs::" << std::endl;
     original_solution->print();
 
-    std::cout << "-.algorithm_stats::" << std::endl;
-    std::cout << "iterations: " << hc->get_num_iterations() <<  ", ";
-    std::cout << "running_time: " << hc->get_execution_time() << std::endl;
+    hc->print();
     original_solution->write_solution_to_file(fout_new_solution);
-
 
     delete instance;
     delete original_solution;
@@ -154,16 +113,6 @@ int main (int argc,char *argv[]) {
     fout_new_solution.close();
     fin_instance.close();
     fin_original_solution.close();
-
-    /*
-    std::cout << std::endl << "arguments:" << std::endl;
-    std::cout << "time_limit: " << time_limit << std::endl;
-    std::cout << "model_filename: " << instance_filename << std::endl;
-    std::cout << "initial_assignment_filename: " << original_solution_filename << std::endl;
-    std::cout << "new_assignment_filename: " << new_solution_filename << std::endl;
-    std::cout << "seed: " << seed << std::endl;
-    */
-
 
     return 0;
 }

@@ -13,7 +13,7 @@ Solution::Solution() {}
 Solution::Solution(Instance *instance) {
     this->instance = instance;
     //set empty assignment
-    Assignments assignments(instance->get_num_of_processes(), -1);
+    Assignments assignments(instance->get_num_of_processes(), 50000);
     set_assignments(assignments);
 }
 
@@ -52,7 +52,7 @@ int64_t Solution::get_solution_cost() {
 
 void Solution::read_solution_from_file(std::ifstream &in) {
     Assignments initial_assignments;
-    int assignment;
+    unsigned int assignment;
     while(in >> assignment) {
         initial_assignments.push_back(assignment);
     }
@@ -73,11 +73,15 @@ void Solution::print() {
     std::cout << "total_cost: " << get_solution_cost() << std::endl;
 }
 
+/*
+
 void Solution::print_assignments() {
     std::cout << "Assignments:" << std::endl;
     std::copy(assignments.begin(), assignments.end(), std::ostream_iterator<int>(std::cout, " "));
     std::cout << std::endl;
 }
+*/
+
 
 Assignments Solution::get_assignments() {
     return assignments;
@@ -247,14 +251,7 @@ bool Solution::check_conflict_with_shift(unsigned int process_id, int machine_id
     Process *process = instance->get_process(process_id);
     Service *service = instance->get_service(process->get_service_id());
     //search new machine in service's used machines list, if not found, there is no problem
-    if(service->has_machine(machine_id)) {
-        //std::cout << "Restricción de conflicto violada, proceso " << process_id << std::endl;
-        return false;
-    } else {
-        return true;
-    }
-
-    //return !service->has_machine(machine_id);
+    return !service->has_machine(machine_id);
 }
 
 bool Solution::check_spread_with_shift(unsigned int process_id, int machine_id) {
@@ -604,7 +601,7 @@ int64_t Solution::calc_delta_cost_with_shift(unsigned int process_id, int machin
 
 // shift movement
 
-void Solution::shift_process(unsigned int process_id, int machine_id) {
+void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *old_machine = instance->get_machine(process->get_current_machine_id());
     Machine *new_machine = instance->get_machine(machine_id);
@@ -701,11 +698,11 @@ void Solution::shift_process(unsigned int process_id, int machine_id) {
     update_solution_costs();
 }
 
-int Solution::get_current_assignment(unsigned int process_id) {
+unsigned int Solution::get_current_assignment(unsigned int process_id) {
     return assignments[process_id];
 }
 
-void Solution::assign_process(unsigned int process_id, int machine_id) {
+void Solution::assign_process(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
     Machine *machine = instance->get_machine(machine_id);
 
@@ -719,6 +716,8 @@ void Solution::assign_process(unsigned int process_id, int machine_id) {
 
     process->set_initial_machine_id(machine_id);
     process->set_current_machine_id(machine_id);
+    process->set_location_id(machine->get_location_id());
+    process->set_neighborhood_id(machine->get_neighborhood_id());
 
     Service *service = instance->get_service(process->get_service_id());
 
@@ -739,7 +738,7 @@ void Solution::assign_process(unsigned int process_id, int machine_id) {
 
 }
 
-bool Solution::check_assignment(unsigned int process_id, int machine_id) {
+bool Solution::check_assignment(unsigned int process_id, unsigned int machine_id) {
     return (check_capacity_with_assignment(process_id, machine_id)
             && check_conflict_with_assignment(process_id, machine_id)
             && check_spread_with_assignment(process_id, machine_id)
@@ -759,13 +758,8 @@ bool Solution::check_spread_with_assignment(unsigned int process_id, int machine
     Service *service = instance->get_service(process->get_service_id());
     int machine_location = instance->get_machine(machine_id)->get_location_id();
 
+    return !service->has_location(machine_location);
 
-    if(!service->locations.empty() && service->locations.size() < service->get_spread_min()) {
-        return !service->has_location(machine_location);
-
-    }
-
-    return true;
 }
 
 bool Solution::check_dependency_with_assignment(unsigned int process_id, int machine_id) {

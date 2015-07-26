@@ -23,6 +23,7 @@ public:
     void set_time_limit(unsigned int time_limit);
     double get_execution_time();
     int32_t get_num_iterations();
+    void print();
 };
 
 

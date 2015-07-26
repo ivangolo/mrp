@@ -4,6 +4,7 @@
 
 #include "HillClimbing.h"
 #include "utils.h"
+#include <iostream>
 
 HillClimbing::HillClimbing() {
 
@@ -30,10 +31,10 @@ Solution * HillClimbing::run(bool sorted) {
         for(unsigned int i = 0; i < instance->processes.size(); ++i) {
             unsigned int process_id = (sorted) ? instance->sorted_processes[i].first : i;
             SolutionNeighborhood neighborhood;
-            int current_process_assignment = solution->get_current_assignment(process_id);
+            unsigned int current_process_assignment = solution->get_current_assignment(process_id);
 
             //generate the neighborhood
-            for (int machine_id = 0; machine_id < instance->get_num_of_machines(); ++machine_id) {
+            for (unsigned int machine_id = 0; machine_id < instance->get_num_of_machines(); ++machine_id) {
 
                 if (machine_id != current_process_assignment) {
 
@@ -83,4 +84,11 @@ double HillClimbing::get_execution_time() {
 
 int32_t HillClimbing::get_num_iterations() {
     return num_iterations;
+}
+
+
+void HillClimbing::print() {
+    std::cout << "-.algorithm_stats::" << std::endl;
+    std::cout << "iterations: " << get_num_iterations() <<  ", ";
+    std::cout << "running_time: " << get_execution_time() << std::endl;
 }

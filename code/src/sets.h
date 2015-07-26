@@ -11,7 +11,7 @@
 
 typedef std::deque<unsigned int> ProcessList;
 typedef std::deque<int> List;
-typedef List Assignments;
+typedef ProcessList Assignments;
 typedef List MachineList;
 typedef List ServiceList;
 typedef List LocationList;

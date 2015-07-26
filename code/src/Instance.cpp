@@ -125,8 +125,8 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         this->get_service(service_id)->add_process(n);
 
         //setting initial and current assignment
-        process->set_initial_machine_id(-1);
-        process->set_current_machine_id(-1);
+        process->set_initial_machine_id(50000);
+        process->set_current_machine_id(50000);
 
         sorted_processes.push_back(std::make_pair(n, process->get_size()));
         add_process(process);
@@ -152,24 +152,24 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
     fin_instance >> weight_machine_move_cost;
 
     //model type: a or b
-    type = (num_processes > 1000) ? 'b' : 'a';
+    //type = (num_processes > 1000) ? 'b' : 'a';
 
 }
 
 
 void Instance::add_solution(Assignments &original_solution) {
-    for(unsigned int i = 0; i < original_solution.size(); ++i) {
+    for(unsigned int process_id = 0; process_id < original_solution.size(); ++process_id) {
         //adding processes to machines
-        get_machine(original_solution[i])->add_process(i);
+        get_machine(original_solution[process_id])->add_process(process_id);
         //adding machine to processes
-        Process *process = get_process(i);
-        process->set_initial_machine_id(original_solution[i]);
-        process->set_current_machine_id(original_solution[i]);
+        Process *process = get_process(process_id);
+        process->set_initial_machine_id(original_solution[process_id]);
+        process->set_current_machine_id(original_solution[process_id]);
 
         //adding location to processes
-        process->set_location_id(get_machine(original_solution[i])->get_location_id());
+        process->set_location_id(get_machine(original_solution[process_id])->get_location_id());
         //adding neighborhood to processes
-        process->set_neighborhood_id(get_machine(original_solution[i])->get_neighborhood_id());
+        process->set_neighborhood_id(get_machine(original_solution[process_id])->get_neighborhood_id());
 
         //adding used machines, locations and neighborhoods to service ownwer
         Service *service = get_service(process->get_service_id());
@@ -276,19 +276,33 @@ void Instance::init(Assignments assignments) {
     Instance::sort_process_by_size();
 }
 
+
+/*
 void Instance::print_services() {
     std::deque<Service*>::iterator service_iter;
     for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
         (*service_iter)->print();
     }
 }
+ */
 
+/*
 void Instance::print_processes() {
     std::deque<Process*>::iterator process_iter;
     for (process_iter = processes.begin(); process_iter != processes.end(); ++process_iter) {
         (*process_iter)->print();
     }
 }
+*/
+
+/*
+void Instance::print_machines() {
+    std::deque<Machine*>::iterator machine_iter;
+    for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
+        (*machine_iter)->print();
+    }
+}
+*/
 
 void Instance::add_dependant_services() {
     std::deque<Service*>::iterator service_iter;
@@ -360,14 +374,6 @@ void Instance::sort_process_by_size() {
     std::sort(sorted_processes.begin(), sorted_processes.end(), BiggerProcess());
 }
 
-void Instance::print_sorted_processes() {
-    std::cout << "Procesos ordenados:" << std::endl;
-    for (const auto& p : sorted_processes) {
-        std::cout << p.first << ", " << p.second << std::endl;
-    }
-}
-
-
 unsigned long int Instance::get_num_of_processes() {
     return processes.empty() ? 0 : processes.size();
 }
@@ -376,26 +382,25 @@ unsigned long int Instance::get_num_of_machines() {
     return machines.empty() ? 0 : machines.size();
 }
 
+/*
 unsigned long int Instance::get_num_of_resources() {
     return resources.empty() ? 0 : resources.size();
 }
+ */
+/*
 
 unsigned long int Instance::get_num_of_balances() {
     return balances.empty() ? 0 : balances.size();
 }
+*/
+/*
 
 unsigned long int Instance::get_num_of_services() {
     return services.empty() ? 0 : services.size();
 }
 
-void Instance::print_machines() {
-    std::deque<Machine*>::iterator machine_iter;
-    for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
-        (*machine_iter)->print();
-    }
-}
-
-
+*/
+/*
 char Instance::get_type() {
     return type;
 }
@@ -403,3 +408,4 @@ char Instance::get_type() {
 void Instance::set_type(char type) {
     this->type = type;
 }
+*/
