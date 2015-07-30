@@ -61,6 +61,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         for (unsigned int j = 0; j < num_resources; ++j) {
             fin_instance >> capacity;
             machine->add_capacity(capacity);
+            machine->increment_machine_size(capacity);
         }
         //reading resource safety_capacities
         for (unsigned int k = 0; k < num_resources; ++k) {
@@ -75,8 +76,9 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         //initialize usages
         for (unsigned int m = 0; m < num_resources; ++m) {
             machine->add_usage(0);
+            machine->add_transient_usage(0);
         }
-
+        sorted_machines.push_back(i);
         add_machine(machine);
     }
 
@@ -124,11 +126,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
         //adding the process to the service owner
         this->get_service(service_id)->add_process(n);
 
-        //setting initial and current assignment
-        process->set_initial_machine_id(50000);
-        process->set_current_machine_id(50000);
-
-        sorted_processes.push_back(std::make_pair(n, process->get_size()));
+        sorted_processes.push_back(n);
         add_process(process);
     }
 
@@ -151,9 +149,6 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
     fin_instance >> weight_service_move_cost;
     fin_instance >> weight_machine_move_cost;
 
-    //model type: a or b
-    //type = (num_processes > 1000) ? 'b' : 'a';
-
 }
 
 
@@ -171,7 +166,7 @@ void Instance::add_solution(Assignments &original_solution) {
         //adding neighborhood to processes
         process->set_neighborhood_id(get_machine(original_solution[process_id])->get_neighborhood_id());
 
-        //adding used machines, locations and neighborhoods to service ownwer
+        //adding used machines, locations and neighborhoods to the service ownwer
         Service *service = get_service(process->get_service_id());
 
         if(!service->has_location(process->get_location_id())) {
@@ -190,16 +185,13 @@ void Instance::add_solution(Assignments &original_solution) {
 
 }
 
-void Instance::compute_usage(int machine_id, int resource_id) {
-    //initially, transient usages remains in 0
+void Instance::compute_usage(unsigned int machine_id, unsigned int resource_id) {
     Machine *machine = get_machine(machine_id);
     uint32_t usage = 0;
     for(ProcessList::iterator it = machine->processes.begin(); it != machine->processes.end(); ++it) {
         usage += get_process(*it)->get_requirement(resource_id);
     }
     machine->set_usage(resource_id, usage);
-    //for a transient resource, its usage is initially zero
-    machine->set_transient_usage(resource_id, 0);
 }
 
 void Instance::compute_all_usages() {
@@ -273,36 +265,30 @@ void Instance::init(Assignments assignments) {
     Instance::add_solution(assignments);
     Instance::add_dependant_services();
     Instance::compute_all_usages();
-    Instance::sort_process_by_size();
+    Instance::sort_processes_by_size();
 }
 
-
-/*
 void Instance::print_services() {
     std::deque<Service*>::iterator service_iter;
     for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
         (*service_iter)->print();
     }
 }
- */
 
-/*
 void Instance::print_processes() {
     std::deque<Process*>::iterator process_iter;
     for (process_iter = processes.begin(); process_iter != processes.end(); ++process_iter) {
         (*process_iter)->print();
     }
 }
-*/
 
-/*
 void Instance::print_machines() {
     std::deque<Machine*>::iterator machine_iter;
     for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
         (*machine_iter)->print();
     }
 }
-*/
+
 
 void Instance::add_dependant_services() {
     std::deque<Service*>::iterator service_iter;
@@ -318,19 +304,19 @@ Process *Instance::get_process(unsigned int process_id) {
     return processes[process_id];
 }
 
-Machine *Instance::get_machine(int machine_id) {
+Machine *Instance::get_machine(unsigned int machine_id) {
     return machines[machine_id];
 }
 
-Service *Instance::get_service(int service_id) {
+Service *Instance::get_service(unsigned int service_id) {
     return services[service_id];
 }
 
-Resource *Instance::get_resource(int resource_id) {
+Resource *Instance::get_resource(unsigned int resource_id) {
     return resources[resource_id];
 }
 
-Balance *Instance::get_balance(int balance_id) {
+Balance *Instance::get_balance(unsigned int balance_id) {
     return balances[balance_id];
 }
 
@@ -370,8 +356,22 @@ void Instance::add_balance(Balance *balance) {
     balances.push_back(balance);
 }
 
-void Instance::sort_process_by_size() {
-    std::sort(sorted_processes.begin(), sorted_processes.end(), BiggerProcess());
+void Instance::sort_processes_by_size() {
+    std::sort(sorted_processes.begin(), sorted_processes.end(), BiggerProcess(*this));
+
+}
+
+/*
+
+void Instance::sort_machines_by_size() {
+    std::sort(sorted_machines.begin(), sorted_machines.end(), BiggerMachine(*this));
+}
+*/
+
+void Instance::sort_services_by_dependencies() {
+    std::sort(restricted_services.begin(), restricted_services.end(), LessRestrictedProcess(*this));
+    std::sort(less_restricted_processes.begin(), less_restricted_processes.end(), BiggerProcess(*this));
+    std::sort(restricted_processes.begin(), restricted_processes.end(), BiggerProcess(*this));
 }
 
 unsigned long int Instance::get_num_of_processes() {
@@ -382,30 +382,20 @@ unsigned long int Instance::get_num_of_machines() {
     return machines.empty() ? 0 : machines.size();
 }
 
-/*
-unsigned long int Instance::get_num_of_resources() {
-    return resources.empty() ? 0 : resources.size();
-}
- */
-/*
-
-unsigned long int Instance::get_num_of_balances() {
-    return balances.empty() ? 0 : balances.size();
-}
-*/
-/*
-
 unsigned long int Instance::get_num_of_services() {
     return services.empty() ? 0 : services.size();
 }
 
-*/
-/*
-char Instance::get_type() {
-    return type;
-}
+void Instance::classify_services() {
+    std::deque<Service*>::iterator service_iter;
+    for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
+        if((*service_iter)->get_spread_min() == 0 && (*service_iter)->dependencies.empty()) {
+            less_restricted_services.push_back((*service_iter)->get_id());
+            less_restricted_processes.insert(less_restricted_processes.end(), (*service_iter)->processes.begin(), (*service_iter)->processes.end());
+        } else {
+            restricted_services.push_back((*service_iter)->get_id());
+            restricted_processes.insert(restricted_processes.end(), (*service_iter)->processes.begin(),  (*service_iter)->processes.end());
+        }
 
-void Instance::set_type(char type) {
-    this->type = type;
+    }
 }
-*/

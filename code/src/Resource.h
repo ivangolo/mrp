@@ -7,18 +7,18 @@
 
 
 class Resource {
-    int id;
-    int weight_load_cost;
+    unsigned int id;
+    unsigned int weight_load_cost;
     bool transient;
 
 
 public:
     Resource();
-    Resource(int id, int weight_load_cost, bool transient);
+    Resource(unsigned int id, unsigned int weight_load_cost, bool transient);
     ~Resource();
     bool is_transient();
-    int get_id();
-    int get_weight_load_cost();
+    unsigned int get_id();
+    unsigned int get_weight_load_cost();
     void print();
 
 };

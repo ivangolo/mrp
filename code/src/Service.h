@@ -8,7 +8,7 @@
 #include "sets.h"
 
 class Service {
-    int id;
+    unsigned int id;
     unsigned int spread_min;
     unsigned int num_moved_processes;
 
@@ -20,24 +20,24 @@ public:
     LocationList locations;
     NeighborhoodList neighborhoods;
     Service();
-    Service(int id, unsigned int spread_min);
+    Service(unsigned int id, unsigned int spread_min);
     ~Service();
 
     void add_process(unsigned int process_id);
-    void add_dependency(int service_id);
-    void add_dependent(int service_id);
-    void add_machine(int machine_id);
-    void add_neighborhood(int neighborhood_id);
-    void add_location(int location_id);
-    void remove_machine(int machine_id);
-    void remove_neighborhood(int neighborhood_id);
-    void remove_location(int location_id);
-    int get_id();
+    void add_dependency(unsigned int service_id);
+    void add_dependent(unsigned int service_id);
+    void add_machine(unsigned int machine_id);
+    void add_neighborhood(unsigned int neighborhood_id);
+    void add_location(unsigned int location_id);
+    void remove_machine(unsigned int machine_id);
+    void remove_neighborhood(unsigned int neighborhood_id);
+    void remove_location(unsigned int location_id);
+    unsigned int get_id();
     unsigned int get_spread_min();
     void print();
-    bool has_machine(int machine_id);
-    bool has_neighborhood(int neighborhood_id);
-    bool has_location(int location_id);
+    bool has_machine(unsigned int machine_id);
+    bool has_neighborhood(unsigned int neighborhood_id);
+    bool has_location(unsigned int location_id);
     unsigned int get_num_moved_processes();
     void increment_moved_processes();
     void decrement_moved_processes();

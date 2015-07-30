@@ -10,7 +10,7 @@ Resource::Resource() {
     std::cout << "Resource created" << std::endl;
 }
 
-Resource::Resource(int id, int weight_load_cost, bool transient) {
+Resource::Resource(unsigned int id, unsigned int weight_load_cost, bool transient) {
     this->id = id;
     this->weight_load_cost = weight_load_cost;
     this->transient = transient;
@@ -24,11 +24,11 @@ bool Resource::is_transient() {
     return transient;
 }
 
-int Resource::get_id() {
+unsigned int Resource::get_id() {
     return id;
 }
 
-int Resource::get_weight_load_cost() {
+unsigned int Resource::get_weight_load_cost() {
     return weight_load_cost;
 }
 

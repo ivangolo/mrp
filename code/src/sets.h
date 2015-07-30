@@ -9,9 +9,9 @@
 #include <cstdint>
 #include <map>
 
-typedef std::deque<unsigned int> ProcessList;
-typedef std::deque<int> List;
-typedef ProcessList Assignments;
+typedef std::deque<unsigned int> List;
+typedef List Assignments;
+typedef List ProcessList;
 typedef List MachineList;
 typedef List ServiceList;
 typedef List LocationList;

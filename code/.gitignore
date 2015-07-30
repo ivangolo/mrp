@@ -6,3 +6,6 @@ build
 checker
 solutions
 *.csv
+
+salida(servicios sin dependencias y spread cero).txt
+salida(servicios sin dependencias).txt

@@ -6,11 +6,11 @@
 #include "Balance.h"
 
 Balance::Balance() {
-    std::cout << "Balance created" << std::endl;
+    //std::cout << "Balance created" << std::endl;
 }
 
-Balance::Balance(int id, int target, int resource1_id, int resource2_id,
-                 int weight_balance_cost) {
+Balance::Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id,
+                 unsigned int weight_balance_cost) {
     this->id = id;
     this->target = target;
     this->resource1_id = resource1_id;
@@ -22,20 +22,20 @@ Balance::~Balance() {
     //std::cout << "Balance " << id << " destroyed" << std::endl;
 }
 
-int Balance::get_id() {
+unsigned int Balance::get_id() {
     return id;
 }
 
-int Balance::get_resource_id(int num) {
+unsigned int Balance::get_resource_id(unsigned int num) {
     return (num == 1) ? resource1_id : resource2_id;
 }
 
-int Balance::get_target() {
+unsigned int Balance::get_target() {
     return target;
 }
 
 
-int Balance::get_weight_balance_cost() {
+unsigned int Balance::get_weight_balance_cost() {
     return weight_balance_cost;
 }
 

@@ -7,22 +7,22 @@
 
 
 class Balance {
-    int id;
-    int target;
-    int resource1_id;
-    int resource2_id;
-    int weight_balance_cost;
+    unsigned int id;
+    unsigned int target;
+    unsigned int resource1_id;
+    unsigned int resource2_id;
+    unsigned int weight_balance_cost;
 
 public:
 
     Balance();
-    Balance(int id, int target, int resource1_id, int resource2_id, int weight_balance_cost);
+    Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id, unsigned int weight_balance_cost);
     ~Balance();
 
-    int get_id();
-    int get_target();
-    int get_resource_id(int num);
-    int get_weight_balance_cost();
+    unsigned int get_id();
+    unsigned int get_target();
+    unsigned int get_resource_id(unsigned int num);
+    unsigned int get_weight_balance_cost();
 
     void print();
 

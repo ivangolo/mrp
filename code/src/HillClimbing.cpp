@@ -29,7 +29,7 @@ Solution * HillClimbing::run(bool sorted) {
     do {
         changes = false;
         for(unsigned int i = 0; i < instance->processes.size(); ++i) {
-            unsigned int process_id = (sorted) ? instance->sorted_processes[i].first : i;
+            unsigned int process_id = (sorted) ? instance->sorted_processes[i] : i;
             SolutionNeighborhood neighborhood;
             unsigned int current_process_assignment = solution->get_current_assignment(process_id);
 

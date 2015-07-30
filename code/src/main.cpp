@@ -15,9 +15,8 @@
 
 int main (int argc,char *argv[]) {
 
-    int seed = 0;
     std::string instance_filename, original_solution_filename, new_solution_filename;
-    unsigned int time_limit = 300;
+    unsigned int time_limit = 300, seed = 0;
 
     int tmp;
     if(argc == 1) {
