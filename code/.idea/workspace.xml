@@ -15,20 +15,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7f8dea5-ba30-4cff-8880-bbf4fe3456a0" name="Default" comment="command line options and basic input output files">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/abstract.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/algoritmo.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/conclusiones.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/definicion_del_problema.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/estado_del_arte.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/experimentos.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/introduccion.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/modelo_matematico.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/representacion.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../informe/sections/resultados.tex" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../informe/informe2.pdf" afterPath="$PROJECT_DIR$/../informe/informe2.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillClimbing.cpp" afterPath="$PROJECT_DIR$/src/HillClimbing.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HillClimbing.h" afterPath="$PROJECT_DIR$/src/HillClimbing.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Instance.cpp" afterPath="$PROJECT_DIR$/src/Instance.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Instance.h" afterPath="$PROJECT_DIR$/src/Instance.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service.cpp" afterPath="$PROJECT_DIR$/src/Service.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Service.h" afterPath="$PROJECT_DIR$/src/Service.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.cpp" afterPath="$PROJECT_DIR$/src/Solution.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.h" afterPath="$PROJECT_DIR$/src/Solution.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../informe/sections/algoritmo.tex" afterPath="$PROJECT_DIR$/../informe/sections/algoritmo.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../informe/informe2.tex" afterPath="$PROJECT_DIR$/../informe/informe2.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sets.h" afterPath="$PROJECT_DIR$/src/sets.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils.cpp" afterPath="$PROJECT_DIR$/src/utils.cpp" />
     </list>
     <ignored path="codigo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,10 +52,22 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.269168">
-              <caret line="99" column="35" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="35" />
+            <state vertical-scroll-proportion="3.0445545">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="e#42#61#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,7 +101,6 @@
         <option value="$PROJECT_DIR$/src/Constraints.h" />
         <option value="$PROJECT_DIR$/src/Constraints.cpp" />
         <option value="$PROJECT_DIR$/src/Costs.cpp" />
-        <option value="$PROJECT_DIR$/src/utils.cpp" />
         <option value="$PROJECT_DIR$/notes.md" />
         <option value="$PROJECT_DIR$/src/BiggerProcessHelper.h" />
         <option value="$PROJECT_DIR$/src/RemoveProcess.h" />
@@ -107,13 +118,14 @@
         <option value="$PROJECT_DIR$/src/HillClimbing.h" />
         <option value="$PROJECT_DIR$/src/Service.cpp" />
         <option value="$PROJECT_DIR$/src/Service.h" />
-        <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/src/Instance.h" />
         <option value="$PROJECT_DIR$/src/sets.h" />
         <option value="$PROJECT_DIR$/src/HillClimbing.cpp" />
         <option value="$PROJECT_DIR$/src/Solution.h" />
         <option value="$PROJECT_DIR$/src/Solution.cpp" />
         <option value="$PROJECT_DIR$/src/Instance.cpp" />
+        <option value="$PROJECT_DIR$/src/main.cpp" />
+        <option value="$PROJECT_DIR$/src/utils.cpp" />
       </list>
     </option>
   </component>
@@ -248,7 +260,7 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="mrp" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-t 300 -p a1/models/model_a1_1.txt -i a1/assignments/assignment_a1_1.txt  -o solutions/a1/out-1-greedy.txt -s 100 " WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="mrp" TARGET_NAME="mrp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mrp" RUN_TARGET_NAME="mrp">
+    <configuration default="false" name="mrp" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-t 300 -p a1/models/model_a1_1.txt -i a1/assignments/assignment_a1_1.txt  -o solutions/a1/out-1.txt -s 100" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="mrp" TARGET_NAME="mrp" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mrp" RUN_TARGET_NAME="mrp">
       <envs />
       <method />
     </configuration>
@@ -294,24 +306,24 @@
     <frame x="-4" y="-1" width="1374" height="745" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21888727" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32636657" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4657321" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46526656" sideWeight="0.4973822" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3215434" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3004695" sideWeight="0.511713" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39719626" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40325204" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30062306" sideWeight="0.48828697" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03089431" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21888727" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32503888" sideWeight="0.4944155" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30048466" sideWeight="0.48828697" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4695122" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03089431" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0124223605" sideWeight="0.4944155" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="100" width="1164" height="533" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39719626" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32503888" sideWeight="0.4944155" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -365,11 +377,20 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Instance.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -555,13 +576,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17918089">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Balance.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5912409">
@@ -650,7 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -658,7 +671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.862969">
           <caret line="120" column="43" selection-start-line="120" selection-start-column="43" selection-end-line="120" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -666,7 +678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0032626">
           <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -674,15 +685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7340946">
           <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sets.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09787928">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -690,7 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,17 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="9.442088">
           <caret line="688" column="0" selection-start-line="688" selection-start-column="0" selection-end-line="688" selection-end-column="0" />
-          <folding>
-            <element signature="e#375#500#0" expanded="false" />
-            <element signature="e#502#583#0" expanded="false" />
-            <element signature="e#585#644#0" expanded="false" />
-            <element signature="e#646#711#0" expanded="false" />
-            <element signature="e#713#788#0" expanded="false" />
-            <element signature="e#790#865#0" expanded="false" />
-            <element signature="e#867#942#0" expanded="false" />
-            <element signature="e#944#1082#0" expanded="false" />
-            <element signature="e#1342#1527#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -716,7 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8564437">
           <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -724,11 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.7862968">
           <caret line="212" column="0" selection-start-line="212" selection-start-column="0" selection-end-line="212" selection-end-column="0" />
-          <folding>
-            <element signature="e#7193#7981#0" expanded="false" />
-            <element signature="e#7983#9013#0" expanded="false" />
-            <element signature="e#9015#9262#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -740,10 +724,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#42#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.269168">
-          <caret line="99" column="35" selection-start-line="99" selection-start-column="35" selection-end-line="99" selection-end-column="35" />
+        <state vertical-scroll-proportion="3.0445545">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

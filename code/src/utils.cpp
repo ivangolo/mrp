@@ -14,10 +14,6 @@ void show_help_info(char *s) {
     std::cout << "         " << "-i path/to/original_solution_filename" << std::endl;
     std::cout << "         " << "-o path/to/new_solution_filename" << std::endl;
     std::cout << "         " << "-s seed" << std::endl;
-    std::cout << "example: " << s << " -t 300 -p model_a1_1.txt -i assignment_a1_1.txt -o salida.txt -s 100" << std::endl;
-}
-
-
-std::pair<unsigned int, int64_t> get_min(SolutionNeighborhood neighborhood) {
-    return *min_element(neighborhood.begin(), neighborhood.end(), CompareSecond());
+    std::cout << "         " << "-a sorted (hill climbing mode)" << std::endl;
+    std::cout << "example: " << s << " -t 300 -p model_a1_1.txt -i assignment_a1_1.txt -o salida.txt -s 100 -a sorted" << std::endl;
 }
