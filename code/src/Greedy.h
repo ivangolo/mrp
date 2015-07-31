@@ -12,6 +12,7 @@ class Greedy {
     Instance *instance;
     Solution *solution;
     unsigned int assigned_processes;
+    SolutionNeighborhood neighborhood;
 
 public:
     Greedy();
@@ -19,6 +20,14 @@ public:
     ~Greedy();
     Solution * run();
     unsigned int get_num_assigned_processes();
+    std::pair<unsigned int, int64_t> get_min_assign();
+
+    struct AssignMinCost {
+        template <typename T>
+        bool operator()(const T& left, const T& right) {
+            return left.second < right.second;
+        }
+    };
 
 };
 

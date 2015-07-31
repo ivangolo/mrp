@@ -3,8 +3,8 @@
 //
 
 #include "HillClimbing.h"
-#include "utils.h"
 #include <iostream>
+#include <algorithm>
 
 HillClimbing::HillClimbing() {
 
@@ -28,9 +28,8 @@ Solution * HillClimbing::run(bool sorted) {
 
     do {
         changes = false;
-        for(unsigned int i = 0; i < instance->processes.size(); ++i) {
+        for(unsigned int i = 0; i < instance->get_num_of_processes(); ++i) {
             unsigned int process_id = (sorted) ? instance->sorted_processes[i] : i;
-            SolutionNeighborhood neighborhood;
             unsigned int current_process_assignment = solution->get_current_assignment(process_id);
 
             //generate the neighborhood
@@ -42,7 +41,7 @@ Solution * HillClimbing::run(bool sorted) {
                         int64_t delta_cost = solution->calc_delta_cost_with_shift(process_id, machine_id);
 
                         if (delta_cost < 0) {  //only solutions that improves the current solution
-                            neighborhood[machine_id] = delta_cost;
+                            add_neighbour(machine_id, delta_cost);
                         }
                     }
                 }
@@ -51,9 +50,10 @@ Solution * HillClimbing::run(bool sorted) {
 
             //check the best shift
             if (!neighborhood.empty()) {
-                std::pair<unsigned int, int64_t> best_machine = get_min(neighborhood);
+                std::pair<unsigned int, int64_t> best_machine = get_min_shift();
                 solution->shift_process(process_id, best_machine.first);
                 changes = true;
+                neighborhood.clear();
             }
 
             num_iterations++;
@@ -92,3 +92,13 @@ void HillClimbing::print() {
     std::cout << "iterations: " << get_num_iterations() <<  ", ";
     std::cout << "running_time: " << get_execution_time() << std::endl;
 }
+
+
+void HillClimbing::add_neighbour(unsigned int machine_id, int64_t cost_decrement) {
+    neighborhood[machine_id] = cost_decrement;
+}
+
+std::pair<unsigned int, int64_t> HillClimbing::get_min_shift() {
+    return *min_element(neighborhood.begin(), neighborhood.end(), ShiftMinCost());
+}
+

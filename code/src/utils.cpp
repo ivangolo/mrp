@@ -16,8 +16,3 @@ void show_help_info(char *s) {
     std::cout << "         " << "-s seed" << std::endl;
     std::cout << "example: " << s << " -t 300 -p model_a1_1.txt -i assignment_a1_1.txt -o salida.txt -s 100" << std::endl;
 }
-
-
-std::pair<unsigned int, int64_t> get_min(SolutionNeighborhood neighborhood) {
-    return *min_element(neighborhood.begin(), neighborhood.end(), CompareSecond());
-}

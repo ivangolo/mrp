@@ -4,3 +4,4 @@ GenericMakeFile/
 code/mrp
 test*
 *.py
+*.ods

@@ -3,7 +3,7 @@
 //
 
 #include "Greedy.h"
-#include "utils.h"
+#include <algorithm>
 
 Greedy::Greedy() {
 
@@ -38,7 +38,7 @@ Solution *Greedy::run() {
         }
 
         if(!neighborhood.empty()) {
-            std::pair<unsigned int, int64_t> best_machine = get_min(neighborhood);
+            std::pair<unsigned int, int64_t> best_machine = get_min_assign();
             solution->assign_process(process->get_id(), best_machine.first);
             process->set_assigned_status(true);
             assigned_processes++;
@@ -48,7 +48,6 @@ Solution *Greedy::run() {
     unsigned int i;
     do {
         for (ProcessList::iterator process_id = instance->restricted_processes.begin(); process_id != instance->restricted_processes.end(); ++process_id) {
-            SolutionNeighborhood neighborhood;
             Process *process = instance->get_process(*process_id);
             if(process->is_assigned()) {
                 continue;
@@ -61,10 +60,11 @@ Solution *Greedy::run() {
             }
 
             if(!neighborhood.empty()) {
-                std::pair<unsigned int, int64_t> best_machine = get_min(neighborhood);
+                std::pair<unsigned int, int64_t> best_machine = get_min_assign();
                 solution->assign_process(process->get_id(), best_machine.first);
                 process->set_assigned_status(true);
                 assigned_processes++;
+                neighborhood.clear();
             }
         }
         i++;
@@ -76,4 +76,8 @@ Solution *Greedy::run() {
 
 unsigned int Greedy::get_num_assigned_processes() {
     return assigned_processes;
+}
+
+std::pair<unsigned int, int64_t> Greedy::get_min_assign() {
+    return *min_element(neighborhood.begin(), neighborhood.end(), AssignMinCost());
 }
