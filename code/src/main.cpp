@@ -17,6 +17,7 @@ int main (int argc,char *argv[]) {
 
     std::string instance_filename, original_solution_filename, new_solution_filename;
     unsigned int time_limit = 300, seed = 0;
+    bool hc_sorted_processes = false;
 
     int tmp;
     if(argc == 1) {
@@ -24,7 +25,7 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    while((tmp = getopt(argc,argv,"t:p:i:o:s:")) != -1) {
+    while((tmp = getopt(argc,argv,"t:p:i:o:s:a:")) != -1) {
         switch(tmp) {
             case 't': {
                 std::istringstream iss_tm(optarg);
@@ -53,6 +54,18 @@ int main (int argc,char *argv[]) {
                     std::cerr << "Número inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
                 }
+                break;
+            }
+
+            case 'a': {
+                std::string mode(optarg);
+                if(!mode.empty() && mode == "sorted") {
+                    hc_sorted_processes = true;
+                } else if(!mode.empty() && mode != "sorted") {
+                    std::cerr << "Hill Climbing mode inválido " << optarg << std::endl;
+                    exit(EXIT_FAILURE);
+                }
+
                 break;
             }
 
@@ -97,7 +110,7 @@ int main (int argc,char *argv[]) {
 
     HillClimbing *hc = new HillClimbing(instance, original_solution);
     hc->set_time_limit(time_limit);
-    hc->run(true);
+    hc->run(hc_sorted_processes);
 
     std::cout << "-.new_assignment_costs::" << std::endl;
     original_solution->print();

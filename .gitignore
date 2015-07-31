@@ -5,3 +5,4 @@ code/mrp
 test*
 *.py
 *.ods
+code/.idea/workspace.xml
