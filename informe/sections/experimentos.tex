@@ -1,0 +1,52 @@
+\documentclass[../informe2.tex]{subfiles}
+\begin{document}
+Se necesita saber cómo experimentaron, cómo definieron parámetros,
+cómo se fueron modificando, cuáles problemas se trataron, cuáles fueron
+las instancias utilizadas, cuáles fueron las características de las
+instancias, cuáles fueron los criterios de término del algoritmo.
+\textbf{En el caso de las técnicas incompletas, es importante que
+ejecute su programa varias veces con distintas semillas aleatorias,
+para obtener valores estadísticos de los resultados}.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+	\small
+	\centering
+	\begin{tabular}{@{}lrrrrrrrrrr@{}}
+		\toprule
+		Estadística/Instancia & \multicolumn{1}{c}{a1\_1} & \multicolumn{1}{c}{a1\_2} & \multicolumn{1}{c}{a1\_3} & \multicolumn{1}{c}{a1\_4} & \multicolumn{1}{c}{a1\_5} & \multicolumn{1}{c}{a2\_1} & \multicolumn{1}{c}{a2\_2} & \multicolumn{1}{c}{a2\_3} & \multicolumn{1}{c}{a2\_4} & \multicolumn{1}{c}{a2\_5} \\ \midrule
+		Procesos              & 100                       & 1000                      & 1000                      & 1000                      & 1000                      & 1000                      & 1000                      & 1000                      & 1000                      & 1000                      \\
+		Máquinas              & 4                         & 100                       & 100                       & 50                        & 12                        & 100                       & 100                       & 100                       & 50                        & 50                        \\
+		Recursos              & 2                         & 4                         & 3                         & 3                         & 4                         & 3                         & 12                        & 12                        & 12                        & 12                        \\
+		Servicios             & 79                        & 980                       & 216                       & 142                       & 981                       & 1000                      & 170                       & 129                       & 180                       & 153                       \\
+		Vecindarios           & 1                         & 2                         & 5                         & 50                        & 2                         & 1                         & 5                         & 5                         & 5                         & 5                         \\
+		Localizaciones        & 4                         & 4                         & 25                        & 50                        & 4                         & 1                         & 25                        & 25                        & 25                        & 25                        \\
+		Balances              & 1                         & 0                         & 0                         & 1                         & 1                         & 0                         & 0                         & 0                         & 1                         & 0                         \\ \bottomrule
+	\end{tabular}
+	\caption{\small Set A de instancias.}
+	\label{table:set-a}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+	\small
+	\centering
+	\begin{tabular}{@{}lrrrrrrrrrr@{}}
+		\toprule
+		Estadística/Instancia & b\_1 & b\_2 & b\_3  & b\_4  & b\_5  & b\_6  & b\_7  & b\_8  & b\_9  & b\_10 \\ \midrule
+		Procesos              & 5000 & 5000 & 20000 & 20000 & 40000 & 40000 & 40000 & 50000 & 50000 & 50000 \\
+		Máquinas              & 100  & 100  & 100   & 500   & 100   & 200   & 4000  & 100   & 1000  & 5000  \\
+		Recursos              & 12   & 12   & 6     & 6     & 6     & 6     & 6     & 3     & 3     & 3     \\
+		Servicios             & 2512 & 2462 & 15025 & 1732  & 35082 & 14680 & 15050 & 45030 & 4609  & 4896  \\
+		Vecindarios           & 5    & 5    & 5     & 5     & 5     & 5     & 5     & 5     & 5     & 5     \\
+		Localizaciones        & 10   & 10   & 10    & 50    & 10    & 50    & 50    & 10    & 100   & 100   \\
+		Balances              & 0    & 1    & 0     & 1     & 0     & 1     & 1     & 0     & 1     & 1     \\ \bottomrule
+	\end{tabular}
+	\caption{\small Set B de instancias.}
+	\label{table:set-b}
+\end{table}
+
+\end{document}
+

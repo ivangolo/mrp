@@ -3,15 +3,25 @@
 \usepackage[spanish]{babel}
 \usepackage{amsfonts}
 \usepackage{amsmath}
-\usepackage[dvips]{graphicx}
+\usepackage{graphicx}
 \usepackage{url}
 \usepackage[top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,footskip=1.5cm,headheight=1.5cm,headsep=.5cm,textheight=3cm]{geometry}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{pifont}
 \usepackage{booktabs}
-
+\usepackage{subfiles}
+\graphicspath{{img/}{../img/}}
 \newcommand{\mrp}{\emph{Machine Reassignment Problem}}
+
+\usepackage{array}% http://ctan.org/pkg/array
+\makeatletter
+\g@addto@macro{\endtabular}{\rowfont{}}% Clear row font
+\makeatother
+\newcommand{\rowfonttype}{}% Current row font
+\newcommand{\rowfont}[1]{% Set current row font
+	\gdef\rowfonttype{#1}#1%
+}
+\newcolumntype{L}{>{\rowfonttype}l}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -43,35 +53,35 @@ Bibliograf\'{i}a (5 \%):  & \underline{\hspace{2cm}}\tabularnewline
 \vspace{2cm}
 
 \begin{abstract}
-\input{sections/abstract/abstract}
+\subfile{sections/abstract}
 \end{abstract}
 \section{Introducción}
 \label{sec:introduccion}
-\input{sections/introduccion/introduccion}
+\subfile{sections/introduccion}
 \section{Definición del Problema}
 \label{sec:definicion}
-\input{sections/definicion_del_problema/definicion_del_problema}
+\subfile{sections/definicion_del_problema}
 \section{Estado del Arte}
 \label{sec:estado}
-\input{sections/estado_del_arte/estado_del_arte}
+\subfile{sections/estado_del_arte}
 \section{Modelos Matemáticos}
 \label{sec:modelo}
-\input{sections/modelo_matematico/modelo_matematico}
+\subfile{sections/modelo_matematico}
 \section{Representación}
 \label{sec:representacion}
-\input{sections/representacion/representacion}
+\subfile{sections/representacion}
 \section{Descripción del algoritmo}
 \label{sec:algoritmo}
-\input{sections/algoritmo/algoritmo}
+\subfile{sections/algoritmo}
 \section{Experimentos}
 \label{sec:experimentos}
-\input{sections/experimentos/experimentos}
+\subfile{sections/experimentos}
 \section{Resultados}
 \label{sec:resultados}
-\input{sections/resultados/resultados}
+\subfile{sections/resultados}
 \section{Conclusiones}
 \label{sec:conclusiones}
-\input{sections/conclusiones/conclusiones}
+\subfile{sections/conclusiones}
 \section{Bibliografía}
 \bibliographystyle{plain}
 \bibliography{informe2}

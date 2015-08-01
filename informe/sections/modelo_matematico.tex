@@ -1,3 +1,5 @@
+\documentclass[../informe2.tex]{subfiles}
+\begin{document}
 %Uno o m\'as modelos matem\'aticos para el problema, idealmente indicando el espacio de b\'usqueda para cada uno. Cada modelo debe estar correctamente referenciado, adem\'as no debe ser una imagen extraida. Tambi\'en deben explicarse en detalle cada una de las partes, mostrando claramente la funci\'on a maximizar/minimizar, variables y restricciones. Tanto las f\'ormulas como las explicaciones deben ser consistentes.
 Para ambos modelos presentados a continuación, la notación referente a los nombres de los conjuntos de máquinas, procesos, requerimientos, servicios, localizaciones, vecindarios y triplas, será igual a la presentada en la sección \ref{sec:definicion}.
 \subsection{Primer Modelo}
@@ -44,7 +46,7 @@ La función objetivo es la correspondiente a la expresada en la sección \ref{se
 
 \subsubsection{Restricciones}
 \begin{align}
-	\label{modelo1:r1} &\sum_{m \in M}x_{m,p} = 1\;; \quad \forall p \in \mathcal{P} \\ 
+	\label{modelo1:r1} &\sum_{m \in M}x_{m,p} = 1\;; \quad \forall p \in \mathcal{P} \\
 	\label{modelo1:r2} &\sum_{p \in P}x_{m,p}R_{p,r} \leq C_{m,r}\;; \qquad \forall m \in \mathcal{M}, r \in R\backslash TR \\
 	\label{modelo1:r3} &\sum_{p \in P, M_0(p)\neq m}x_{m,p}R_{p,r}+\sum_{p\in P, M_0(p)=m}R_{p,r} \leq C_{m,r}\;; \qquad \forall r \in TR, m \in \mathcal{M} \\
 	\label{modelo1:r4} &\sum_{p \in P} \leq 1\;; \qquad \forall m \in \mathcal{M}, s \in \mathcal{S} \\
@@ -64,12 +66,12 @@ Donde cada restricción corresponde a:
 	\item \eqref{modelo1:r3} para cada recurso de uso transitorio, su utilización no debe exceder la capacidad dispuesta por las máquinas.
 	\item \eqref{modelo1:r4} restricción de conflicto, previene que dos procesos pertenecientes al mismo servicio, sean asignados a la misma máquina.
 	\item \eqref{modelo1:r5} y \eqref{modelo1:r6}, relativas al cumplimiento de las restricciones de dispersión. La primera establece que la variable $y_{l,s}$ debe ser cero cuando ningún proceso del servicio $s$ se ejecuta en alguna máquina perteneciente a la localización $l$. La segunda establece que el número de localizaciones utilizadas por un servicio $s$, debe ser mayor o igual al mínimo de dispersión $SM_s$.
-	\item \eqref{modelo1:r7} y \eqref{modelo1:r8}, relativas al cumplimiento de las restricciones de dependencia. La primera establece si un proceso $p$, perteneciente a un servicio $s$, se ejecuta en algún vecindario determinado. La segunda establece que, si en la anterior restricción $z_{p,n}$ es uno y siendo el servicio $s_b$ dependencia de $s$, al menos un proceso perteneciente a $s_b$ debe ejecutarse en el vecindario $n$.  
+	\item \eqref{modelo1:r7} y \eqref{modelo1:r8}, relativas al cumplimiento de las restricciones de dependencia. La primera establece si un proceso $p$, perteneciente a un servicio $s$, se ejecuta en algún vecindario determinado. La segunda establece que, si en la anterior restricción $z_{p,n}$ es uno y siendo el servicio $s_b$ dependencia de $s$, al menos un proceso perteneciente a $s_b$ debe ejecutarse en el vecindario $n$.
 	\item \eqref{modelo1:r9}, \eqref{modelo1:r10} y \eqref{modelo1:r11}, establece el dominio o valores posibles que pueden tomar esas variables, que en este caso son binarias.
 \end{itemize}
 
 \subsection{Segundo Modelo}
-A continuación se presenta un modelo basado en CP (Constraint Programming) o programación por restricciones, propuesto por Mehta et al. \cite{mehta2012comparing}. 
+A continuación se presenta un modelo basado en CP (Constraint Programming) o programación por restricciones, propuesto por Mehta et al. \cite{mehta2012comparing}.
 
 \subsubsection{Variables}
 \begin{itemize}
@@ -90,18 +92,18 @@ A continuación se presenta un modelo basado en CP (Constraint Programming) o pr
 	\item \textit{Restricciones de carga:} El uso de un recurso $r \in \mathcal{R}$ en una máquina $m$ es la suma de los recursos requeridos por aquellos procesos $p$ que son asignados a la máquina $m$:
 		\begin{equation}\label{modelo2:r1}
 			u_{m,r} = \sum_{p \in \mathcal{P} \wedge x_p = m}r_{p,r}\;; \qquad \forall m \in \mathcal{M}, r \in \mathcal{R}
-		\end{equation} 
-	
+		\end{equation}
+
 	\item \textit{Restricciones de uso transitorio:} La utilización de un recurso transitorio $r \in T$ ($T$ conjunto de recursos de uso transitorio, $T \in \mathcal{R}$) en una máquina $m$ es la suma de $u_{m,r}$ y los recursos requeridos por aquellos procesos $p$ cuya máquina original $o_p$ es $m$ pero la actual es distinta.
 		\begin{equation}\label{modelo2:r2}
 			t_{m,r} = u_{m,r} + \sum_{o_p=m \wedge x_p \neq o_p}r_{p,r}\;; \qquad \forall m \in \mathcal{M}, r \in T
 		\end{equation}
-		
+
 	\item \textit{Restricciones de conflicto:} El conjunto de máquinas usadas por los procesos del servicio $s$ es $um_s := {x_p:p \in s}$. Los procesos pertenecientes al mismo servicio $s$ no pueden ejecutarse en la misma máquina:
 		\begin{equation}\label{modelo2:r3}
 			|s| = |um_s|\;; \qquad \forall s \in \mathcal{S}
 		\end{equation}
-	
+
 	\item\textit{Restricciones de dispersión:} El número de máquinas en una localización $l$ usadas por un servicio $s$ es $\forall s \in \mathcal{S}, l \in \mathcal{L},yu_{s,l}:=|\{x_p|p\in s \wedge|L(x_p)=l\}|$ ($L(x_p)$ es la localización de la máquina $x_p$). El número de localizaciones utilizadas por los procesos de un servicio $s$ es $nul_{s}:=|\{l|l\in \mathcal{L}\wedge yu_{s,l}>0|$. El número de localizaciones utilizadas por un servicio $s$ debe ser mayor o igual al mínimo de dispersión de $s$ ($spreadmin_s$):
 		\begin{equation}\label{modelo2:r4}
 			nul_s \geq spreadmin_s
@@ -110,7 +112,7 @@ A continuación se presenta un modelo basado en CP (Constraint Programming) o pr
 	\begin{equation}\label{modelo2:r5}
 		nmn_s = 0
 	\end{equation}
-		 
+
 \end{itemize}
 
 \subsubsection{Función Objetivo}
@@ -133,3 +135,4 @@ La función objetivo a minimizar es el costo total:
 	minimizar \qquad cost = \sum_{m \in \mathcal{M}}cost_m + (\sum_{p \in \mathcal{P}}cost_p) + \max\limits_{s \in \mathcal{S}}(cost_s)
 \end{equation}
 
+\end{document}
