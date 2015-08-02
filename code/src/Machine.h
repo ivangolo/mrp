@@ -12,27 +12,23 @@ class Machine {
     unsigned int id;
     unsigned int neighborhood_id;
     unsigned int location_id;
-    int64_t size;
 
 public:
     Capacities capacities;
     Capacities safety_capacities;
     ProcessList processes;
-    MachineMoveCosts mmc;
+    MachineMoveCosts machine_move_costs;
     Usages usages;
     Usages transient_usages;
 
     Machine();
     Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id);
     ~Machine();
-
     void add_process(unsigned int process_id);
     void remove_process(unsigned int process_id);
     void add_capacity(int32_t capacity);
     void add_safety_capacity(int32_t safety_capacity);
     void add_machine_move_cost(unsigned int mmc);
-    void add_usage(int32_t usage);
-    void add_transient_usage(int32_t usage);
     unsigned int get_id();
     unsigned int get_location_id();
     unsigned int get_neighborhood_id();
@@ -45,11 +41,7 @@ public:
     unsigned int get_machine_move_cost(unsigned int machine_id);
     void print();
     bool has_process(unsigned int process_id);
-    int64_t get_size();
-    void increment_machine_size(int64_t increment);
-
-
-    //calculate costs here
+    void init_usages(unsigned int num_resources);
 
 };
 

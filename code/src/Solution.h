@@ -21,7 +21,6 @@ class Solution {
 public:
     Solution();
     Solution(Instance *instance);
-    Solution(Instance *instance, std::ifstream &in);
     ~Solution();
 
     int64_t get_load_cost();
@@ -33,7 +32,6 @@ public:
     void read_solution_from_file(std::ifstream &in);
     void write_solution_to_file(std::ofstream &out);
     Assignments get_assignments();
-    unsigned int get_current_assignment(unsigned int process_id);
     void print();
     void print_assignments();
     void set_assignments(Assignments assignments);

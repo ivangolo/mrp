@@ -15,18 +15,26 @@ class HillClimbing {
     int32_t num_iterations;
     unsigned int time_limit;
     SolutionNeighborhood neighborhood;
-
 public:
+
+    enum Mode {
+        INSTANCE_SEQUENCE,
+        SORTED_BY_SIZE
+    };
+    Mode mode;
+
     HillClimbing();
     HillClimbing(Instance *instance, Solution *solution);
     ~HillClimbing();
-    Solution * run(bool sorted = false);
+    Solution * run();
     void set_time_limit(unsigned int time_limit);
     double get_execution_time();
     int32_t get_num_iterations();
     void print();
     void add_neighbour(unsigned int machine_id, int64_t cost_decrement);
     std::pair<unsigned int, int64_t> get_min_shift();
+
+    void set_process_selection_mode(HillClimbing::Mode mode);
 
     struct ShiftMinCost {
         template <typename T>

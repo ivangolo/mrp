@@ -8,25 +8,17 @@
 #include <iterator>
 
 
-Process::Process() {
-    std::cout << "Process created";
-}
+Process::Process() {}
 
 Process::Process(unsigned int id, unsigned int service_id) {
     this->id = id;
     this->service_id = service_id;
     this->size = 0;
-    this->initial_machine_id = 60000;
-    this->current_machine_id = 60000;
-    this->neighborhood_id = 60000;
-    this->location_id = 60000;
     this->assigned = false;
 
 }
 
-Process::~Process() {
-   // std::cout << "Process " << id << " destroyed" << std::endl;
-}
+Process::~Process() {}
 
 void Process::set_current_machine_id(unsigned int current_machine_id) {
     this->current_machine_id = current_machine_id;
@@ -88,11 +80,11 @@ unsigned int Process::get_neighborhood_id() {
 void Process::print() {
     std::cout << "Proceso # " << id << std::endl;
     std::cout << "Servicio # " << service_id << std::endl;
+    std::cout << "Tamaño: " << size << std::endl;
     std::cout << "Process move cost: " << process_move_cost << std::endl;
     std::cout << "Requerimientos: [";
     copy(requirements.begin(), requirements.end(), std::ostream_iterator<unsigned int>(std::cout, ", "));
     std::cout << "]"<< std::endl;
-    std::cout << "Tamaño: " << size << std::endl;
     std::cout << "Máquina: " << get_current_machine_id() << std::endl;
     std::cout << "Vecindario: " << get_neighborhood_id() << std::endl;
     std::cout << "Localización: " << get_location_id() << std::endl;
@@ -103,16 +95,13 @@ int64_t Process::get_size() {
     return size;
 }
 
-
 void Process::increment_process_size(int64_t increment) {
     size += increment;
 }
 
-
 bool Process::is_assigned() {
     return assigned;
 }
-
 
 void Process::set_assigned_status(bool assigned) {
     this->assigned = assigned;

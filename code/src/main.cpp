@@ -17,7 +17,7 @@ int main (int argc,char *argv[]) {
 
     std::string instance_filename, original_solution_filename, new_solution_filename;
     unsigned int time_limit = 300, seed = 0;
-    bool hc_sorted_processes = false;
+    HillClimbing::Mode process_selection_mode = HillClimbing::INSTANCE_SEQUENCE;
 
     int tmp;
     if(argc == 1) {
@@ -60,7 +60,7 @@ int main (int argc,char *argv[]) {
             case 'a': {
                 std::string mode(optarg);
                 if(!mode.empty() && mode == "sorted") {
-                    hc_sorted_processes = true;
+                    process_selection_mode = HillClimbing::SORTED_BY_SIZE;
                 } else if(!mode.empty() && mode != "sorted") {
                     std::cerr << "Hill Climbing mode inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
@@ -93,33 +93,35 @@ int main (int argc,char *argv[]) {
     Instance *instance = new Instance(fin_instance);
 
     //original solution
-    Solution *original_solution = new Solution(instance, fin_original_solution);
+    Solution *solution = new Solution(instance);
+    solution->read_solution_from_file(fin_original_solution);
 
-    if(instance->processes.size() != original_solution->get_assignments().size()) {
+    if(instance->processes.size() != solution->get_assignments().size()) {
         std::cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << std::endl;
         delete instance;
-        delete original_solution;
+        delete solution;
         exit(EXIT_FAILURE);
     }
 
-    instance->init(original_solution->get_assignments());
-    original_solution->update_solution_costs();
+    instance->init(solution->get_assignments());
+    solution->update_solution_costs();
 
     std::cout << "-.initial_assignment_costs::" << std::endl;
-    original_solution->print();
+    solution->print();
 
-    HillClimbing *hc = new HillClimbing(instance, original_solution);
+    HillClimbing *hc = new HillClimbing(instance, solution);
     hc->set_time_limit(time_limit);
-    hc->run(hc_sorted_processes);
+    hc->set_process_selection_mode(process_selection_mode);
+    hc->run();
 
     std::cout << "-.new_assignment_costs::" << std::endl;
-    original_solution->print();
+    solution->print();
 
     hc->print();
-    original_solution->write_solution_to_file(fout_new_solution);
+    solution->write_solution_to_file(fout_new_solution);
 
     delete instance;
-    delete original_solution;
+    delete solution;
     delete hc;
 
     fout_new_solution.close();

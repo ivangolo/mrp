@@ -13,13 +13,8 @@ Solution::Solution() {}
 Solution::Solution(Instance *instance) {
     this->instance = instance;
     //set empty assignment
-    Assignments assignments(instance->get_num_of_processes(), 60000);
+    Assignments assignments(instance->processes.size(), 60000);
     set_assignments(assignments);
-}
-
-Solution::Solution(Instance *instance, std::ifstream &in) {
-    this->instance = instance;
-    read_solution_from_file(in);
 }
 
 Solution::~Solution() {
@@ -50,6 +45,20 @@ int64_t Solution::get_solution_cost() {
     return load_cost + balance_cost + process_move_cost + service_move_cost + machine_move_cost;
 }
 
+Assignments Solution::get_assignments() {
+    return assignments;
+}
+
+void Solution::set_assignments(Assignments assignments) {
+    this->assignments = assignments;
+}
+
+void Solution::print_assignments() {
+    std::cout << "Assignments:" << std::endl;
+    std::copy(assignments.begin(), assignments.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << std::endl;
+}
+
 void Solution::read_solution_from_file(std::ifstream &in) {
     Assignments initial_assignments;
     unsigned int assignment;
@@ -73,15 +82,6 @@ void Solution::print() {
     std::cout << "total_cost: " << get_solution_cost() << std::endl;
 }
 
-void Solution::print_assignments() {
-    std::cout << "Assignments:" << std::endl;
-    std::copy(assignments.begin(), assignments.end(), std::ostream_iterator<int>(std::cout, " "));
-    std::cout << std::endl;
-}
-
-Assignments Solution::get_assignments() {
-    return assignments;
-}
 
 //COSTS CALCULATION
 
@@ -196,6 +196,9 @@ int64_t Solution::calc_total_machine_move_cost() {
     return cost * instance->get_weight_machine_move_cost();
 }
 
+
+// UPDATE COSTS
+
 void Solution::update_solution_load_cost() {
     load_cost = calc_total_load_cost();
 }
@@ -224,7 +227,8 @@ void Solution::update_solution_costs() {
     update_solution_machine_move_cost();
 }
 
-// Constraints
+
+// CHECK CONSTRAINST WITH SHIFT MOVEMENT
 
 bool Solution::check_capacity_with_shift(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
@@ -356,7 +360,8 @@ bool Solution::check_shift(unsigned int process_id, unsigned int machine_id) {
             && check_transient_usage_with_shift(process_id, machine_id));
 }
 
-// Delta costs calculation
+
+// CALCULATION OF COSTS VARIATION
 
 int64_t Solution::get_load_cost_with_process(unsigned int process_id, unsigned int machine_id) {
     Machine* machine = instance->get_machine(machine_id);
@@ -586,15 +591,18 @@ int64_t Solution::calc_delta_machine_move_cost_with_shift(unsigned int process_i
 }
 
 int64_t Solution::calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id) {
-    return (calc_delta_load_cost_with_shift(process_id, machine_id)
+    return (
+            calc_delta_load_cost_with_shift(process_id, machine_id)
             + calc_delta_balance_cost_with_shift(process_id, machine_id)
             + calc_delta_process_move_cost_with_shift(process_id, machine_id)
             + calc_delta_service_move_cost_with_shift(process_id, machine_id)
-            + calc_delta_machine_move_cost_with_shift(process_id, machine_id));
+            + calc_delta_machine_move_cost_with_shift(process_id, machine_id)
+    );
 }
 
 
-// shift movement
+
+// SHIFT MOVEMENT
 
 void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
@@ -610,7 +618,8 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
         int32_t new_usage = old_machine->get_usage(i) - process->get_requirement(i);
         old_machine->set_usage(i, new_usage);
         if(is_the_old_machine_the_initial_one && instance->get_resource(i)->is_transient()) {
-           old_machine->transient_usages[i] += process->get_requirement(i);
+            int32_t new_transient_usage = old_machine->get_transient_usage(i) + process->get_requirement(i);
+            old_machine->set_transient_usage(i, new_transient_usage);
         }
     }
     old_machine->remove_process(process_id);
@@ -624,7 +633,8 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
         int32_t new_usage = new_machine->get_usage(j) + process->get_requirement(j);
         new_machine->set_usage(j, new_usage);
         if(is_the_new_machine_the_initial_one && instance->get_resource(j)->is_transient()) {
-            new_machine->transient_usages[j] -= process->get_requirement(j);
+            int32_t new_transient_usage = new_machine->get_transient_usage(j) - process->get_requirement(j);
+            new_machine->set_transient_usage(j, new_transient_usage);
         }
     }
 
@@ -693,12 +703,8 @@ void Solution::shift_process(unsigned int process_id, unsigned int machine_id) {
     update_solution_costs();
 }
 
-unsigned int Solution::get_current_assignment(unsigned int process_id) {
-    return assignments[process_id];
-}
 
-
-// functions for greedy procedure
+// FUNCTIONS FOR GREEDY PROCEDURE
 
 void Solution::assign_process(unsigned int process_id, unsigned int machine_id) {
     Process *process = instance->get_process(process_id);
@@ -790,7 +796,4 @@ bool Solution::check_dependency_with_assignment(unsigned int process_id, unsigne
     return true;
 }
 
-void Solution::set_assignments(Assignments assignments) {
-    this->assignments = assignments;
-}
 

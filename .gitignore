@@ -1,20 +1,15 @@
 checker 
 code/.idea/*
-GenericMakeFile/
 code/mrp
-test*
-*.py
-*.ods
 code/.idea/workspace.xml
-
-code/a1
-code/a2
-code/b
+summaries
+datasets
 code/bin
 code/build
-code/checker
-code/solutions
-code/*.csv
 .directory
 code/.directory
+output
+scripts
+
+
 

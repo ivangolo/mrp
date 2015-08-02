@@ -21,19 +21,19 @@ HillClimbing::~HillClimbing() {
 
 }
 
-Solution * HillClimbing::run(bool sorted) {
+Solution * HillClimbing::run() {
 
     bool changes;
     time_t start_time = time(NULL);
 
     do {
         changes = false;
-        for(unsigned int i = 0; i < instance->get_num_of_processes(); ++i) {
-            unsigned int process_id = (sorted) ? instance->sorted_processes[i] : i;
-            unsigned int current_process_assignment = solution->get_current_assignment(process_id);
+        for(unsigned int i = 0; i < instance->processes.size(); ++i) {
+            unsigned int process_id = (mode == HillClimbing::SORTED_BY_SIZE) ? instance->sorted_processes[i] : i;
+            unsigned int current_process_assignment = instance->get_process(process_id)->get_current_machine_id();
 
             //generate the neighborhood
-            for (unsigned int machine_id = 0; machine_id < instance->get_num_of_machines(); ++machine_id) {
+            for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
 
                 if (machine_id != current_process_assignment) {
 
@@ -102,3 +102,7 @@ std::pair<unsigned int, int64_t> HillClimbing::get_min_shift() {
     return *min_element(neighborhood.begin(), neighborhood.end(), ShiftMinCost());
 }
 
+
+void HillClimbing::set_process_selection_mode(Mode mode) {
+    this->mode = mode;
+}

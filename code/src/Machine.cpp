@@ -8,10 +8,7 @@
 #include <iterator>
 
 
-Machine::Machine() {
-    std::cout << "Machine created";
-}
-
+Machine::Machine() {}
 
 Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id) {
     this->id = id;
@@ -19,9 +16,7 @@ Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int loc
     this->location_id = location_id;
 }
 
-Machine::~Machine() {
-    //std::cout << "Machine " << id << " destroyed" << std::endl;
-}
+Machine::~Machine() {}
 
 void Machine::add_process(unsigned int process_id) {
     processes.push_back(process_id);
@@ -44,13 +39,12 @@ void Machine::add_safety_capacity(int32_t safety_capacity) {
 }
 
 void Machine::add_machine_move_cost(unsigned int mmc) {
-    this->mmc.push_back(mmc);
+    this->machine_move_costs.push_back(mmc);
 }
 
 unsigned int Machine::get_id() {
     return id;
 }
-
 
 unsigned int Machine::get_location_id() {
     return location_id;
@@ -63,7 +57,6 @@ unsigned int Machine::get_neighborhood_id() {
 void Machine::set_usage(unsigned int resource_id, int32_t usage) {
     usages[resource_id] = usage;
 }
-
 
 int32_t Machine::get_usage(unsigned int resource_id) {
     return usages[resource_id];
@@ -111,22 +104,11 @@ bool Machine::has_process(unsigned int process_id) {
 }
 
 unsigned int Machine::get_machine_move_cost(unsigned int machine_id) {
-    return mmc[machine_id];
+    return machine_move_costs[machine_id];
 }
 
-void Machine::add_usage(int32_t usage) {
-    usages.push_back(usage);
-}
-
-void Machine::add_transient_usage(int32_t usage) {
-    transient_usages.push_back(usage);
-}
-
-
-int64_t Machine::get_size() {
-    return size;
-}
-
-void Machine::increment_machine_size(int64_t increment) {
-    size += increment;
+void Machine::init_usages(unsigned int num_resources) {
+    Usages empty_usages(num_resources, 0);
+    usages = empty_usages;
+    transient_usages = empty_usages;
 }

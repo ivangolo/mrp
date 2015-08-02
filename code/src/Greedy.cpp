@@ -30,10 +30,10 @@ Solution *Greedy::run() {
         if(process->is_assigned()) {
             continue;
         }
-        for (MachineList::iterator machine_id = instance->sorted_machines.begin(); machine_id != instance->sorted_machines.end(); ++machine_id) {
-            if(solution->relaxed_check_assignment(process->get_id(), *machine_id)) {
-                int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), *machine_id);
-                neighborhood[*machine_id] = load_cost;
+        for (unsigned int machine_id = 0; machine_id != instance->machines.size(); ++machine_id) {
+            if(solution->relaxed_check_assignment(process->get_id(), machine_id)) {
+                int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
+                neighborhood[machine_id] = load_cost;
             }
         }
 
@@ -52,10 +52,10 @@ Solution *Greedy::run() {
             if(process->is_assigned()) {
                 continue;
             }
-            for (MachineList::iterator machine_id = instance->sorted_machines.begin(); machine_id != instance->sorted_machines.end(); ++machine_id) {
-                if(solution->check_assignment(process->get_id(), *machine_id)) {
-                    int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), *machine_id);
-                    neighborhood[*machine_id] = load_cost;
+            for (unsigned int machine_id = 0; machine_id != instance->machines.size(); ++machine_id) {
+                if(solution->check_assignment(process->get_id(), machine_id)) {
+                    int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
+                    neighborhood[machine_id] = load_cost;
                 }
             }
 
