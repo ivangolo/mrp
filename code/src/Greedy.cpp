@@ -16,9 +16,6 @@ Solution *Greedy::run() {
 
     for (ProcessList::iterator process_id = instance->less_restricted_processes.begin(); process_id != instance->less_restricted_processes.end(); ++process_id) {
         Process *process = instance->get_process(*process_id);
-        if(process->is_assigned()) {
-            continue;
-        }
         for (unsigned int machine_id = 0; machine_id != instance->machines.size(); ++machine_id) {
             if(solution->relaxed_check_assignment(process->get_id(), machine_id)) {
                 int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);

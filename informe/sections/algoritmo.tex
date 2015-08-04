@@ -12,14 +12,61 @@ para que se logre un mejor entendimiento. Además, en este punto no
 se espera que se incluya código, eso va aparte.}
 
 \begin{algorithm}
-	\caption{Greedy heuristic}
-	\label{algorithm:greedy}
+	\caption{Greedy heuristic parte 1}
+	\label{algorithm:greedy-1}
 	\begin{algorithmic}[1]
 		\Procedure{Greddy}{}
-		\State $\textit{stringlen} \gets \text{length of }\textit{string}$
+		\For{each process $p \in lessRestrictedProcesses$}
+			\State Candidate Machines $N_s = \{\}$
+			\For{each machine $m \in \mathcal{M}$}
+				\If{$assign(p, m)$ is feasible}
+					\State Add $m$ to $N_s$
+				\EndIf
+			\EndFor
+			\If{$N_s \neq \emptyset$}
+				\State $m_b \gets$ machine with the lowest \textit{load cost} from $N_s$
+				\State $assign(p, m_b)$
+				\State $assignmentStatus(p) \gets$ \textit{true}
+			\EndIf
+			
+			\If {\textit{time\_limit} reached}
+				\State \textbf{break}
+			\EndIf
+		\EndFor		
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+	\caption{Greedy heuristic parte 2}
+	\label{algorithm:greedy-2}
+	\begin{algorithmic}[1]
+		\Procedure{Greddy}{}
+		\For{each service $s \in restrictedServices$}
+			\If{\textit{time\_limit} reached}
+				\State \textbf{break}
+			\EndIf
+			\For{each process $p \in processes(s)$}
+				\State Candidate Machines $N_s = \{\}$
+				\For{each machine $m \in \mathcal{M}$}
+					\If{$assign(p, m)$ is feasible}
+						\State Add $m$ to $N_s$
+					\EndIf
+				\EndFor			
+				\If{$N_s \neq \emptyset$}
+					\State $m_b \gets$ machine with the lowest \textit{load cost} from $N_s$
+					\State $assign(p, m_b)$
+					\State $assignmentStatus(p) \gets$ \textit{true}
+				\EndIf
+				\If {\textit{time\_limit} reached}
+					\State \textbf{break}
+				\EndIf
+			\EndFor		
+		\EndFor		
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
 
 \begin{algorithm}
 	\caption{Hill Climbing mejor mejora}
@@ -27,23 +74,23 @@ se espera que se incluya código, eso va aparte.}
 	\begin{algorithmic}[1]
 		\Procedure{Hill climbing}{}
 		\Repeat
-		\State $\textit{changes}\gets \textbf{false}$
-		\For{each process $p \in \mathcal{P}$}
-		\State Solution neighborhood $N_s = \{\}$
-		\For{each machine $m \in \mathcal{M}$ and $m \neq M(p)$}
-		\If {$shift(p,m)$ is feasible \textbf{and} improves the current solution}
-		\State Add $m$ to $N_s$
-		\EndIf
-		\EndFor
-		\If {$N_s \neq \emptyset$}
-		\State $m_b \gets$ best machine  from $N_s$
-		\State $shift(p, m_b)$
-		\State $\textit{changes}\gets \textbf{true}$
-		\EndIf
-		\If {\textit{time\_limit} reached}
-		\State \textbf{break}
-		\EndIf
-		\EndFor
+			\State $\textit{changes}\gets \textbf{false}$
+			\For{each process $p \in \mathcal{P}$}
+				\State Solution neighborhood $N_s = \{\}$
+				\For{each machine $m \in \mathcal{M}$ and $m \neq M(p)$}
+					\If {$shift(p,m)$ is feasible \textbf{and} improves the current solution}
+						\State Add $m$ to $N_s$
+					\EndIf
+				\EndFor
+				\If {$N_s \neq \emptyset$}
+					\State $m_b \gets$ best machine  from $N_s$
+					\State $shift(p, m_b)$
+					\State $\textit{changes}\gets \textbf{true}$
+				\EndIf
+				\If {\textit{time\_limit} reached}
+					\State \textbf{break}
+				\EndIf
+			\EndFor
 		\Until {\textit{time\_limit} reached \textbf{or} not \textit{changes}}
 		\EndProcedure
 	\end{algorithmic}
