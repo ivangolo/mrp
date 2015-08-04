@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <iterator>
 
-Process::Process(unsigned int id, unsigned int service_id): id(id), service_id(service_id), size(0), assigned(false) {}
+Process::Process(unsigned int id, unsigned int service_id): id(id), service_id(service_id), assigned(false), size(0) {}
 
 Process::~Process() {}
 

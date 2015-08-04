@@ -42,41 +42,34 @@ Solution *Greedy::run() {
 
     neighborhood.clear();
 
-    if(execution_time < time_limit) {
-        for (ServiceList::iterator service_id = instance->restricted_services.begin(); service_id != instance->restricted_services.end(); ++service_id) {
-            Service *service = instance->get_service(*service_id);
+    for (ServiceList::iterator service_id = instance->restricted_services.begin(); execution_time < time_limit && service_id != instance->restricted_services.end(); ++service_id) {
+        Service *service = instance->get_service(*service_id);
 
-            for (ProcessList::iterator process_id = service->processes.begin(); process_id != service->processes.end(); ++process_id) {
-                Process *process = instance->get_process(*process_id);
+        for (ProcessList::iterator process_id = service->processes.begin(); process_id != service->processes.end(); ++process_id) {
+            Process *process = instance->get_process(*process_id);
 
-                if(!process->is_assigned()) {
-                    for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
-                        if(solution->check_assignment(process->get_id(), machine_id)) {
-                            int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
-                            add_neighbour(machine_id, load_cost);
-                        }
-
+            if(!process->is_assigned()) {
+                for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
+                    if(solution->check_assignment(process->get_id(), machine_id)) {
+                        int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
+                        add_neighbour(machine_id, load_cost);
                     }
 
-                    if(!neighborhood.empty()) {
-                        unsigned int best_machine = get_min_machine();
-                        solution->assign_process(process->get_id(), best_machine);
-                        process->set_assigned_status(true);
-                        neighborhood.clear();
-                        assigned_processes++;
-                    }
                 }
 
-                execution_time = difftime(time(NULL), start_time);
-                if(execution_time >= time_limit) {
-                    break;
+                if(!neighborhood.empty()) {
+                    unsigned int best_machine = get_min_machine();
+                    solution->assign_process(process->get_id(), best_machine);
+                    process->set_assigned_status(true);
+                    neighborhood.clear();
+                    assigned_processes++;
                 }
             }
 
+            execution_time = difftime(time(NULL), start_time);
             if(execution_time >= time_limit) {
                 break;
             }
-
         }
 
     }

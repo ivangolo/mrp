@@ -18,7 +18,7 @@ int main (int argc,char *argv[]) {
 
     std::string instance_filename, original_solution_filename, new_solution_filename;
     unsigned int time_limit = 300, seed = 0;
-    HillClimbing::Mode process_selection_mode = HillClimbing::INSTANCE_SEQUENCE;
+    //HillClimbing::Mode process_selection_mode = HillClimbing::INSTANCE_SEQUENCE;
 
     int tmp;
     if(argc == 1) {
@@ -61,7 +61,7 @@ int main (int argc,char *argv[]) {
             case 'a': {
                 std::string mode(optarg);
                 if(!mode.empty() && mode == "sorted") {
-                    process_selection_mode = HillClimbing::SORTED_BY_SIZE;
+                    //process_selection_mode = HillClimbing::SORTED_BY_SIZE;
                 } else if(!mode.empty() && mode != "sorted") {
                     std::cerr << "Hill Climbing mode inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
