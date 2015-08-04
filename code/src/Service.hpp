@@ -5,9 +5,10 @@
 #ifndef MRP_SERVICE_H
 #define MRP_SERVICE_H
 
-#include "sets.h"
+#include "sets.hpp"
 
 class Service {
+private:
     unsigned int id;
     unsigned int spread_min;
     unsigned int num_moved_processes;
@@ -19,7 +20,6 @@ public:
     ServiceList dependents;
     LocationList locations;
     NeighborhoodList neighborhoods;
-    Service();
     Service(unsigned int id, unsigned int spread_min);
     ~Service();
 

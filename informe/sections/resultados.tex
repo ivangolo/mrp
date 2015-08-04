@@ -11,8 +11,7 @@ valores promedio, desviaciones, \textbf{comparaciones con resultados
 	de la literatura}, etc. También debería discutir qué cosas podría
 haber agregado o quedan como desafíos para trabajo futuro en su algoritmo.
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
+
 \begin{table}[h]
 	\small
 	\centering
@@ -36,6 +35,31 @@ haber agregado o quedan como desafíos para trabajo futuro en su algoritmo.
 	\caption{\small Por cada instancia, se determina la cantidad de servicios que no poseen dependencias y tienen un mínimo de dispersión igual a cero.}
 	\label{tabla:analisis-servicios}
 \end{table}
+
+\begin{table}[h]
+	\small
+	\centering
+	\begin{tabular}{@{}lrrrrrrrrrr@{}}
+		\toprule
+		Estadística/Instancia       & a1\_1 & a1\_2 & a1\_3 & a1\_4 & a1\_5 & a2\_1 & a2\_2 & a2\_3 & a2\_4 & a2\_5 \\ \midrule
+		Total de procesos           & 100   & 1000  & 1000  & 1000  & 1000  & 1000  & 1000  & 1000  & 1000  & 1000  \\
+		Procesos asignados          & 98    & 956   & 116   & 843   & 974   & 1000  & 945   & 4     & 62    & 58    \\
+		Tiempo de ejecución {[}s{]} & 0     & 0     & 0     & 0     & 0     & 0     & 1     & 0     & 0     & 1     \\ %\bottomrule
+	\end{tabular}
+	
+	\bigskip
+	
+	\begin{tabular}{@{}lrrrrrrrrrr@{}}
+		%\toprule
+		Estadística/Instancia       & b\_1 & b\_2 & b\_3  & b\_4  & b\_5  & b\_6  & b\_7  & b\_8  & b\_9  & b\_10 \\ \midrule
+		Total de procesos           & 5000 & 5000 & 20000 & 20000 & 40000 & 40000 & 40000 & 50000 & 50000 & 50000 \\
+		Procesos asignados          & 2012 & 1962 & 14025 & 732   & 34082 & 13680 & 14050 & 44030 & 3609  & 3896  \\
+		Tiempo de ejecución {[}s{]} & 2    & 2    & 7     & 25    & 26    & 27    & 300   & 28    & 112   & 300   \\ \bottomrule
+	\end{tabular}
+	\caption{\small Por cada instancia, se muestra el número de procesos asignados con el algoritmo \textit{Greedy}.}
+	\label{tabla:greedy}
+\end{table}
+
 
 \begin{figure}[ht]
 	\centering

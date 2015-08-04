@@ -7,16 +7,15 @@
 
 
 class Balance {
+private:
     unsigned int id;
     unsigned int target;
-    unsigned int resource1_id;
-    unsigned int resource2_id;
+    unsigned int r1_id;
+    unsigned int r2_id;
     unsigned int weight_balance_cost;
 
 public:
-
-    Balance();
-    Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id, unsigned int weight_balance_cost);
+    Balance(unsigned int id, unsigned int target, unsigned int r1_id, unsigned int r2_id, unsigned int weight_balance_cost);
     ~Balance();
 
     unsigned int get_id();

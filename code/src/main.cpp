@@ -8,10 +8,11 @@
 #include <ctime>
 #include <memory>
 #include <cstring>
-#include "Instance.h"
-#include "Solution.h"
-#include "HillClimbing.h"
-#include "utils.h"
+#include "Instance.hpp"
+#include "Solution.hpp"
+#include "HillClimbing.hpp"
+#include "utils.hpp"
+#include "Greedy.hpp"
 
 int main (int argc,char *argv[]) {
 
@@ -90,11 +91,14 @@ int main (int argc,char *argv[]) {
     }
 
     //instance model
-    Instance *instance = new Instance(fin_instance);
-
+    Instance *instance = new Instance();
+    instance->read_instance_from_file(fin_instance);
     //original solution
     Solution *solution = new Solution(instance);
+
+    /*
     solution->read_solution_from_file(fin_original_solution);
+
 
     if(instance->processes.size() != solution->get_assignments().size()) {
         std::cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << std::endl;
@@ -103,7 +107,20 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    instance->init(solution->get_assignments());
+
+    //instance->add_assignments(solution->get_assignments());
+    //instance->update_all_usages();
+     */
+
+    instance->init();
+
+    Greedy *greedy = new Greedy(instance, solution);
+    greedy->set_time_limit(time_limit);
+    greedy->run();
+    std::cout << instance_filename << std::endl;
+    greedy->print();
+
+    /*
     solution->update_solution_costs();
 
     std::cout << "-.initial_assignment_costs::" << std::endl;
@@ -119,10 +136,11 @@ int main (int argc,char *argv[]) {
 
     hc->print();
     solution->write_solution_to_file(fout_new_solution);
+    */
 
     delete instance;
     delete solution;
-    delete hc;
+    delete greedy;
 
     fout_new_solution.close();
     fin_instance.close();

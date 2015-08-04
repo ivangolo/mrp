@@ -3,31 +3,19 @@
 //
 
 #include <iostream>
-#include "Balance.h"
+#include "Balance.hpp"
 
-Balance::Balance() {
-    //std::cout << "Balance created" << std::endl;
-}
+Balance::Balance(unsigned int id, unsigned int target, unsigned int r1_id, unsigned int r2_id, unsigned int weight_balance_cost)
+        :id(id), target(target), r1_id(r1_id), r2_id(r2_id), weight_balance_cost(weight_balance_cost) {};
 
-Balance::Balance(unsigned int id, unsigned int target, unsigned int resource1_id, unsigned int resource2_id,
-                 unsigned int weight_balance_cost) {
-    this->id = id;
-    this->target = target;
-    this->resource1_id = resource1_id;
-    this->resource2_id = resource2_id;
-    this->weight_balance_cost = weight_balance_cost;
-}
-
-Balance::~Balance() {
-    //std::cout << "Balance " << id << " destroyed" << std::endl;
-}
+Balance::~Balance() {}
 
 unsigned int Balance::get_id() {
     return id;
 }
 
 unsigned int Balance::get_resource_id(unsigned int num) {
-    return (num == 1) ? resource1_id : resource2_id;
+    return (num == 1) ? r1_id : r2_id;
 }
 
 unsigned int Balance::get_target() {
@@ -40,5 +28,5 @@ unsigned int Balance::get_weight_balance_cost() {
 }
 
 void Balance::print() {
-    std::cout << "Balance #" << id << ": <" << resource1_id << ", " << resource2_id << ", " << target << ">" << std::endl;
+    std::cout << "Balance #" << id << ": <" << r1_id << ", " << r2_id << ", " << target << ">" << std::endl;
 }

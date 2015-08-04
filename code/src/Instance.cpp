@@ -2,15 +2,13 @@
 // Created by ivanedo on 13-06-15.
 //
 
-#include "Instance.h"
+#include "Instance.hpp"
 #include <iostream>
 #include <algorithm>
 #include <memory>
 #include <iterator>
 
-Instance::Instance(std::ifstream &fin_instance) {
-    read_instance_from_file(fin_instance);
-}
+Instance::Instance() {}
 
 Instance::~Instance() {
     std::for_each(resources.begin(), resources.end(), std::default_delete<Resource>());
@@ -133,7 +131,7 @@ void Instance::read_instance_from_file(std::ifstream &fin_instance) {
 
 }
 
-void Instance::add_assignments(Assignments &assignments) {
+void Instance::add_assignments(Assignments assignments) {
     for(unsigned int process_id = 0; process_id < assignments.size(); ++process_id) {
         //adding processes to machines
         get_machine(assignments[process_id])->add_process(process_id);
@@ -185,12 +183,12 @@ void Instance::update_all_usages() {
 
 }
 
-void Instance::init(Assignments assignments) {
-    Instance::add_dependant_services();
-    Instance::sort_processes_by_size();
 
-    Instance::add_assignments(assignments);//solo cuando utilizo la solucoin del archivo
-    Instance::update_all_usages(); //solo cuando utilizo la solucion del archivo
+void Instance::init() {
+    add_dependant_services();
+    sort_processes_by_size();
+    classify_services();
+    sort_services_by_dependencies();
 }
 
 void Instance::add_dependant_services() {
@@ -208,29 +206,70 @@ void Instance::sort_processes_by_size() {
 
 }
 
+void Instance::classify_services() {
+    std::deque<Service*>::iterator service_iter;
+    for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
+        if((*service_iter)->get_spread_min() == 0 && (*service_iter)->dependencies.empty()) {
+            less_restricted_services.push_back((*service_iter)->get_id());
+            less_restricted_processes.insert(less_restricted_processes.end(), (*service_iter)->processes.begin(), (*service_iter)->processes.end());
+        } else {
+            restricted_services.push_back((*service_iter)->get_id());
+        }
+
+    }
+}
+
+void Instance::sort_services_by_dependencies() {
+    std::sort(less_restricted_processes.begin(), less_restricted_processes.end(), BiggerProcess(*this));
+    std::sort(restricted_services.begin(), restricted_services.end(), LessRestrictedService(*this));
+}
+
+
+void Instance::add_process(Process *process) {
+    processes.push_back(process);
+}
+
 Process *Instance::get_process(unsigned int process_id) {
     return processes[process_id];
+}
+
+
+void Instance::add_machine(Machine *machine) {
+    machines.push_back(machine);
 }
 
 Machine *Instance::get_machine(unsigned int machine_id) {
     return machines[machine_id];
 }
 
+
+void Instance::add_service(Service *service) {
+    services.push_back(service);
+}
+
 Service *Instance::get_service(unsigned int service_id) {
     return services[service_id];
+}
+
+
+void Instance::add_resource(Resource *resource) {
+    resources.push_back(resource);
 }
 
 Resource *Instance::get_resource(unsigned int resource_id) {
     return resources[resource_id];
 }
 
+
+
+void Instance::add_balance(Balance *balance) {
+    balances.push_back(balance);
+}
+
 Balance *Instance::get_balance(unsigned int balance_id) {
     return balances[balance_id];
 }
 
-void Instance::print() {
-
-}
 
 unsigned int Instance::get_weight_process_move_cost() {
     return weight_process_move_cost;
@@ -244,45 +283,6 @@ unsigned int Instance::get_weight_machine_move_cost() {
     return weight_machine_move_cost;
 }
 
-void Instance::add_resource(Resource *resource) {
-    resources.push_back(resource);
-}
-
-void Instance::add_machine(Machine *machine) {
-    machines.push_back(machine);
-}
-
-void Instance::add_service(Service *service) {
-    services.push_back(service);
-}
-
-void Instance::add_process(Process *process) {
-    processes.push_back(process);
-}
-
-void Instance::add_balance(Balance *balance) {
-    balances.push_back(balance);
-}
-
-void Instance::sort_services_by_dependencies() {
-    std::sort(restricted_services.begin(), restricted_services.end(), LessRestrictedProcess(*this));
-    std::sort(less_restricted_processes.begin(), less_restricted_processes.end(), BiggerProcess(*this));
-    std::sort(restricted_processes.begin(), restricted_processes.end(), BiggerProcess(*this));
-}
-
-void Instance::classify_services() {
-    std::deque<Service*>::iterator service_iter;
-    for (service_iter = services.begin(); service_iter != services.end(); ++service_iter) {
-        if((*service_iter)->get_spread_min() == 0 && (*service_iter)->dependencies.empty()) {
-            less_restricted_services.push_back((*service_iter)->get_id());
-            less_restricted_processes.insert(less_restricted_processes.end(), (*service_iter)->processes.begin(), (*service_iter)->processes.end());
-        } else {
-            restricted_services.push_back((*service_iter)->get_id());
-            restricted_processes.insert(restricted_processes.end(), (*service_iter)->processes.begin(),  (*service_iter)->processes.end());
-        }
-
-    }
-}
 
 void Instance::print_services() {
     std::deque<Service*>::iterator service_iter;
@@ -303,5 +303,9 @@ void Instance::print_machines() {
     for (machine_iter = machines.begin(); machine_iter != machines.end(); ++machine_iter) {
         (*machine_iter)->print();
     }
+}
+
+void Instance::print() {
+
 }
 

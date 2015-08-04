@@ -1,12 +1,3 @@
-a1
-a2
-b
 bin
 build
-checker
-solutions
-*.csv
-
-salida(servicios sin dependencias y spread cero).txt
-salida(servicios sin dependencias).txt
 .idea/workspace.xml

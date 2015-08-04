@@ -2,19 +2,12 @@
 // Created by ivanedo on 12-06-15.
 //
 
-#include "Machine.h"
+#include "Machine.hpp"
 #include <iostream>
 #include <algorithm>
 #include <iterator>
 
-
-Machine::Machine() {}
-
-Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id) {
-    this->id = id;
-    this->neighborhood_id = neighborhood_id;
-    this->location_id = location_id;
-}
+Machine::Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id): id(id), neighborhood_id(neighborhood_id), location_id(location_id) {}
 
 Machine::~Machine() {}
 

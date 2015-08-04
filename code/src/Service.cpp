@@ -2,21 +2,12 @@
 // Created by ivanedo on 12-06-15.
 //
 
-#include "Service.h"
+#include "Service.hpp"
 #include <iostream>
 #include <algorithm>
 #include <iterator>
 
-
-Service::Service() {
-    std::cout << "Service created" << std::endl;
-}
-
-Service::Service(unsigned int id, unsigned int spread_min) {
-    this->id = id;
-    this->spread_min = spread_min;
-    this->num_moved_processes = 0;
-}
+Service::Service(unsigned int id, unsigned int spread_min): id(id), spread_min(spread_min), num_moved_processes(0) {}
 
 Service::~Service() {
     //std::cout << "Service " << id << " destroyed" << std::endl;

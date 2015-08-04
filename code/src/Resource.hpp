@@ -7,13 +7,12 @@
 
 
 class Resource {
+private:
     unsigned int id;
     unsigned int weight_load_cost;
     bool transient;
 
-
 public:
-    Resource();
     Resource(unsigned int id, unsigned int weight_load_cost, bool transient);
     ~Resource();
     bool is_transient();

@@ -6,37 +6,38 @@
 #define MRP_INSTANCE_H
 #include <fstream>
 #include <deque>
-#include "Machine.h"
-#include "Process.h"
-#include "Service.h"
-#include "Balance.h"
-#include "Resource.h"
+#include "Machine.hpp"
+#include "Process.hpp"
+#include "Service.hpp"
+#include "Balance.hpp"
+#include "Resource.hpp"
 
 
 
 class Instance {
+private:
     unsigned int weight_process_move_cost;
     unsigned int weight_service_move_cost;
     unsigned int weight_machine_move_cost;
 
 public:
-    Instance(std::ifstream &fin_instance);
-    ~Instance();
-    std::deque<Machine*> machines;
     std::deque<Process*> processes;
-    std::deque<Service*> services;
+    std::deque<Machine*> machines;
     std::deque<Resource*> resources;
+    std::deque<Service*> services;
     std::deque<Balance*> balances;
     ProcessList sorted_processes;
     ProcessList less_restricted_processes;
-    ProcessList restricted_processes;
     ServiceList less_restricted_services;
     ServiceList restricted_services;
-    void init(Assignments assignments);
+
+    Instance();
+    ~Instance();
+    void init();
     void update_usage(unsigned int machine_id, unsigned int resource_id);
     void update_all_usages();
     void read_instance_from_file(std::ifstream &fin_instance);
-    void add_assignments(Assignments &original_solution);
+    void add_assignments(Assignments assignments);
     void print_services();
     void print_processes();
     void print_machines();
@@ -68,9 +69,9 @@ public:
         }
     };
 
-    struct LessRestrictedProcess {
-        Instance &instance;  // Reference to parent
-        LessRestrictedProcess(Instance &i) : instance(i) {}  // Initialise reference in constructor
+    struct LessRestrictedService {
+        Instance &instance;
+        LessRestrictedService(Instance &i) : instance(i) {}
 
         bool operator()(const unsigned int &left, const unsigned int &right) {
             return instance.get_service(left)->dependencies.size() < instance.get_service(right)->dependencies.size();
@@ -79,5 +80,4 @@ public:
 
 };
 
-
-#endif //MRP_INSTANCE_H
+#endif  //MRP_INSTANCE_H

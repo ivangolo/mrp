@@ -2,24 +2,13 @@
 // Created by ivanedo on 21-07-15.
 //
 
-#include "HillClimbing.h"
+#include "HillClimbing.hpp"
 #include <iostream>
 #include <algorithm>
 
-HillClimbing::HillClimbing() {
+HillClimbing::HillClimbing(Instance *instance, Solution *solution): LocalSearch(instance, solution), num_iterations(0) {}
 
-}
-
-HillClimbing::HillClimbing(Instance *instance, Solution *solution) {
-    this->instance = instance;
-    this->solution = solution;
-    this->num_iterations = 0;
-    this->execution_time = 0;
-}
-
-HillClimbing::~HillClimbing() {
-
-}
+HillClimbing::~HillClimbing() {}
 
 Solution * HillClimbing::run() {
 
@@ -50,8 +39,8 @@ Solution * HillClimbing::run() {
 
             //check the best shift
             if (!neighborhood.empty()) {
-                std::pair<unsigned int, int64_t> best_machine = get_min_shift();
-                solution->shift_process(process_id, best_machine.first);
+                unsigned int best_machine = get_min_machine();
+                solution->shift_process(process_id, best_machine);
                 changes = true;
                 neighborhood.clear();
             }
@@ -73,15 +62,6 @@ Solution * HillClimbing::run() {
 }
 
 
-void HillClimbing::set_time_limit(unsigned int time_limit) {
-    this->time_limit = time_limit;
-}
-
-
-double HillClimbing::get_execution_time() {
-    return execution_time;
-}
-
 int32_t HillClimbing::get_num_iterations() {
     return num_iterations;
 }
@@ -94,15 +74,10 @@ void HillClimbing::print() {
 }
 
 
-void HillClimbing::add_neighbour(unsigned int machine_id, int64_t cost_decrement) {
-    neighborhood[machine_id] = cost_decrement;
-}
-
-std::pair<unsigned int, int64_t> HillClimbing::get_min_shift() {
-    return *min_element(neighborhood.begin(), neighborhood.end(), ShiftMinCost());
-}
-
-
 void HillClimbing::set_process_selection_mode(Mode mode) {
     this->mode = mode;
+}
+
+void HillClimbing::set_time_limit(unsigned int time_limit) {
+    LocalSearch::set_time_limit(time_limit);
 }

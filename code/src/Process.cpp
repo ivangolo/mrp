@@ -2,21 +2,12 @@
 // Created by ivanedo on 12-06-15.
 //
 
-#include "Process.h"
+#include "Process.hpp"
 #include <iostream>
 #include <algorithm>
 #include <iterator>
 
-
-Process::Process() {}
-
-Process::Process(unsigned int id, unsigned int service_id) {
-    this->id = id;
-    this->service_id = service_id;
-    this->size = 0;
-    this->assigned = false;
-
-}
+Process::Process(unsigned int id, unsigned int service_id): id(id), service_id(service_id), size(0), assigned(false) {}
 
 Process::~Process() {}
 

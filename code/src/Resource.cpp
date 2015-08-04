@@ -2,23 +2,12 @@
 // Created by ivanedo on 12-06-15.
 //
 
-#include "Resource.h"
+#include "Resource.hpp"
 #include <iostream>
 
+Resource::Resource(unsigned int id, unsigned int weight_load_cost, bool transient): id(id), weight_load_cost(weight_load_cost), transient(transient){}
 
-Resource::Resource() {
-    std::cout << "Resource created" << std::endl;
-}
-
-Resource::Resource(unsigned int id, unsigned int weight_load_cost, bool transient) {
-    this->id = id;
-    this->weight_load_cost = weight_load_cost;
-    this->transient = transient;
-}
-
-Resource::~Resource() {
-    //std::cout << "Resource " << id << " destroyed" << std::endl;
-}
+Resource::~Resource() {}
 
 bool Resource::is_transient() {
     return transient;

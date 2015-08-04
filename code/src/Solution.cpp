@@ -2,24 +2,19 @@
 // Created by ivanedo on 26-06-15.
 //
 
-#include "Solution.h"
+#include "Solution.hpp"
 #include <iostream>
 #include <algorithm>
 #include <memory>
 #include <iterator>
 
-Solution::Solution() {}
-
-Solution::Solution(Instance *instance) {
-    this->instance = instance;
-    //set empty assignment
-    Assignments assignments(instance->processes.size(), 60000);
+Solution::Solution(Instance *instance): instance(instance), load_cost(0), balance_cost(0), process_move_cost(0), service_move_cost(0), machine_move_cost(0) {
+    //  set empty assignment
+    Assignments assignments(instance->processes.size(), -1);
     set_assignments(assignments);
 }
 
-Solution::~Solution() {
-    //std::cout << "Deleting solution..." << std::endl;
-}
+Solution::~Solution() {}
 
 int64_t Solution::get_load_cost() {
     return load_cost;
@@ -771,11 +766,7 @@ bool Solution::check_spread_with_assignment(unsigned int process_id, unsigned in
     Service *service = instance->get_service(process->get_service_id());
     unsigned int machine_location = instance->get_machine(machine_id)->get_location_id();
 
-    if(service->locations.size() <= service->get_spread_min()) {
-        return true;
-    }
-
-    return !service->has_location(machine_location);
+    return service->locations.size() <= service->get_spread_min() || !service->has_location(machine_location);
 
 }
 
@@ -795,5 +786,3 @@ bool Solution::check_dependency_with_assignment(unsigned int process_id, unsigne
 
     return true;
 }
-
-

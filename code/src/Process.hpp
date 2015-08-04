@@ -5,9 +5,10 @@
 #ifndef MRP_PROCESS_H
 #define MRP_PROCESS_H
 
-#include "sets.h"
+#include "sets.hpp"
 
 class Process {
+private:
     unsigned int id;
     unsigned int initial_machine_id;
     unsigned int current_machine_id;
@@ -20,7 +21,6 @@ class Process {
     int64_t size;
 
 public:
-    Process();
     Process(unsigned int id, unsigned int service_id);
     ~Process();
     void set_location_id(unsigned int location_id);

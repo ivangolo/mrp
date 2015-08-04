@@ -5,10 +5,10 @@
 #ifndef MRP_SOLUTION_H
 #define MRP_SOLUTION_H
 
-#include "Instance.h"
+#include "Instance.hpp"
 
 class Solution {
-
+private:
     Instance *instance;
     Assignments assignments;
     int64_t load_cost;
@@ -19,7 +19,6 @@ class Solution {
     unsigned int max_num_of_moved_processes;
 
 public:
-    Solution();
     Solution(Instance *instance);
     ~Solution();
 
@@ -75,20 +74,17 @@ public:
     int64_t calc_delta_cost_with_shift(unsigned int process_id, unsigned int machine_id);
 
 
+    //Reasignments
+    void shift_process(unsigned int process_id, unsigned int machine_id);
+    bool check_shift(unsigned int process_id, unsigned int machine_id);
     bool check_capacity_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_conflict_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_spread_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_dependency_with_shift(unsigned int process_id, unsigned int machine_id);
     bool check_transient_usage_with_shift(unsigned int process_id, unsigned int machine_id);
-    bool check_shift(unsigned int process_id, unsigned int machine_id);
-
-    //Reasignments
-    void shift_process(unsigned int process_id, unsigned int machine_id);
 
     //Assignments
     void assign_process(unsigned int process_id, unsigned int machine_id);
-
-    //checkers
     bool relaxed_check_assignment(unsigned int process_id, unsigned int machine_id);
     bool check_assignment(unsigned int process_id, unsigned int machine_id);
     bool check_capacity_with_assignment(unsigned int process_id, unsigned int machine_id);
@@ -99,4 +95,4 @@ public:
 };
 
 
-#endif //MRP_SOLUTION_H
+#endif  //MRP_SOLUTION_H

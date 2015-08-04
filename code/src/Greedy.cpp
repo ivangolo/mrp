@@ -2,30 +2,19 @@
 // Created by ivanedo on 29-07-15.
 //
 
-#include "Greedy.h"
+#include "Greedy.hpp"
 #include <algorithm>
+#include <iostream>
 
-Greedy::Greedy() {
+Greedy::Greedy(Instance *instance, Solution *solution): LocalSearch(instance, solution), assigned_processes(0) {}
 
-}
-
-Greedy::Greedy(Instance *instance, Solution *solution) {
-    this->instance = instance;
-    this->solution = solution;
-    this->assigned_processes = 0;
-}
-
-Greedy::~Greedy() {
-
-}
+Greedy::~Greedy() {}
 
 Solution *Greedy::run() {
 
-    instance->classify_services();
-    instance->sort_services_by_dependencies();
+    time_t start_time = time(NULL);
 
     for (ProcessList::iterator process_id = instance->less_restricted_processes.begin(); process_id != instance->less_restricted_processes.end(); ++process_id) {
-        SolutionNeighborhood neighborhood;
         Process *process = instance->get_process(*process_id);
         if(process->is_assigned()) {
             continue;
@@ -33,42 +22,64 @@ Solution *Greedy::run() {
         for (unsigned int machine_id = 0; machine_id != instance->machines.size(); ++machine_id) {
             if(solution->relaxed_check_assignment(process->get_id(), machine_id)) {
                 int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
-                neighborhood[machine_id] = load_cost;
+                add_neighbour(machine_id, load_cost);
             }
         }
 
         if(!neighborhood.empty()) {
-            std::pair<unsigned int, int64_t> best_machine = get_min_assign();
-            solution->assign_process(process->get_id(), best_machine.first);
+            unsigned int best_machine = get_min_machine();
+            solution->assign_process(process->get_id(), best_machine);
             process->set_assigned_status(true);
+            neighborhood.clear();
             assigned_processes++;
+        }
+
+        execution_time = difftime(time(NULL), start_time);
+        if(execution_time >= time_limit) {
+            break;
         }
     }
 
-    unsigned int i;
-    do {
-        for (ProcessList::iterator process_id = instance->restricted_processes.begin(); process_id != instance->restricted_processes.end(); ++process_id) {
-            Process *process = instance->get_process(*process_id);
-            if(process->is_assigned()) {
-                continue;
-            }
-            for (unsigned int machine_id = 0; machine_id != instance->machines.size(); ++machine_id) {
-                if(solution->check_assignment(process->get_id(), machine_id)) {
-                    int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
-                    neighborhood[machine_id] = load_cost;
+    neighborhood.clear();
+
+    if(execution_time < time_limit) {
+        for (ServiceList::iterator service_id = instance->restricted_services.begin(); service_id != instance->restricted_services.end(); ++service_id) {
+            Service *service = instance->get_service(*service_id);
+
+            for (ProcessList::iterator process_id = service->processes.begin(); process_id != service->processes.end(); ++process_id) {
+                Process *process = instance->get_process(*process_id);
+
+                if(!process->is_assigned()) {
+                    for (unsigned int machine_id = 0; machine_id < instance->machines.size(); ++machine_id) {
+                        if(solution->check_assignment(process->get_id(), machine_id)) {
+                            int64_t load_cost = solution->get_load_cost_with_process(process->get_id(), machine_id);
+                            add_neighbour(machine_id, load_cost);
+                        }
+
+                    }
+
+                    if(!neighborhood.empty()) {
+                        unsigned int best_machine = get_min_machine();
+                        solution->assign_process(process->get_id(), best_machine);
+                        process->set_assigned_status(true);
+                        neighborhood.clear();
+                        assigned_processes++;
+                    }
+                }
+
+                execution_time = difftime(time(NULL), start_time);
+                if(execution_time >= time_limit) {
+                    break;
                 }
             }
 
-            if(!neighborhood.empty()) {
-                std::pair<unsigned int, int64_t> best_machine = get_min_assign();
-                solution->assign_process(process->get_id(), best_machine.first);
-                process->set_assigned_status(true);
-                assigned_processes++;
-                neighborhood.clear();
+            if(execution_time >= time_limit) {
+                break;
             }
+
         }
-        i++;
-    } while(i < 2);
+
+    }
 
     return solution;
 }
@@ -78,6 +89,13 @@ unsigned int Greedy::get_num_assigned_processes() {
     return assigned_processes;
 }
 
-std::pair<unsigned int, int64_t> Greedy::get_min_assign() {
-    return *min_element(neighborhood.begin(), neighborhood.end(), AssignMinCost());
+void Greedy::print() {
+    std::cout << "Total de procesos: " << instance->processes.size() << std::endl;
+    std::cout << "Total de procesos asignados: " << get_num_assigned_processes() << std::endl;
+    std::cout << "Tiempo de ejecución: " << get_execution_time() << std::endl;
+    std::cout << ":::::::::::::::::::::::::::::::::::::" << std::endl;
+}
+
+void Greedy::set_time_limit(unsigned int time_limit) {
+    LocalSearch::set_time_limit(time_limit);
 }

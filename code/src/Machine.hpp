@@ -6,9 +6,10 @@
 #define MRP_MACHINE_H
 
 #include <stdint.h>
-#include "sets.h"
+#include "sets.hpp"
 
 class Machine {
+private:
     unsigned int id;
     unsigned int neighborhood_id;
     unsigned int location_id;
@@ -21,7 +22,6 @@ public:
     Usages usages;
     Usages transient_usages;
 
-    Machine();
     Machine(unsigned int id, unsigned int neighborhood_id, unsigned int location_id);
     ~Machine();
     void add_process(unsigned int process_id);
