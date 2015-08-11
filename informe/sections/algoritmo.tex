@@ -1,99 +1,129 @@
 \documentclass[../informe2.tex]{subfiles}
 \begin{document}
-Cómo fue implementando, interesa la implementación más que el algoritmo
-genérico, es decir, si se tiene que implementar SA, lo que se espera
-es que se explique en pseudo código la estructura general y en párrafo
-explicativo cada parte cómo fue implementada para su caso particular,
-si se utilizan operadores se debe explicar por qué se utilizó ese
-operador, si fuera el caso de una técnica completa, si se utiliza
-recursión o no, etc. \textbf{Recuerde utilizar pseudocódigo para mostrar
-cada algoritmo y separar la explicación de su algoritmo en secciones
-para que se logre un mejor entendimiento. Además, en este punto no
-se espera que se incluya código, eso va aparte.}
+%Cómo fue implementando, interesa la implementación más que el algoritmo
+%genérico, es decir, si se tiene que implementar SA, lo que se espera
+%es que se explique en pseudo código la estructura general y en párrafo
+%explicativo cada parte cómo fue implementada para su caso particular,
+%si se utilizan operadores se debe explicar por qué se utilizó ese
+%operador, si fuera el caso de una técnica completa, si se utiliza
+%recursión o no, etc. \textbf{Recuerde utilizar pseudocódigo para mostrar
+%cada algoritmo y separar la explicación de su algoritmo en secciones
+%para que se logre un mejor entendimiento. Además, en este punto no
+%se espera que se incluya código, eso va aparte.}
+El algoritmo de búsqueda que se describirá a continuación es del tipo híbrido, es decir, combina una heurística \greedy\ o \textit{voraz} por una parte, para luego dar paso a un algoritmo del tipo \hillc\ \textit{mejor mejora}. La idea por detrás es poder construir una solución inicial a través de la heurística \greedy, solución que será alternativa a la que es entregada por defecto en cada instancia utilizada en el desafío de la ROADEF, para luego hacer de input del algoritmo \hillc, que se encargará de mejorar su calidad.
+\subsection{Greedy}
+Un algorimo \greedy\ construye una solución de forma incremental, agregando una componente a la vez, de tal manera que sea la que produzca el mayor beneficio local (función miope). En el caso del \mrp\ se tiene que, inicialmente, ningun proceso posee asignación alguna y con todas las máquinas con uso nulo. Luego de forma iterativa, se asigna un proceso a la vez, concluyendo cuando todos los procesos han sido asignados, resultando en una nueva solución factible. Para el método que está siendo presentado, la \textbf{\textit{función míope}} puede resumirse en \textit{asignar el proceso menos restringido a la máquina donde se origine el menor costo de carga}. \\
 
-\begin{algorithm}
-	\caption{Greedy heuristic parte 1}
-	\label{algorithm:greedy-1}
+Para determinar los procesos menos restringidos, se realizó el siguiente análisis:
+\begin{itemize}
+	\item La restricción de uso transitorio (ver sección~\ref{sec:definicion}), puede relajarse debido a que esta solo tiene efecto cuando hay involucradas, reasignaciones de procesos desde su máquina inicial a otra distinta, no asignaciones.
+	\item En la gran mayoría de las instancias utilizadas en el desafío de la ROADEF 2012, una cantidad importante de los servicios no poseen dependencias y tienen un mínimo de dispersión igual a cero. En consecuencia, las restricciones de dispersión y de dependencia pueden relajarse, ya que por un lado, se cumple de forma trivial la utilización de una o más localizaciones, y por otro lado, no se requiere la presencia de otros servicios ejecutándose en los vecindarios donde se vaya a posicionar un proceso pronto a asignarse. Para más detalles, ver las secciones~\ref{sec:experimentos} y~\ref{sec:resultados}.
+\end{itemize}
+En consecuencia, previo a ejecutar el algoritmo, los servicios son clasificados y separados en dos grupos: los que tienen no tienen dependencias y un mínimo de dispersión igual a cero, cuyos procesos se encuentran en \textit{lessRestrictedProcesses}, ordenados de forma descendente de acuerdo a su tamaño (ver sección~\ref{sec:experimentos}); el resto de los servicios se agrupan en \textit{restrictedServices}, ordenados de forma ascendente de acuerdo al número de dependencias que posean. \\
+De acuerdo a lo anterior, el algoritmo \greedy\ se divide en dos partes: la~\ref{greedy-1}, la cual asigna los procesos pertenececientes a \textit{lessRestrictedProcesses}; y la~\ref{greedy-2}, que asigna los procesos pertenecientes a \textit{restrictedServices}.\\
+
+En la primera parte, por cada proceso $p \in lessRestrictedProcesses$ se genera el conjunto $N_c$ de aquellas máquinas a las que es posible realizar la asignación del proceso $p$ (lineas 3--8). Ahí, solamente se realiza el chequeo de las restricciones de capacidad y de conflicto. Luego, del conjunto $N_c$, se selecciona la máquina $m_b$ que genera el menor costo de carga con la asignación de $p$, se le asigna a $m_b$ el proceso y este último cambia su estado de asignación a verdadero (líneas 9--13). Finalizada la evaluación anterior, se chequea si es que se ha alcanzado el tiempo límite (líneas 14--16).\\
+Es importante señalar que, el hecho de realizar la asignación de estos procesos primero, se debe a tratar de satisfacer con un mayor índice de éxito la restricción de dependencia, que es la más complicada de respetar. La idea es que al asignar los procesos pertenecientes a los servicios del conjunto \textit{restrictedServices}, sus potenciales dependencias ya se encuentren asignadas.
+
+\begin{algorithm}[h]
+	\caption{Greedy heuristic parte 1}\label{greedy-1}
 	\begin{algorithmic}[1]
 		\Procedure{Greddy}{}
 		\For{each process $p \in lessRestrictedProcesses$}
-			\State Candidate Machines $N_s = \{\}$
+			\State{Candidate Machines $N_c = \emptyset$}
 			\For{each machine $m \in \mathcal{M}$}
 				\If{$assign(p, m)$ is feasible}
-					\State Add $m$ to $N_s$
-				\EndIf
-			\EndFor
-			\If{$N_s \neq \emptyset$}
-				\State $m_b \gets$ machine with the lowest \textit{load cost} from $N_s$
-				\State $assign(p, m_b)$
-				\State $assignmentStatus(p) \gets$ \textit{true}
-			\EndIf
-			
-			\If {\textit{time\_limit} reached}
-				\State \textbf{break}
-			\EndIf
-		\EndFor		
-		\EndProcedure
+					\State{Add $m$ to $N_c$}
+				\EndIf{}
+			\EndFor{}
+			\If{$N_c \neq \emptyset$}
+				\State{$m_b \gets$ machine with the lowest \textit{load cost} from $N_c$}
+				\State{$assign(p, m_b)$}
+				\State{$assignmentStatus(p) \gets$ \textit{true}}
+			\EndIf{}
+
+			\If{\textit{time\_limit} reached}
+				\State{\textbf{break}}
+			\EndIf{}
+		\EndFor{}
+		\EndProcedure{}
 	\end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-	\caption{Greedy heuristic parte 2}
-	\label{algorithm:greedy-2}
+En la segunda parte del algoritmo \greedy, primero se intentan asignar los procesos de los servicios, del conjunto \textit{restrictedServices}, que poseen la menor cantidad de dependencias posibles. Entonces, se procede de la siguiente forma: Si el tiempo límite no se ha alcanzado, se selecciona un servicio $s \in restrictedServices$. Por cada proceso $p \in s$, se genera el conjunto de $N_c$ de aquellas máquinas en que sea factible asignar $p$, respetando las restricciones de capacidad, conflicto, dependencia y de dispersión (líneas 7--12). Posteriormente, se selecciona de $N_c$ la máquina $m_b$ que genera el menor costo de carga, asignando $p$ a esta última (líneas 13--17). Luego se chequea de que el tiempo límite no se haya alcanzado (líneas 18--20). Hay que señalar que, el hecho de chequear dos veces la condición de término del tiempo, se debe a que esta se pudo haber alcanzado al realizar la primera parte del algoritmo \greedy\ o mientras se realiza la asignación del segundo conjunto de procesos. Más adelante, en las secciónes~\ref{sec:experimentos} y~\ref{sec:resultados}, se presentará lo que sucede con las instancias de mayor tamaño, con 40000 o 50000 procesos por asignar.\\
+
+\begin{algorithm}[h]
+	\caption{Greedy heuristic parte 2}\label{greedy-2}
 	\begin{algorithmic}[1]
 		\Procedure{Greddy}{}
 		\For{each service $s \in restrictedServices$}
 			\If{\textit{time\_limit} reached}
-				\State \textbf{break}
-			\EndIf
+				\State{\textbf{break}}
+			\EndIf{}
 			\For{each process $p \in processes(s)$}
-				\State Candidate Machines $N_s = \{\}$
+				\State{Candidate Machines $N_c = \emptyset$}
 				\For{each machine $m \in \mathcal{M}$}
 					\If{$assign(p, m)$ is feasible}
-						\State Add $m$ to $N_s$
-					\EndIf
-				\EndFor			
-				\If{$N_s \neq \emptyset$}
-					\State $m_b \gets$ machine with the lowest \textit{load cost} from $N_s$
-					\State $assign(p, m_b)$
-					\State $assignmentStatus(p) \gets$ \textit{true}
-				\EndIf
-				\If {\textit{time\_limit} reached}
-					\State \textbf{break}
-				\EndIf
-			\EndFor		
-		\EndFor		
-		\EndProcedure
+						\State{Add $m$ to $N_c$}
+					\EndIf{}
+				\EndFor{}
+				\If{$N_c \neq \emptyset$}
+					\State{$m_b \gets$ machine with the lowest \textit{load cost} from $N_c$}
+					\State{$assign(p, m_b)$}
+					\State{$assignmentStatus(p) \gets$ \textit{true}}
+				\EndIf{}
+				\If{\textit{time\_limit} reached}
+					\State{\textbf{break}}
+				\EndIf{}
+			\EndFor{}
+		\EndFor{}
+		\EndProcedure{}
 	\end{algorithmic}
 \end{algorithm}
 
+\subsection{Hill Climbing}
+Un algoritmo de tipo \hillc\ busca mejorar el valor de la \textit{función objetivo} de una solución inicial, esta última sea generada de forma aleatoria o arbitrariamente. Para ello, construye el vecindario de la solución actual, a partir de la realización de un \textit{movimiento} o modificación de alguna componente de aquella solución. Luego, a partir del vecindario generado, se selecciona la solución vecina de dos formas:
+\begin{itemize}
+	\item Selección según alguna mejora: la primera solución vecina que mejora la \textit{función objetivo}, se acepta como nueva solución actual de inmediato.
+	\item Selección según mejor mejora: se construye el vecindario completo de la solución actual a partir del movimiento,  aceptándose la solución vecina que produzca la mayor mejora en la \textit{función objetivo}.
+\end{itemize}
 
-\begin{algorithm}
-	\caption{Hill Climbing mejor mejora}
-	\label{algorithm:HC}
+El algoritmo \hillc\ presentado en este informe realiza la selección de soluciónes vecinas según \textit{mejor mejora}. La solución de entrada de este algoritmo es la provista por el algoritmo \greedy\ o por la que viene definida para la instancia correspondiente, utilizada en el desafío de la ROADEF 2012.\\
+
+Dos elementos importantes dentro del algoritmo \hillc\ son el \textbf{\textit{movimiento}} y la \textbf{\textit{función objetivo}}, los cuales se detallarán a continuación.
+
+\begin{itemize}
+	\item \textbf{\textit{movimiento}}: La manera en que se originarán las soluciones vecinas será a través del movimiento \textbf{\textit{shift}}. Este movimiento implica mover un proceso, desde su máquina actual a otra distinta. La elección de este movimiento se debe a que es bastante simple de implementar, con un chequeo sencillo de todas las restricciones del problema. El criterio utilizado para seleccionar el proceso a reasignar, considera probar todos los procesos de la instancia o los que sean posibles dentro del límite de tiempo de cinco minutos. El orden en que se revisan estos puede ser de dos formas: según la secuencia de lectura del archivo de entrada de la instancia u ordenados de forma descendente de acuerdo a su tamaño (ver secciones~\ref{sec:experimentos} y~\ref{sec:resultados} para más detalles). De acuerdo a lo anterior, una solución vecina estará identificada por aquella máquina a la cual, se pretenda reasignarle el proceso que esté siendo analizado.
+	\item \textbf{\textit{función objetivo}}: La función objetivo para el \mrp\ es el costo total definido en la sección~\ref{sec:definicion}. Sin embargo, calcular desde cero el costo de una solución vecina puede llegar a ser muy costoso en términos de tiempo, considerando que hay un límite de cinco minutos de ejecución para el algoritmo y que las instancias pueden llegar a tener una gran cantidad de procesos y máquinas. Por lo tanto, en vez de calcular el costo total, se obtiene la variación que se origina en este al realizar el \textit{shift} de un proceso. Esto tiene la ventaja de solo considerar los cambios que se realizan de forma local, tanto para la máquina inicial como para la máquina final de reasignación. El vecindario de soluciones considerará todos los \textit{shifts} factibles hacia las máquinas que presenten una variación negativa del costo total. La variación más grande, en terminos absolutos, determinará el \textit{shift} que habrá de concretarse.
+\end{itemize}
+En el trabajo realizado por Jaśkowski et al.~\cite{jaskowskihybrid}, se implementa una versión de \hillc\ con alguna mejora, donde el criterio de evaluación de las soluciones vecinas (\textit{evaluación delta}) fue utilizado como inspiración para la realización de esta parte del algoritmo.\\
+
+En definitiva, como puede verse en el pseudocódigo~\ref{algorithm:HC}, el \hillc\ se implementa de la siguiente forma: por cada proceso $p \in \mathcal{P}$, se genera el vecindario $N_s$, compuesto de aquellas máquinas, distintas de la actual asignación $M(p)$, a las que es factible realizar la asignación de $p$ y que evidencien una mejora en el costo de la solución actual (líneas 5--10). Luego, del vecindario $N_s$ (si no es vacío), se obtiene la máquina $m_b$ que produce la mayor disminución del costo total, para luego efectuar en definitiva el desplazamiento de $p$ a $m_b$ (líneas 11--15). Posteriormente, se realiza el
+chequeo de la condición de término del tiempo de ejecución (líneas 16--18). Es importante recalcar que todos los procesos intentarán ser revisados. Si lo anterior logra darse antes de alcanzar el límite de tiempo, los procesos volverán a ser analizados, en la búsqueda de nuevas reasignaciones. Este procedimiento culminará cuando se detecte que no hay más movimientos posibles que realizar o cuando se acabe el tiempo de ejecución (línea 20).
+\begin{algorithm}[h]
+	\caption{Hill Climbing mejor mejora}\label{algorithm:HC}
 	\begin{algorithmic}[1]
 		\Procedure{Hill climbing}{}
-		\Repeat
-			\State $\textit{changes}\gets \textbf{false}$
+		\Repeat{}
+			\State{} $\textit{changes}\gets \textbf{false}$
 			\For{each process $p \in \mathcal{P}$}
-				\State Solution neighborhood $N_s = \{\}$
+				\State{Solution neighborhood $N_s = \emptyset$}
 				\For{each machine $m \in \mathcal{M}$ and $m \neq M(p)$}
-					\If {$shift(p,m)$ is feasible \textbf{and} improves the current solution}
-						\State Add $m$ to $N_s$
-					\EndIf
-				\EndFor
-				\If {$N_s \neq \emptyset$}
-					\State $m_b \gets$ best machine  from $N_s$
-					\State $shift(p, m_b)$
-					\State $\textit{changes}\gets \textbf{true}$
-				\EndIf
-				\If {\textit{time\_limit} reached}
-					\State \textbf{break}
-				\EndIf
-			\EndFor
-		\Until {\textit{time\_limit} reached \textbf{or} not \textit{changes}}
-		\EndProcedure
+					\If{$shift(p,m)$ is feasible \textbf{and} improves the current solution}
+						\State{Add $m$ to $N_s$}
+					\EndIf{}
+				\EndFor{}
+				\If{$N_s \neq \emptyset$}
+					\State{$m_b \gets$ best machine  from $N_s$}
+					\State{$shift(p, m_b)$}
+					\State{$\textit{changes}\gets \textbf{true}$}
+				\EndIf{}
+				\If{\textit{time\_limit} reached}
+					\State{\textbf{break}}
+				\EndIf{}
+			\EndFor{}
+		\Until{\textit{time\_limit} reached \textbf{or} not \textit{changes}}
+		\EndProcedure{}
 	\end{algorithmic}
 \end{algorithm}
-
 \end{document}

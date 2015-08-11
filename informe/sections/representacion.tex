@@ -1,8 +1,242 @@
 \documentclass[../informe2.tex]{subfiles}
 \begin{document}
-Representación matemática y estructura de datos que se usa (arreglos,
-matrices, etc.), por qué se usa, la relación entre la representación
-matemática y la estructura. \textbf{Utilizar figuras, tablas, etc.
-en lo posible, de modo que sea fácil entender las estructuras utilizadas,
-además describa lo más sencillo y claro que pueda.}
+%Representación matemática y estructura de datos que se usa (arreglos,
+%matrices, etc.), por qué se usa, la relación entre la representación
+%matemática y la estructura. \textbf{Utilizar figuras, tablas, etc.
+%en lo posible, de modo que sea fácil entender las estructuras utilizadas,
+%además describa lo más sencillo y claro que pueda.}
+El formato de los archivos de entrada, para las instancias y asignaciones iniciales, se estructura de listas de números enteros y valores binarios, lo cual hace que se implementen variables con tipos de datos enteros o booleanos, ya sea para la representación matemática como para las estructuras de datos utilizadas en la aplicación, los cuales se describirán a continuación.
+\subsection{Representación matemática}
+La representación matemática utilizada, está principalmente basada en el segundo modelo presentado en la sección~\ref{sec:representacion} y  extraído del trabajo de Mehta et al.~\cite{mehta2012comparing}. De tal modelo, se emplean las siguientes variables:
+\begin{itemize}
+	\item $x_p$: Variable entera que indica cual máquina es asignada al proceso $p$. $x_p \in [0,|\mathcal{M}|-1]$.
+\end{itemize}
+Donde una solución se expresa como un vector de todos los $x_p$, siendo $p \in [0,|\mathcal{P}|-1]$ el identificador del proceso y la posición en el vector de asignación:
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\node[minimum size=6mm, draw, rectangle] (x0) at (0,0) {5};
+		\node[minimum size=6mm, draw, rectangle] (x1) at (1,0) {2};
+		\node[minimum size=6mm, draw, rectangle] (x2) at (2,0) {7};
+		\node[minimum size=6mm, draw, rectangle] (x3) at (3,0) {1};
+		\node[minimum size=6mm, draw, rectangle] (x4) at (4,0) {3};
+		\node[minimum size=6mm, draw, rectangle] (x5) at (5,0) {5};
+		\node[minimum size=6mm, draw, rectangle] (x6) at (6,0) {2};
+		\node[minimum size=6mm, draw, rectangle] (x7) at (7,0) {12};
+		\node[minimum size=1mm, label=below:{$x_2$}] (label) at (2,-1) {};
+		\draw [arrow] (label) -- (x2);
+	\end{tikzpicture}
+	\caption{\small El proceso $p = 2$ ha sido asignado a la máquina 7.}\label{vectorsolucion}
+\end{figure}
+
+\begin{itemize}
+	\item $u_{m,r}$: Variable entera que indica el consumo del recurso $r$ en la máquina $m$. $u_{m,r} \in [0,c_{m,r}]$ ($c_{m,r}$ capacidad del recurso $r$ en la máquina $m$).
+	\item $t_{m,r}$: Variable entera que indica la utilización transitoria de una máquina $m$ para un recurso transitorio $r$. $t_{m,r} \in [0,c_{m,r}]$
+	\item $um_s$: Indica el conjunto de máquinas que son asignadas a los procesos del servicio $s$.
+	\item $nmp_s$: Indica cuantos proceso en el servicio $s$ son asignados a nuevas máquinas.
+	\item $mmp$: Indica el máximo número de procesos de los servicios, que son movidos a nuevas máquinas.
+\end{itemize}
+Adicionalmente, se establecen las siguientes variables y conjuntos:
+\begin{itemize}
+	\item $n_p$: Variable entera que indica en cuál vecindario se está ejecutando el proceso $p$. $n_p \in [0,|\mathcal{N}|-1]$.
+	\item $l_p$: Variable entera que indica en cuál localización se está ejecutando el proceso $p$. $l_p \in [0,|\mathcal{L}|-1]$.
+	\item $un_s$: Conjunto de vecindarios que son utilizados por el servicio $s$.
+	\item $ul_s$: Conjunto de localizaciones que son utilizadas por el servicio $s$.
+	\item $p_m$: Conjunto de procesos ejecutándose en la máquina $m$.
+\end{itemize}
+Los costos que componen la función objetivo y las restricciones, son los que están presentes en la definición del problema~\cite{2012ProblemDefinition}.
+
+\subsection{Estructura de datos}
+El lenguaje de programación C++, permite la utilización de un enfoque orientado a objetos que es ideal para modelar y estructurar la aplicación de forma ordenada. Es así como se definen las clases para las sigueintes entidades: \texttt{Resource, Machine, Service, Process y Balance}. Luego, al leer el archivo de entrada de una instancia, se crea la cantidad correspondiente de objetos para cada entidad. Además se define la clase \texttt{Instance} para guardar las referencias mediante punteros a esos objetos, en contenedores de tamaño dinámico \texttt{deque}\footnote{\url{http://www.cplusplus.com/reference/deque/deque/}} por cada tipo de entidad. Finalmente, se define la clase \texttt{Solution}, que guarda el vector de asignaciones leído del archivo de la solución inicial (y sus posteriores modificaciones), como también los diferentes tipos de costos asociados. Para dichas asignaciones, concordando con la representación matemática (ver figura~\ref{vectorsolucion}), se utiliza un \texttt{deque} de enteros sin signo \texttt{unsigned int}. \\
+Para los \texttt{id} de cada entidad, incluyendo los vecindarios y localizaciones, se implementaron con \texttt{unsigned int}. Su valor se determina de acuerdo al orden de lectura del archivo de entrada. En relación a los costos, como estos pueden origninar cantidades enormes (en la instancia más compleja, la solución inicial tienen un costo superior a $4\times10^{10}$), se usaron enteros de tipo \texttt{int64\_t}\footnote{\url{http://www.cplusplus.com/reference/cstdint/\#macros}}, que tienen una capacidad superior a $9\times10^{18}$. Para las capacidades, requerimientos y usos, se utilizaron enteros de tipo \texttt{int32\_t}. A continuación, se presentan la definición de tales clases, con sus variables y parámetros miembro, indicando el tipo de dato utilizado (se omiten los métodos de cada clase para mantener la simpleza de las figuras). \\
+
+\noindent\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{transient}: variable booleana que especifica si el recurso en cuestión es de uso transitorio o no.
+		\item \texttt{weight\_load\_cost}: variable entera sin signo que guarda la ponderación del recurso en cuestión para el cálculo del costo de carga.
+	\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+	\begin{tikzpicture}
+	    \tikzstyle{every node}=[font=\footnotesize]
+		\begin{class}{Resource}{0, 0}
+	        \attribute{id : unsigned int}
+	        \attribute{weight\_load\_cost : unsigned int}
+	        \attribute{transient : bool}
+	    \end{class}
+	\end{tikzpicture}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.3\textwidth}
+\begin{tikzpicture}
+	\tikzstyle{every node}=[font=\footnotesize]
+	\begin{class}{Machine}{0, 0}
+		\attribute{id : unsigned int}
+		\attribute{location\_id : unsigned int}
+		\attribute{neighborhood\_id : unsigned int}
+		\attribute{capacities : deque<int32\_t>}
+		\attribute{safety\_capacities : deque<int32\_t>}
+		\attribute{usages : deque<int32\_t>}
+		\attribute{transient\_usages : deque<int32\_t>}
+		\attribute{processes : deque<unsigned int>}
+		\attribute{machine\_move\_costs : deque<unsigned int>}
+	\end{class}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.6\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{location\_id y neighborhood\_id}: $ids$ de la localización y el vecindario donde se encuentra la máquina.
+		\item Para un recurso $r$ de \texttt{id}  $=i$ en \textit{esta} máquina $m$, se guarda en la posición $i$ de los siguientes contenedores:
+		\begin{itemize}
+			\item \texttt{capacities, safety\_capacities}: capacidad $c_{m,r}$ y capacidad de seguridad $sc_{m,r}$ del recurso $r$ respectivamente.
+			\item \texttt{usages}: consumo $u_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutan en $m$.
+			\item \texttt{transient\_usages}: consumo transitorio $t_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutaban inicialmente en $m$ y actualmente no.
+		\end{itemize}
+		\item \texttt{processes}: $ids$ de los procesos que se ejecutan en \textit{esta} máquina.
+		\item \texttt{machine\_move\_costs}: contenedor que guarda en la posición $i$, el costo de mover un proceso desde \textit{esta} máquina a otra de \texttt{id} $=i$.
+	\end{itemize}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{spread\_min}: mínimo de dispersión del servicio.
+		\item \texttt{num\_moved\_process}: cantidad de procesos movidos de su máquina inicial, pertenecientes a \textit{este} servicio ($nmp_s$).
+		\item \texttt{processes}: \textit{ids} de los procesos pertenecientes a \textit{este} servicio.
+ 		\item \texttt{machines, locations, neighborhoods}: contenedores con los \textit{ids} de las máquinas, localizaciones y vecindarios respectivamente, que utiliza \textit{este} servicio.
+ 		\item \texttt{dependencies y dependents}: \textit{ids} de los servicios de los cuales depende y dependen de \textit{este} servicio, respectivamente.
+	\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}{0.4\textwidth}
+	\begin{tikzpicture}
+		\tikzstyle{every node}=[font=\footnotesize]
+		\begin{class}{Service}{0, 0}
+			\attribute{id : unsigned int}
+			\attribute{spread\_min : unsigned int}
+			\attribute{num\_moved\_processes : unsigned int}
+			\attribute{processes : deque<unsigned int>}
+			\attribute{machines : deque<unsigned int>}
+			\attribute{locations : deque<unsigned int>}
+			\attribute{neighborhoods : deque<unsigned int>}
+			\attribute{dependencies : deque<unsigned int>}
+			\attribute{dependents : deque<unsigned int>}
+		\end{class}
+	\end{tikzpicture}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.4\textwidth}
+	\begin{tikzpicture}
+	    \tikzstyle{every node}=[font=\footnotesize]
+	    \begin{class}{Process}{0, 0}
+	        \attribute{id : unsigned int}
+	        \attribute{service\_id : unsigned int}
+	        \attribute{initial\_machine\_id : unsigned int}
+	        \attribute{current\_machine\_id : unsigned int}
+	        \attribute{requirements : deque<int32\_t>}
+	        \attribute{location\_id : unsigned int}
+	        \attribute{neighborhood\_id : unsigned int}
+	        \attribute{process\_move\_cost : unsigned int}
+	        \attribute{size : int64\_t}
+	        \attribute{assigned : bool}
+	    \end{class}
+	\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{service\_id, process\_move\_cost}: $id$ del servicio al cual pertenece \textit{este} proceso y el costo de mover este último respectivamente.
+		\item \texttt{initial\_machine\_id, current\_machine\_id}: $ids$ de la máquina inicial y actual respectivamente, donde se ejecuta \textit{este} proceso.
+		\item \texttt{requeriments}: contenedor que guarda en la posición $i$, el requerimiento de \textit{este} proceso de recurso $r$ de \texttt{id} $=i$.
+		\item \texttt{location\_id, neighborhood\_id}: $ids$ de la localización y vecindario respectivamente, donde se ejecuta \textit{este} proceso.
+		\item \texttt{size}: tamaño de \textit{este} proceso (suma de todos los requerimientos).
+		\item \texttt{assigned}: variable booleana que indica si este proceso ha sido asignado (\textit{Greedy}).
+	\end{itemize}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{target}: proporción entre cantidad disponible de los recursos de $ids$ \texttt{r1\_id y r2\_id}.
+		\item \texttt{r1\_id, r2\_id}: $ids$ de los recursos pertenecientes a la tripla de \textit{este} balance.
+		\item \texttt{weight\_balance\_cost}: guarda la ponderación de \textit{este} balance, para el cálculo del costo de balance.
+	\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{tikzpicture}
+	\tikzstyle{every node}=[font=\footnotesize]
+	\begin{class}{Balance}{0, 0}
+        \attribute{id : unsigned int}
+        \attribute{target : unsigned int}
+        \attribute{r1\_id : unsigned int}
+        \attribute{r2\_id : unsigned int}
+        \attribute{weight\_balance\_cost : unsigned int}
+    \end{class}
+\end{tikzpicture}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.4\textwidth}
+	\begin{tikzpicture}
+	    \tikzstyle{every node}=[font=\footnotesize]
+	    \begin{class}[text width=6cm]{Instance}{0, 0}
+	        \attribute{weight\_process\_move\_cost : unsigned int}
+	        \attribute{weight\_service\_move\_cost : unsigned int}
+	        \attribute{weight\_machine\_move\_cost : unsigned int}
+	        \attribute{processes : deque<Process*>}
+	        \attribute{machines : deque<Machine*>}
+	        \attribute{services : deque<Service*>}
+	        \attribute{resources : deque<Resource*>}
+	        \attribute{balances : deque<Balance*>}
+	    \end{class}
+	\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{weight\_process\_move\_cost, weight\_service\_move\_cost, weight\_machine\_move\_cost}: ponderación de los costos de movimiento de proceso, servicio y máquina respectivamente, utilizado para el calcular el costo total.
+		\item \texttt{processes, machines, services, resources, balances}: contendores con las referencias mediante puntero a los objetos instanciados de cada entidad. El puntero que se encuentra en la posición $i$, es la referencia del objeto de la entidad de \texttt{id} $=i$.
+	\end{itemize}
+\end{minipage}
+
+\bigskip
+
+\noindent\begin{minipage}{0.5\textwidth}
+	\small
+	\begin{itemize}
+		\item \texttt{instance}: puntero al objeto de la clase \texttt{Instance}.
+		\item \texttt{assignments}: contenedor que guarda en la posición $i$ para el proceso de \texttt{id} $=i$, la asignación o \texttt{id} de la máquina en la cual se ejecuta.
+		\item \texttt{load\_cost, balance\_cost, process\_move\_cost, service\_move\_cost, machine\_load\_cost}: Costos totales de la solución, para item correspondiente.
+		\item \texttt{max\_moved\_processes}: variable que guarda el número máximo de procesos movidos por servicio. Utilizado para calcular el costo de movimiento de servicio.
+	\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{tikzpicture}
+	\tikzstyle{every node}=[font=\footnotesize]
+	\begin{class}{Solution}{0, 0}
+        \attribute{instance : Instance}
+        \attribute{assignments : deque<unsigned int>}
+        \attribute{load\_cost : int64\_t}
+        \attribute{balance\_cost : int64\_t}
+        \attribute{process\_move\_cost : int64\_t}
+        \attribute{service\_move\_cost : int64\_t}
+        \attribute{machine\_move\_cost : int64\_t}
+        \attribute{max\_moved\_processes : unsigned int}
+    \end{class}
+\end{tikzpicture}
+\end{minipage}
+
+
+
 \end{document}
