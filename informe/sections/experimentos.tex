@@ -6,8 +6,9 @@
 %instancias, cuáles fueron los criterios de término del algoritmo.
 \subsection{Instancias}
 \label{sub:Instancias}
-Para las distintas pruebas realizadas, se utilizaron las instancias provistas de manera oficial en el desafío de la \roadef. Estas se agrupan en tres datasets, a1 y a2 (Tabla~\ref{tabla:set-a}) y b (Tabla~\ref{tabla:set-b}). Las dos primeras son las instancias más sencillas, con un máximo de 1000 procesos y 100 máquinas, el número de dependencias no supera las 600. Estas instancias se usaron como parte de la etapa de clasificación de la \roadef, donde los 30 mejores equipos pasaban a la siguiente ronda. En ella, se utilizan las instancias b, las cuales son las más complejas, tendiendo a describir un escenario más real, con hasta 50000 procesos, 5000 máquinas y una mayor cantidad de servicios y dependencias.\\
-\begin{table}[h]
+Para las distintas pruebas realizadas, se utilizaron las instancias provistas de manera oficial en el desafío de la \roadef. Estas se agrupan en tres datasets, a1 y a2 (cuadro~\ref{tabla:seta}) y b (cuadro~\ref{tabla:setb}). Las dos primeras son las instancias más sencillas, con un máximo de 1000 procesos y 100 máquinas, donde el número de dependencias no supera las 600. Estas instancias se usaron como parte de la etapa de clasificación de la \roadef, donde los 30 mejores equipos pasaban a la siguiente ronda. En ella, se utilizan las instancias b, las cuales son las más complejas, tendiendo a describir un escenario más real, con hasta 50000 procesos, 5000 máquinas y una mayor cantidad de servicios y dependencias.
+\clearpage
+\begin{table}[ht!]
 	\small
 	\centering
 	\begin{tabular}{@{}lrrrrrrrrrr@{}}
@@ -22,10 +23,10 @@ Para las distintas pruebas realizadas, se utilizaron las instancias provistas de
 		Localizaciones        & 4                         & 4                         & 25                        & 50                        & 4                         & 1                         & 25                        & 25                        & 25                        & 25                        \\
 		Balances              & 1                         & 0                         & 0                         & 1                         & 1                         & 0                         & 0                         & 0                         & 1                         & 0                         \\ \bottomrule
 	\end{tabular}
-	\caption{\small Datasets a1 y a2 de instancias.}\label{tabla:set-a}
+	\caption{\small Datasets a1 y a2 de instancias.}\label{tabla:seta}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht!]
 	\small
 	\makebox[\textwidth][c]{
 	\begin{tabular}{@{}lrrrrrrrrrr@{}}
@@ -40,19 +41,20 @@ Para las distintas pruebas realizadas, se utilizaron las instancias provistas de
 		Localizaciones        & 10   & 10   & 10    & 50    & 10    & 50    & 50    & 10    & 100   & 100   \\
 		Balances              & 0    & 1    & 0     & 1     & 0     & 1     & 1     & 0     & 1     & 1     \\ \bottomrule
 	\end{tabular}}
-	\caption{\small Dataset b de instancias.}\label{tabla:set-b}
+	\caption{\small Dataset b de instancias.}\label{tabla:setb}
 \end{table}
 \noindent Para la ejecución del algoritmo presentado en este informe, se respetó el limite de tiempo de cinco minutos. Para ello, se utilizó un notebook con las siguientes características:
 \begin{itemize}
 	\item Procesador: Intel (R) Core (TM) i5--4210U CPU @ 1.70GHz
-	\item Memoria principal: 8 Gb.
+	\item Memoria principal: 8 GB\@.
 	\item Sistema operativo: Arch Linux 64 bits.
 \end{itemize}
 
 \subsection{Pruebas}
 \label{sub:Pruebas}
-Las pruebas realizadas se dividieron en dos partes, una por cada algoritmo (\greedy\ y \hillc). Lo anterior se debe al tratar de establecer la efectividad del algoritmo \greedy\ en la generación de soluciones iniciales, considerando que estas se utilizan como input del \hillc, además del deseo de generar resultados efectivos que permitan realizar comparativas medibles en las diferentes instancias del problema, especialmente en relación a los mejores resultados obtenidos en la competición de la \roadef.\\
-En relación al \hillc, se tratará de establecer la configuración que ofrezca los mejores resultados (costo total, iteraciones, tiempo de ejecución), en función del orden de selección de los procesos para la generación de las soluciones vecinas. Esto considera revisar los procesos según el orden de lectura del archivo de la instancia o de acuerdo al orden originado por el tamaño de cada proceso (descendentemente).\\
-Ambos algoritmos, basados en la realización de búsquedas locales, son deterministas, por lo que por cada instancia se ejecutan solo una vez.
+Las pruebas realizadas se dividieron en dos partes, una por cada algoritmo (\greedy\ y \hillc). Lo anterior se debe al tratar de establecer la efectividad del algoritmo \greedy\ en la generación de soluciones iniciales, considerando que estas se utilizan como input del \hillc, además del deseo de generar resultados efectivos que permitan realizar comparativas medibles en las diferentes instancias del problema, especialmente en relación a los mejores resultados obtenidos en la competición de la \roadef. \par
+\noindent En relación al \hillc, se tratará de establecer la configuración que ofrezca los mejores resultados (costo total, iteraciones, tiempo de ejecución), en función del orden de selección de los procesos para la generación de las soluciones vecinas. Esto considera revisar los procesos según el orden de lectura del archivo de la instancia o de acuerdo al orden originado por el tamaño de cada proceso (descendentemente). \par
+\noindent Ambos algoritmos, basados en la realización de búsquedas locales, son deterministas, por lo que para cada instancia, solo se ejecutan una vez. \par
+\noindent Para validar la factibilidad y el costo de las nuevas soluciones generadas, se utilizará el \textit{solution checker} oficial de la \roadef.
 
 \end{document}
