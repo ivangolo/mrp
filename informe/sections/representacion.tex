@@ -94,23 +94,23 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
 		\item Para un recurso $r$ de \texttt{id}  $=i$ en una máquina $m$, se guarda en la posición $i$ de los siguientes contenedores:
 		\begin{itemize}
 			\item \texttt{capacities, safety\_capacities}: capacidad $c_{m,r}$ y capacidad de seguridad $sc_{m,r}$ del recurso $r$ respectivamente.
-			\item \texttt{usages}: consumo $u_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutan en $m$.
-			\item \texttt{transient\_usages}: consumo transitorio $t_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutaban inicialmente en $m$ y actualmente no.
+			\item \texttt{usages}: consumo $u_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutan en $m$ (se actualiza con cada cambio en las asignaciones).
+			\item \texttt{transient\_usages}: consumo transitorio $t_{m,r}$ del recurso $r$ por parte de los procesos que se ejecutaban inicialmente en $m$ y actualmente no (se actualiza con cada cambio en las asignaciones).
 		\end{itemize}
 		\item \texttt{processes}: $ids$ de los procesos que se ejecutan la máquina.
 		\item \texttt{machine\_move\_costs}: contenedor que guarda en la posición $i$, el costo de mover un proceso desde \textit{esta} máquina a otra de \texttt{id} $=i$.
 	\end{itemize}
 \end{minipage}
 
-\vspace{1cm}
+\vspace{0.75cm}
 
 \noindent\begin{minipage}{0.5\textwidth}
 	\small
 	\begin{itemize}[leftmargin=*]
 		\item \texttt{spread\_min}: mínimo de dispersión del servicio.
-		\item \texttt{num\_moved\_process}: cantidad de procesos movidos de su máquina inicial ($nmp_s$).
+		\item \texttt{num\_moved\_process}: cantidad de procesos movidos de su máquina inicial $nmp_s$ (se actualiza con cada cambio en las asignaciones).
 		\item \texttt{processes}: \textit{ids} de los procesos pertenecientes al servicio.
- 		\item \texttt{machines, locations, neighborhoods}: contenedores con los \textit{ids} de las máquinas, localizaciones y vecindarios respectivamente, que utiliza el servicio.
+ 		\item \texttt{machines, locations, neighborhoods}: contenedores con los \textit{ids} de las máquinas ($um_s$), localizaciones ($ul_s$) y vecindarios ($nm_s$) respectivamente, que utiliza el servicio (se actualizan con cada cambio en las asignaciones).
  		\item \texttt{dependencies y dependents}: \textit{ids} de los servicios de los cuales depende y dependen del servicio, respectivamente.
 	\end{itemize}
 \end{minipage}\hfill
@@ -131,7 +131,7 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
 	\end{tikzpicture}
 \end{minipage}
 
-\vspace{1cm}
+\vspace{0.75cm}
 
 \noindent\begin{minipage}{0.3\textwidth}
 	\begin{tikzpicture}
@@ -154,9 +154,9 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
 	\small
 	\begin{itemize}[leftmargin=*]
 		\item \texttt{service\_id, process\_move\_cost}: $id$ del servicio al cual pertenece el proceso y el costo de mover este último respectivamente.
-		\item \texttt{initial\_machine\_id, current\_machine\_id}: $ids$ de la máquina inicial y actual respectivamente, donde se ejecuta el proceso.
-		\item \texttt{requeriments}: contenedor que guarda en la posición $i$, el requerimiento del proceso de recurso $r$ de \texttt{id} $=i$.
-		\item \texttt{location\_id, neighborhood\_id}: $ids$ de la localización y vecindario respectivamente, donde se ejecuta el proceso.
+		\item \texttt{initial\_machine\_id, current\_machine\_id}: $ids$ de la máquina inicial y actual respectivamente, donde se ejecuta el proceso (se actualizan con cada cambio en las asignaciones).
+		\item \texttt{requirements}: contenedor que guarda en la posición $i$, el requerimiento del proceso para el recurso $r$ de \texttt{id} $=i$.
+		\item \texttt{location\_id, neighborhood\_id}: $ids$ de la localización y vecindario respectivamente, donde se ejecuta el proceso (se actualizan con cada cambio en las asignaciones).
 		\item \texttt{size}: tamaño del proceso (suma de todos los requerimientos).
 		\item \texttt{assigned}: variable booleana que indica si el proceso ha sido asignado (\textit{Greedy}).
 	\end{itemize}
@@ -185,7 +185,7 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
 \end{tikzpicture}
 \end{minipage}
 
-\vspace{1cm}
+\vspace{0.75cm}
 
 \noindent\begin{minipage}{0.35\textwidth}
 	\begin{tikzpicture}
@@ -210,15 +210,15 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
 	\end{itemize}
 \end{minipage}
 
-\vspace{1cm}
+\vspace{0.75cm}
 
 \noindent\begin{minipage}{0.55\textwidth}
 	\small
 	\begin{itemize}[leftmargin=*]
 		\item \texttt{instance}: puntero al objeto de la clase \texttt{Instance}.
 		\item \texttt{assignments}: contenedor que guarda en la posición $i$ para el proceso de \texttt{id} $=i$, la asignación o \texttt{id} de la máquina en la cual se ejecuta.
-		\item \texttt{load\_cost, balance\_cost, process\_move\_cost, service\_move\_cost, machine\_load\_cost}: Costos totales de la solución, para item correspondiente.
-		\item \texttt{max\_moved\_processes}: variable que guarda el número máximo de procesos movidos por servicio. Utilizado para calcular el costo de movimiento de servicio.
+		\item \texttt{load\_cost, balance\_cost, process\_move\_cost, service\_move\_cost, machine\_load\_cost}: Costos totales de la solución, para item correspondiente (se actualizan con cada cambio en las asignaciones).
+		\item \texttt{max\_moved\_processes}: variable que guarda el número máximo de procesos movidos por servicio. Utilizado para calcular el costo de movimiento de servicio (se actualiza con cada cambio en las asignaciones).
 	\end{itemize}
 \end{minipage}\hfill
 \begin{minipage}{0.4\textwidth}
@@ -236,7 +236,5 @@ El lenguaje de programación C++, permite la utilización de un enfoque orientad
     \end{class}
 \end{tikzpicture}
 \end{minipage}
-
-\vspace{1cm}
 
 \end{document}
