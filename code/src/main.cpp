@@ -12,13 +12,12 @@
 #include "Solution.hpp"
 #include "HillClimbing.hpp"
 #include "utils.hpp"
-#include "Greedy.hpp"
 
 int main (int argc,char *argv[]) {
 
     std::string instance_filename, original_solution_filename, new_solution_filename;
     unsigned int time_limit = 300, seed = 0;
-    //HillClimbing::Mode process_selection_mode = HillClimbing::INSTANCE_SEQUENCE;
+    HillClimbing::Mode process_selection_mode = HillClimbing::INSTANCE_SEQUENCE;
 
     int tmp;
     if(argc == 1) {
@@ -26,7 +25,7 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    while((tmp = getopt(argc,argv,"t:p:i:o:s:a:")) != -1) {
+    while((tmp = getopt(argc,argv,"t:p:i:o:s:m:")) != -1) {
         switch(tmp) {
             case 't': {
                 std::istringstream iss_tm(optarg);
@@ -58,10 +57,10 @@ int main (int argc,char *argv[]) {
                 break;
             }
 
-            case 'a': {
+            case 'm': {
                 std::string mode(optarg);
                 if(!mode.empty() && mode == "sorted") {
-                    //process_selection_mode = HillClimbing::SORTED_BY_SIZE;
+                    process_selection_mode = HillClimbing::SORTED_BY_SIZE;
                 } else if(!mode.empty() && mode != "sorted") {
                     std::cerr << "Hill Climbing mode inválido " << optarg << std::endl;
                     exit(EXIT_FAILURE);
@@ -95,10 +94,7 @@ int main (int argc,char *argv[]) {
     instance->read_instance_from_file(fin_instance);
     //original solution
     Solution *solution = new Solution(instance);
-
-    /*
     solution->read_solution_from_file(fin_original_solution);
-
 
     if(instance->processes.size() != solution->get_assignments().size()) {
         std::cerr << "Número de procesos de la instancia y de la solución inicial no concuerdan"  << std::endl;
@@ -107,40 +103,24 @@ int main (int argc,char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-
-    //instance->add_assignments(solution->get_assignments());
-    //instance->update_all_usages();
-     */
-
+    instance->add_assignments(solution->get_assignments());
+    instance->update_all_usages();
     instance->init();
 
-    Greedy *greedy = new Greedy(instance, solution);
-    greedy->set_time_limit(time_limit);
-    greedy->run();
-    std::cout << instance_filename << std::endl;
-    greedy->print();
-
-    /*
     solution->update_solution_costs();
-
-    std::cout << "-.initial_assignment_costs::" << std::endl;
-    solution->print();
 
     HillClimbing *hc = new HillClimbing(instance, solution);
     hc->set_time_limit(time_limit);
     hc->set_process_selection_mode(process_selection_mode);
     hc->run();
 
-    std::cout << "-.new_assignment_costs::" << std::endl;
-    solution->print();
+    std::cout << solution->get_solution_cost() << ";" << hc->get_execution_time() << ";" << hc->get_num_iterations() << std::endl;
 
-    hc->print();
     solution->write_solution_to_file(fout_new_solution);
-    */
 
     delete instance;
     delete solution;
-    delete greedy;
+    delete hc;
 
     fout_new_solution.close();
     fin_instance.close();

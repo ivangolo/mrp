@@ -66,9 +66,12 @@ int32_t HillClimbing::get_num_iterations() {
     return num_iterations;
 }
 
+double HillClimbing::get_execution_time() {
+    return LocalSearch::get_execution_time();
+}
 
 void HillClimbing::print() {
-    std::cout << "-.algorithm_stats::" << std::endl;
+    std::cout << "-.Algorithm_stats::" << std::endl;
     std::cout << "iterations: " << get_num_iterations() <<  ", ";
     std::cout << "running_time: " << get_execution_time() << std::endl;
 }

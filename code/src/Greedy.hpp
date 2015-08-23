@@ -22,6 +22,7 @@ public:
     unsigned int get_num_assigned_processes();
     void print();
     void set_time_limit(unsigned int time_limit);
+    double get_execution_time();
 
 };
 

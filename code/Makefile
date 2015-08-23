@@ -83,6 +83,14 @@ ifeq ($(SOURCES),)
 	SOURCES := $(call rwildcard, $(SRC_PATH)/, *.$(SRC_EXT))
 endif
 
+# Greedy option, to build greedy or hill climbing
+export GREEDY := false
+ifeq ($(GREEDY),true)
+	SOURCES := $(filter-out $(SRC_PATH)/main.cpp, $(SOURCES))
+else
+	SOURCES := $(filter-out $(SRC_PATH)/main_greedy.cpp, $(SOURCES))
+endif
+
 # Set the object file names, with the source directory stripped
 # from the path, and the build path prepended in its place
 OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)

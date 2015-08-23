@@ -30,11 +30,10 @@ public:
     LocalSearch(Instance *instance, Solution *solution);
     virtual ~LocalSearch();
     virtual void set_time_limit(unsigned int time_limit);
-    double get_execution_time();
     virtual Solution * run() = 0;
     virtual void print() = 0;
-
-
+    virtual double get_execution_time() = 0;
+    
 };
 
 

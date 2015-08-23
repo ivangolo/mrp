@@ -24,6 +24,7 @@ public:
     ~HillClimbing();
     Solution * run();
     int32_t get_num_iterations();
+    double get_execution_time();
     void print();
     void set_process_selection_mode(HillClimbing::Mode mode);
     void set_time_limit(unsigned int time_limit);

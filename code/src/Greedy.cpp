@@ -80,12 +80,16 @@ unsigned int Greedy::get_num_assigned_processes() {
 }
 
 void Greedy::print() {
-    std::cout << "Total de procesos: " << instance->processes.size() << std::endl;
-    std::cout << "Total de procesos asignados: " << get_num_assigned_processes() << std::endl;
-    std::cout << "Tiempo de ejecución: " << get_execution_time() << std::endl;
-    std::cout << ":::::::::::::::::::::::::::::::::::::" << std::endl;
+    std::cout << "Total processes: " << instance->processes.size() << std::endl;
+    std::cout << "Total assigned processes: " << get_num_assigned_processes() << std::endl;
+    std::cout << "Execution time: " << get_execution_time() << std::endl;
 }
 
 void Greedy::set_time_limit(unsigned int time_limit) {
     LocalSearch::set_time_limit(time_limit);
+}
+
+
+double Greedy::get_execution_time() {
+    return LocalSearch::get_execution_time();
 }
